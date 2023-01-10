@@ -1,0 +1,6 @@
+class BusTypeModel {
+
+  String serviceTypeName = "";
+
+
+}
