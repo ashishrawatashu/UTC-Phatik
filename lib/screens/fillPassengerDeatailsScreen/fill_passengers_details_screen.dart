@@ -714,7 +714,7 @@ class _FillPassengersDetailsScreenState
           //print(_fillPassengersDetailsProvider.passengers);
           moveToPaymentScreen(context);
           await _fillPassengersDetailsProvider.getPhoneNumber();
-          CommonMethods.showSnackBar(context, "Login successfully");
+          CommonMethods.dialogDone(context, "Login successfully");
         } else {
           Navigator.pop(context);
           CommonMethods.showSnackBar(context, "Invalid OTP !");

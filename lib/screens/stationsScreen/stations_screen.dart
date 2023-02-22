@@ -46,7 +46,8 @@ class StationsScreenState extends State<StationsScreen> {
         backgroundColor: Colors.white,
         body: SafeArea(
             child: Column(
-          children: [Container(
+              children: [
+                Container(
               // color: Colors.blueAccent,
               height: 50,
               child: Row(
@@ -132,42 +133,41 @@ class StationsScreenState extends State<StationsScreen> {
 
   Widget allDestinationList(
       GetStationsResponse searchBusesResponse, int index) {
-    return Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          children: [
-            GestureDetector(
-              onTap: () {
-                if (_allDestinationProvider.flag_F_T=="F") {
-                  AppConstants.SELECTED_SOURCE =
-                      searchBusesResponse.station![index].stonname!;
-                  //print("FROM" + AppConstants.SELECTED_SOURCE + "" + AppConstants.SELECTED_DESTINATION);
-                } else {
-                  AppConstants.SELECTED_DESTINATION = searchBusesResponse.station![index].stonname!;
-                  //print("To" + AppConstants.SELECTED_SOURCE + "" + AppConstants.SELECTED_DESTINATION);
-                }
-                Navigator.of(context).pushNamedAndRemoveUntil(MyRoutes.homeRoute, (route) => false);
-                // SaveSearchBusSP.setSourcePlace(sourcePlace: searchBusesResponse.station![index].);
-              },
-              child: Container(
-                margin: EdgeInsets.all(8),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    searchBusesResponse.station![index].stonname!,
-                    style: TextStyle(fontSize: 14),
-                  ),
-                ),
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () {
+            if (_allDestinationProvider.flag_F_T=="F") {
+              AppConstants.SELECTED_SOURCE =
+                  searchBusesResponse.station![index].stonname!;
+              //print("FROM" + AppConstants.SELECTED_SOURCE + "" + AppConstants.SELECTED_DESTINATION);
+            } else {
+              AppConstants.SELECTED_DESTINATION = searchBusesResponse.station![index].stonname!;
+              //print("To" + AppConstants.SELECTED_SOURCE + "" + AppConstants.SELECTED_DESTINATION);
+            }
+            Navigator.of(context).pushNamedAndRemoveUntil(MyRoutes.homeRoute, (route) => false);
+            // SaveSearchBusSP.setSourcePlace(sourcePlace: searchBusesResponse.station![index].);
+          },
+          child: Container(
+            padding: EdgeInsets.all(8),
+            margin: EdgeInsets.all(8),
+            color: HexColor(MyColors.white),
+            width: MediaQuery.of(context).size.width,
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                searchBusesResponse.station![index].stonname!,
+                style: TextStyle(fontSize: 14),
               ),
             ),
-            Container(
-              color: Colors.grey,
-              height: 1,
-            ),
-          ],
-        )
-        // ),
-        );
+          ),
+        ),
+        Container(
+          color: Colors.grey,
+          height: 1,
+        ),
+      ],
+    );
   }
 
   void getdestination() async {

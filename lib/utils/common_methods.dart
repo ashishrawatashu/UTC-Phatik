@@ -31,6 +31,7 @@ class CommonMethods {
     // } on SocketException catch (_) {
     //     return false;
     // }
+
   }
 
   static showLoadingDialog(BuildContext context) {
@@ -79,65 +80,149 @@ class CommonMethods {
   }
 
   static showSnackBar(BuildContext context, String msg) {
-
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        isDismissible: false,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20), topRight: Radius.circular(20))),
-        builder: (BuildContext context) {
-          return Container(
-              height: 100,
-              padding: EdgeInsets.only(top: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Padding(
-                  //   padding: EdgeInsets.all(10.0),
-                  //   child: Text(
-                  //     "Alert !",
-                  //     style: GoogleFonts.nunito(
-                  //         fontSize: 18, color: HexColor(MyColors.black)),
-                  //   ),
-                  // ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: Text(
-                      msg,
-                      style: GoogleFonts.nunito(
-                          fontSize: 15,
-                          color: HexColor(MyColors.black)),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      height: 35,
-                      width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: HexColor(MyColors.orange),
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return WillPopScope(
+              onWillPop: () async => false,
+              child: Dialog(
+                  shape: RoundedRectangleBorder(borderRadius:
+                  BorderRadius.circular(20.0)), //this right here
+                  child: Wrap(
+                    children: [
+                      Column(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Image.asset("assets/images/warning.png",
+                                    width: 80, height: 80, fit: BoxFit.fill,),
+                                ),
+                              ),
+                              SizedBox(height: 20,),
+                              Center(child: Padding(
+                                padding: const EdgeInsets.only(left: 15.0,right: 15),
+                                child: Text(msg,
+                                  textAlign: TextAlign.center, style: TextStyle(
+                                      fontSize: 13, fontWeight: FontWeight.w600),),
+                              )),
+                              SizedBox(
+                                height: 20,
+                              ),
+                            ],
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  bottom: 10, left: 20, right: 20),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: HexColor(MyColors.primaryColor),
+                              ),
+                              height: 40,
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 4),
+                                    child: Text("OK",
+                                        style: TextStyle(color: Colors.white)),),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      child: Center(
-                          child: Text(
-                            "OK",
-                            style: GoogleFonts.nunito(
-                                fontSize: 15, color: HexColor(MyColors.white)),
-                          )),
-                    ),
+                    ],
                   )
-                ],
-              ));
-        },
-      );
+              ),
+            );
+          });
     }
 
 
+  static dialogDone(BuildContext context, String msg) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: Dialog(
+                shape: RoundedRectangleBorder(borderRadius:
+                BorderRadius.circular(20.0)), //this right here
+                child: Wrap(
+                  children: [
+                    Column(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Image.asset("assets/images/check.png",
+                                  width: 80, height: 80, fit: BoxFit.fill,),
+                              ),
+                            ),
+                            SizedBox(height: 20,),
+                            Center(child: Padding(
+                              padding: const EdgeInsets.only(left: 15.0,right: 15),
+                              child: Text(msg,
+                                textAlign: TextAlign.center, style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.w600),),
+                            )),
+                            SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(
+                                bottom: 10, left: 20, right: 20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: HexColor(MyColors.primaryColor),
+                            ),
+                            height: 40,
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 4),
+                                  child: Text("OK",
+                                      style: TextStyle(color: Colors.white)),),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+            ),
+          );
+        });
+  }
 
 
   static noDataFound(BuildContext context){

@@ -582,7 +582,7 @@ class _RegisterComplaintScreenState extends State<RegisterComplaintScreen> {
           await registerComplaintScreenProvider.saveGrievance();
           if(registerComplaintScreenProvider.saveGrievanceResponse.code=="100"){
             Navigator.pop(context);
-            CommonMethods.showSnackBar(context, "Feedback send successfully ");
+            CommonMethods.dialogDone(context, "Feedback send successfully ");
           }else if(registerComplaintScreenProvider.saveGrievanceResponse.code=="999"){
             Navigator.pop(context);
             CommonMethods.showTokenExpireDialog(context);

@@ -203,7 +203,7 @@ class Wallet {
   }
   String? userid;
   String? openingdate;
-  int? currentbalanceamount;
+  num? currentbalanceamount;
   String? ddate;
 
   Map<String, dynamic> toJson() {
@@ -297,7 +297,7 @@ class ServiceTypes {
   int? servicecode;
   String? servicetypenameen;
   dynamic servicetypenamehi;
-  int? acschargepkm;
+  num? acschargepkm;
   int? slschargeps;
   int? heatschargepkm;
   int? speedhillkmh;

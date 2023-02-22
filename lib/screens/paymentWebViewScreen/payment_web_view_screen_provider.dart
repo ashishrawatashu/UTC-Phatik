@@ -86,7 +86,7 @@ class PaymentWebViewScreenProvider extends ChangeNotifier {
         ),
       );
       if (walletTopUpCompleted == "Y") {
-        CommonMethods.showSnackBar(context, "Wallet recharged successfully ");
+        CommonMethods.dialogDone(context, "Wallet recharged successfully ");
       } else {
         // CommonMethods.showSnackBar(context, "Something went wrong !");
       }
@@ -96,7 +96,7 @@ class PaymentWebViewScreenProvider extends ChangeNotifier {
       if (passengerConfirmDetailsResponse.code == "100") {
         if(!passengerConfirmDetailsResponse.ticketDeatil!.isEmpty){
           if (passengerConfirmDetailsResponse.ticketDeatil![0].ticketbookingstatus == "A") {
-            CommonMethods.showSnackBar(context, "Ticket booked successfully");
+            CommonMethods.dialogDone(context, "Ticket booked successfully");
             Navigator.pushNamed(context, MyRoutes.bookingHistoryDetailsScreen, arguments: PaymentScreenArguments(ticketNumber, "Booking"));
           }else if (passengerConfirmDetailsResponse.ticketDeatil![0].ticketbookingstatus == "R") {
             paymentIsUnderProcessDialogBox(context,ticketNumber);

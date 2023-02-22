@@ -68,7 +68,7 @@ class WalletTransactions {
   String? wallettxntypecode;
   String? txntype;
   String? txnreference;
-  int? txnamount;
+  num? txnamount;
   String? txndate;
 
   Map<String, dynamic> toJson() {
@@ -101,7 +101,7 @@ class Wallet {
   }
   String? userid;
   String? openingdate;
-  int? currentbalanceamount;
+  num? currentbalanceamount;
   String? ddate;
 
   Map<String, dynamic> toJson() {

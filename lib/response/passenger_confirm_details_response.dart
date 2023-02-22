@@ -102,7 +102,7 @@ class TicketTax {
     amount = json['AMOUNT'];
   }
   String? tax;
-  int? amount;
+  num? amount;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

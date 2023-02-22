@@ -213,7 +213,7 @@ class OtpScreenProvider extends ChangeNotifier{
           moveToHomeScreen(context);
           otpTextEditingController.text = "";
           // _otpScreenProvider.usernameTextEditingController.text = "";
-          CommonMethods.showSnackBar(context, "Login successfully");
+          CommonMethods.dialogDone(context, "Login successfully");
           // if (getRatingTicketsList.isEmpty) {
           //
           // } else {
@@ -240,7 +240,7 @@ class OtpScreenProvider extends ChangeNotifier{
         CommonMethods.showLoadingDialog(context);
         //print(mobilenumber+"aaaaaaa");
         await checkMobileNumber(mobilenumber,context);
-        CommonMethods.showSnackBar(context, "OTP sent successfully");
+        CommonMethods.dialogDone(context, "OTP sent successfully");
         Navigator.pop(context);
         otpLimitSet(otpLimit + 1);
       } else {

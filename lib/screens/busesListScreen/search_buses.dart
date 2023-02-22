@@ -637,8 +637,8 @@ class SearchBusesState extends State<SearchBuses> {
                     ),
                     Expanded(
                       child: InkWell(
-                        onTap: (){
-                          myProvider.applyFilter();
+                        onTap: () async {
+                          await myProvider.applyFilter();
                           Navigator.pop(context);
                         },
                         child: Container(

@@ -555,7 +555,7 @@ class _FillConcessionScreenState extends State<FillConcessionScreen> {
         if(fillConcessionScreenProvider.passengerList[index].checkBusPassStatus=="Error"){
           CommonMethods.showSnackBar(context, "Invalid pass no !");
         }else {
-          CommonMethods.showSnackBar(context, "Pass is verified ");
+          CommonMethods.dialogDone(context, "Pass is verified ");
         }
       }else if(fillConcessionScreenProvider.checkConcessionPassResponse.code=="999"){
         CommonMethods.showTokenExpireDialog(context);

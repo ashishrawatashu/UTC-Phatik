@@ -486,7 +486,7 @@ class DashboardScreenState extends State<DashboardScreen> {
           Navigator.pop(context);
           Navigator.pop(context);
           await commonProviderForInAppLogin.getPhoneNumber();
-          CommonMethods.showSnackBar(context, "Login successfully");
+          CommonMethods.dialogDone(context, "Login successfully");
           setState(() {
             AppConstants.index = index;
           });

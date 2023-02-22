@@ -5,6 +5,6 @@ class CheckMobileNumberArguments {
   final String already_yn;
   final String EncryptOTP;
 
-  CheckMobileNumberArguments(
-      this.mobilenumber, this.username, this.already_yn, this.EncryptOTP);
+  CheckMobileNumberArguments(this.mobilenumber, this.username, this.already_yn, this.EncryptOTP);
+
 }

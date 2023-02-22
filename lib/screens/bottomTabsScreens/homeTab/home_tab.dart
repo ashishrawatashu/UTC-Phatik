@@ -251,6 +251,7 @@ class _HomeTabState extends State<HomeTab> {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
+        reverse: true,
         padding: EdgeInsets.zero,
         itemCount: homeTabProvider.recentSearchData1.length,
         itemBuilder: (BuildContext context, int index) {

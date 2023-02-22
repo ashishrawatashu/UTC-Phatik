@@ -14,7 +14,7 @@ class IsAppActiveDataSource implements IsAppActiveApi{
     requestHeader.putIfAbsent("Content-Type", () => Headers.formUrlEncodedContentType);
     requestBody.putIfAbsent("token", () => token);
     Completer<dynamic> completer = new Completer<dynamic>();
-    //print(requestBody);
+    print(requestBody);
     var response = await APIHandler.post(
         url: "${APIs.isAppActive}",
         requestBody: requestBody,

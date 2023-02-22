@@ -295,7 +295,7 @@ class _RateScreenState extends State<RateScreen> {
           if(rateScreenProvider.saveResponse.code=="100"){
             // Navigator.pop(context);
             Navigator.pop(context);
-            CommonMethods.showSnackBar(context, "Feedback done successfully");
+            CommonMethods.dialogDone(context, "Feedback done successfully");
           }else if(rateScreenProvider.saveResponse.code == "999"){
             Navigator.pop(context);
             CommonMethods.showTokenExpireDialog(context);

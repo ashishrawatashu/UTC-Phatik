@@ -39,7 +39,7 @@ class Result {
     fare = json['FARE'];
   }
   String? pTicketnumber;
-  int? fare;
+  num? fare;
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['TICKETNUMBER'] = pTicketnumber;

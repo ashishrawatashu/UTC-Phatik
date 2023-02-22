@@ -680,7 +680,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     await _paymentScreenProvider.walletTicketConfirm();
     Navigator.pop(context);
     if (_paymentScreenProvider.walletTicketConfirmResponse.code == "100") {
-      CommonMethods.showSnackBar(context, "Ticket is booked !");
+      CommonMethods.dialogDone(context, "Ticket is booked !");
       Navigator.pushNamed(context, MyRoutes.bookingHistoryDetailsScreen,
           arguments: PaymentScreenArguments(
               _paymentScreenProvider.ticketNumber, "Booking"));
@@ -842,7 +842,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       if (!_paymentScreenProvider.isValidCode) {
         CommonMethods.showSnackBar(context, "Invalid coupon code !");
       } else {
-        CommonMethods.showSnackBar(context, "Coupon code Applied !");
+        CommonMethods.dialogDone(context, "Coupon code Applied !");
       }
     }else if(_paymentScreenProvider.applyRemoveOfferResponse.code=="999"){
       CommonMethods.showTokenExpireDialog(context);
@@ -878,7 +878,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     Navigator.pop(context);
     if(_paymentScreenProvider.applyRemoveOfferResponse.code=="100"){
       paymentScreenProvider.viewOffers = true;
-      CommonMethods.showSnackBar(context, "Coupon code removed !");
+      CommonMethods.dialogDone(context, "Coupon code removed !");
     }else if(_paymentScreenProvider.applyRemoveOfferResponse.code=="999"){
       CommonMethods.showTokenExpireDialog(context);
     }else if(_paymentScreenProvider.applyRemoveOfferResponse.code=="900"){

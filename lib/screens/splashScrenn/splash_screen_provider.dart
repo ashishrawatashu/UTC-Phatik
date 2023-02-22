@@ -34,13 +34,12 @@ class SplashScreenProvider extends ChangeNotifier{
     });
   }
 
-
  IsAppActiveDataSource isAppActiveDataSource = IsAppActiveDataSource();
  IsAppActive isAppActive = IsAppActive();
  Future<IsAppActive> isAppActiveOrNot() async {
    var response = await isAppActiveDataSource.isAppActiveApi(AppConstants.IS_APP_ACTIVE_TOKEN);
 
-   //print(response);
+   print(response);
    isAppActive = IsAppActive.fromJson(response);
    return isAppActive;
 
