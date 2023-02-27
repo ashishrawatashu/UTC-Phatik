@@ -58,12 +58,12 @@ class Wallet {
   }
   String? _userid;
   String? _openingdate;
-  int? _currentbalanceamount;
+  num? _currentbalanceamount;
   String? _ddate;
 
   String? get userid => _userid;
   String? get openingdate => _openingdate;
-  int? get currentbalanceamount => _currentbalanceamount;
+  num? get currentbalanceamount => _currentbalanceamount;
   String? get ddate => _ddate;
 
   Map<String, dynamic> toJson() {

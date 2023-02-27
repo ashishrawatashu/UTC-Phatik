@@ -45,88 +45,112 @@ class SearchBusProvider extends ChangeNotifier {
       filterBusServices[i].showHideItem = true;
     }
 
-    for(int i =0 ; i < newBusTypeModelList.length;i++){
+    for (int i = 0; i < newBusTypeModelList.length; i++) {
       newBusTypeModelList[i].isSelected = false;
     }
     notifyListeners();
   }
 
-
-  splitBusAmenities(String amenities){
+  splitBusAmenities(String amenities) {
     List<String> result = amenities.split(',');
-    for(int i=0;i<result.length;i++){
-      amenitiesUrlList.add(AppConstants.AMINITIES_URL+result[i].toString());
+    for (int i = 0; i < result.length; i++) {
+      amenitiesUrlList.add(AppConstants.AMINITIES_URL + result[i].toString());
     }
 
     return amenitiesUrlList;
   }
 
+  applyFilter1() {
 
-
-  applyFilter() {
-    for(int i =0 ; i < newBusTypeModelList.length;i++){
-      if(newBusTypeModelList[i].isSelected==true){
+    for (int i = 0; i < newBusTypeModelList.length; i++) {
+      if (newBusTypeModelList[i].isSelected == true) {
         String serviceType = newBusTypeModelList[i].serviceTypeName!;
-        // filterBusServices[i].showHideItem = true;
+        filterBusServices[i].showHideItem = true;
         for (int i = 0; i < busServices.length; i++) {
-          if (lateDepartureValue == 1 && busServices[i].deptBus == "Night" || earlyDepartureValue == 1 && busServices[i].deptBus == "Morning" || nightBuses_depature == true && busServices[i].deptBus == "Night" || afterNoonBuses_depature == true && busServices[i].deptBus == "Afternoon" ||morningBuses_depature == true && busServices[i].deptBus == "Morning" || eveBuses_depature == true && busServices[i].deptBus == "Evening" || nightBuses_arrival == true && busServices[i].arrivalBus == "Night" || afterNoonBuses_arrival == true && busServices[i].arrivalBus == "Afternoon" || morningBuses_arrival == true && busServices[i].arrivalBus == "Morning" ||eveBuses_arrival == true && busServices[i].arrivalBus == "Evening") {
-            filterBusServices[i].showHideItem = true;
-            if(serviceType.toString().trim()==busServices[i].servicetypename.toString().trim()){
-              print(serviceType+"0===>"+busServices[i].servicetypename.toString());
-              filterBusServices[i].showHideItem = true;
-            }else{
-              print(serviceType+"1===>"+busServices[i].servicetypename.toString());
-              filterBusServices[i].showHideItem = false;
-            }
-          } else if (lateDepartureValue == 0 &&
-              earlyDepartureValue == 0 &&
-              nightBuses_depature == false &&
-              afterNoonBuses_depature == false &&
-              morningBuses_depature == false &&
-              eveBuses_depature == false &&
-              nightBuses_arrival == false &&
-              afterNoonBuses_arrival == false &&
-              morningBuses_arrival == false &&
-              eveBuses_arrival == false) {
-            filterBusServices[i].showHideItem = true;
-            if(serviceType.toString().trim()==busServices[i].servicetypename.toString().trim()){
-              //print("SERVICE_TYPE");
-              print(serviceType+"2===>"+busServices[i].servicetypename.toString());
-              filterBusServices[i].showHideItem = true;
-            }else{
-              print(serviceType+"3===>"+busServices[i].servicetypename.toString());
-              filterBusServices[i].showHideItem = false;
-            }
-          } else {
-            filterBusServices[i].showHideItem = false;
-            if(serviceType.toString().trim()==busServices[i].servicetypename.toString().trim()){
-              //print("SERVICE_TYPE");
-              print(serviceType+"4===>"+busServices[i].servicetypename.toString());
-              filterBusServices[i].showHideItem = true;
-            }else{
-              print(serviceType+"5===>"+busServices[i].servicetypename.toString());
-              filterBusServices[i].showHideItem = false;
-            }
-          }
-        }
-      }
-      else {
-        //print("zzzzzz");
-        for (int i = 0; i < busServices.length; i++) {
-          if (lateDepartureValue == 1 && busServices[i].deptBus == "Night" ||
-              earlyDepartureValue == 1 && busServices[i].deptBus == "Morning" ||
-              nightBuses_depature == true && busServices[i].deptBus == "Night" ||
-              afterNoonBuses_depature == true &&
+          if (lateDepartureValue == 1 && busServices[i].deptBus == "Night" || earlyDepartureValue == 1 && busServices[i].deptBus == "Morning" ||
+              nightBuses_depature == true && busServices[i].deptBus == "Night" || afterNoonBuses_depature == true &&
                   busServices[i].deptBus == "Afternoon" ||
               morningBuses_depature == true &&
                   busServices[i].deptBus == "Morning" ||
-              eveBuses_depature == true && busServices[i].deptBus == "Evening" ||
-              nightBuses_arrival == true && busServices[i].arrivalBus == "Night" ||
+              eveBuses_depature == true &&
+                  busServices[i].deptBus == "Evening" ||
+              nightBuses_arrival == true &&
+                  busServices[i].arrivalBus == "Night" ||
               afterNoonBuses_arrival == true &&
                   busServices[i].arrivalBus == "Afternoon" ||
               morningBuses_arrival == true &&
                   busServices[i].arrivalBus == "Morning" ||
-              eveBuses_arrival == true && busServices[i].arrivalBus == "Evening") {
+              eveBuses_arrival == true &&
+                  busServices[i].arrivalBus == "Evening") {
+            filterBusServices[i].showHideItem = true;
+            if (serviceType.toString().trim() == busServices[i].servicetypename.toString().trim()) {
+              print(serviceType + "0===>" + busServices[i].servicetypename.toString());
+              filterBusServices[i].showHideItem = true;
+            } else {
+              print(serviceType + "1===>" + busServices[i].servicetypename.toString());
+              filterBusServices[i].showHideItem = false;
+            }
+          } else if (lateDepartureValue == 0 &&
+              earlyDepartureValue == 0 &&
+              nightBuses_depature == false &&
+              afterNoonBuses_depature == false &&
+              morningBuses_depature == false &&
+              eveBuses_depature == false &&
+              nightBuses_arrival == false &&
+              afterNoonBuses_arrival == false &&
+              morningBuses_arrival == false &&
+              eveBuses_arrival == false) {
+            filterBusServices[i].showHideItem = true;
+            if (serviceType.toString().trim() ==
+                busServices[i].servicetypename.toString().trim()) {
+              //print("SERVICE_TYPE");
+              print(serviceType +
+                  "2===>" +
+                  busServices[i].servicetypename.toString());
+              filterBusServices[i].showHideItem = true;
+            } else {
+              print(serviceType +
+                  "3===>" +
+                  busServices[i].servicetypename.toString());
+              filterBusServices[i].showHideItem = false;
+            }
+          } else {
+            filterBusServices[i].showHideItem = false;
+            if (serviceType.toString().trim() ==
+                busServices[i].servicetypename.toString().trim()) {
+              //print("SERVICE_TYPE");
+              print(serviceType +
+                  "4===>" +
+                  busServices[i].servicetypename.toString());
+              filterBusServices[i].showHideItem = true;
+            } else {
+              print(serviceType +
+                  "5===>" +
+                  busServices[i].servicetypename.toString());
+              filterBusServices[i].showHideItem = false;
+            }
+          }
+        }
+      } else {
+        for (int i = 0; i < busServices.length; i++) {
+          if (lateDepartureValue == 1 && busServices[i].deptBus == "Night" ||
+              earlyDepartureValue == 1 && busServices[i].deptBus == "Morning" ||
+              nightBuses_depature == true &&
+                  busServices[i].deptBus == "Night" ||
+              afterNoonBuses_depature == true &&
+                  busServices[i].deptBus == "Afternoon" ||
+              morningBuses_depature == true &&
+                  busServices[i].deptBus == "Morning" ||
+              eveBuses_depature == true &&
+                  busServices[i].deptBus == "Evening" ||
+              nightBuses_arrival == true &&
+                  busServices[i].arrivalBus == "Night" ||
+              afterNoonBuses_arrival == true &&
+                  busServices[i].arrivalBus == "Afternoon" ||
+              morningBuses_arrival == true &&
+                  busServices[i].arrivalBus == "Morning" ||
+              eveBuses_arrival == true &&
+                  busServices[i].arrivalBus == "Evening") {
             filterBusServices[i].showHideItem = true;
           } else if (lateDepartureValue == 0 &&
               earlyDepartureValue == 0 &&
@@ -144,13 +168,24 @@ class SearchBusProvider extends ChangeNotifier {
           }
         }
       }
-
     }
 
 
-    if (cheapestFirstValue == 1) {
-      filterBusServices.sort((a, b) => a.totalfare!.compareTo(b.totalfare!));
-    }
+    // if (cheapestFirstValue == 1) {
+    //   filterBusServices.sort((a, b) => a.totalfare!.compareTo(b.totalfare!));
+    // }
+
+    notifyListeners();
+  }
+
+  applyFilter() {
+    filterBuServiceType();
+
+
+
+    // if (cheapestFirstValue == 1) {
+    //   filterBusServices.sort((a, b) => a.totalfare!.compareTo(b.totalfare!));
+    // }
 
     notifyListeners();
   }
@@ -335,20 +370,27 @@ class SearchBusProvider extends ChangeNotifier {
   List<Services> busServices = [];
   List<Services> filterBusServices = [];
 
-  Future<SearchServicesResponse> getSearchBuses(String fromStationName, String toStationName, String serviceTypeId, String date) async {
+  Future<SearchServicesResponse> getSearchBuses(String fromStationName,
+      String toStationName, String serviceTypeId, String date) async {
     setloading(true);
     busServices.clear();
     filterBusServices.clear();
     //print(filterBusServices.length.toString()+"LENGTH_OF_LIT");
-    var response = await getSearchBusesDataSource.getSearchBusesApi(fromStationName, toStationName, serviceTypeId, date, AppConstants.IS_APP_ACTIVE_TOKEN);
+    var response = await getSearchBusesDataSource.getSearchBusesApi(
+        fromStationName,
+        toStationName,
+        serviceTypeId,
+        date,
+        AppConstants.IS_APP_ACTIVE_TOKEN);
     //print(response);
-    SearchServicesResponse searchServicesResponse = SearchServicesResponse.fromJson(response);
+    SearchServicesResponse searchServicesResponse =
+        SearchServicesResponse.fromJson(response);
     if (searchServicesResponse.code == "100") {
       busServices = searchServicesResponse.services!;
       filterBusServices = searchServicesResponse.services!;
       await setServiceTypeInList(searchServicesResponse.services!);
       setFilterBusServicesDataByFilter();
-    }else if(searchServicesResponse.code == "101"){
+    } else if (searchServicesResponse.code == "101") {
       busServices.clear();
       filterBusServices.clear();
     }
@@ -362,9 +404,18 @@ class SearchBusProvider extends ChangeNotifier {
     for (int i = 0; i < busServices.length; i++) {
       filterBusServices[i].showHideItem = true;
       busServices[i].showHideItem = true;
-      if (busServices[i].depttime!.substring(busServices[i].depttime!.length - 2, busServices[i].depttime!.length) == "AM") {
-        if (int.parse(busServices[i].depttime!.substring(0, busServices[i].depttime!.length - 6)) <= 12 ||
-            int.parse(busServices[i].depttime!.substring(0, busServices[i].depttime!.length - 6)) <= 5) {
+      if (busServices[i].depttime!.substring(
+              busServices[i].depttime!.length - 2,
+              busServices[i].depttime!.length) ==
+          "AM") {
+        if (int.parse(busServices[i]
+                    .depttime!
+                    .substring(0, busServices[i].depttime!.length - 6)) <=
+                12 ||
+            int.parse(busServices[i]
+                    .depttime!
+                    .substring(0, busServices[i].depttime!.length - 6)) <=
+                5) {
           filterBusServices[i].deptBus = "Night";
           busServices[i].deptBus = "Night";
         }
@@ -497,7 +548,8 @@ class SearchBusProvider extends ChangeNotifier {
     // });
 
     busTypeModelList.forEach((element) {
-      newBusTypeModelList.removeWhere((e) => element.serviceTypeName == e.serviceTypeName);
+      newBusTypeModelList
+          .removeWhere((e) => element.serviceTypeName == e.serviceTypeName);
       newBusTypeModelList.add(element);
     });
 
@@ -510,13 +562,20 @@ class SearchBusProvider extends ChangeNotifier {
   }
 
   selectServiceType(int index, bool value) {
-    if (newBusTypeModelList[index].isSelected == null) {
-      newBusTypeModelList[index].isSelected = true;
-    } else if (newBusTypeModelList[index].isSelected == false) {
-      newBusTypeModelList[index].isSelected = true;
-    } else {
-      newBusTypeModelList[index].isSelected = false;
+    for(int  i =0; i< newBusTypeModelList.length;i++){
+      if(newBusTypeModelList[index].serviceTypeName==newBusTypeModelList[i].serviceTypeName){
+        if (newBusTypeModelList[i].isSelected == null) {
+          newBusTypeModelList[i].isSelected = true;
+        } else if (newBusTypeModelList[i].isSelected == false) {
+          newBusTypeModelList[i].isSelected = true;
+        } else {
+          newBusTypeModelList[i].isSelected = false;
+        }
+      }else {
+        newBusTypeModelList[i].isSelected = false;
+      }
     }
+
 
     notifyListeners();
   }
@@ -531,36 +590,131 @@ class SearchBusProvider extends ChangeNotifier {
     }
   }
 
+  AuthenticationMethodDataSource authenticationMethodDataSource =
+      AuthenticationMethodDataSource();
+  AuthenticationMethodResponse authenticationMethodResponse =
+      AuthenticationMethodResponse();
 
-
-
-  AuthenticationMethodDataSource authenticationMethodDataSource = AuthenticationMethodDataSource();
-  AuthenticationMethodResponse authenticationMethodResponse = AuthenticationMethodResponse();
   Future<AuthenticationMethodResponse> authenticationMethod() async {
-    var response = await authenticationMethodDataSource.authenticationMethod(AppConstants.AUTH_USER_ID, AppConstants.AUTH_IMEI);
+    var response = await authenticationMethodDataSource.authenticationMethod(
+        AppConstants.AUTH_USER_ID, AppConstants.AUTH_IMEI);
     //print(response);
-    authenticationMethodResponse = AuthenticationMethodResponse.fromJson(response);
-    if(authenticationMethodResponse.code=="100"){
-      AppConstants.MY_TOKEN = authenticationMethodResponse.result![0].token.toString();
+    authenticationMethodResponse =
+        AuthenticationMethodResponse.fromJson(response);
+    if (authenticationMethodResponse.code == "100") {
+      AppConstants.MY_TOKEN =
+          authenticationMethodResponse.result![0].token.toString();
     }
     return authenticationMethodResponse;
   }
 
-  BusServiceTypeDataSource busServiceTypeDataSource = BusServiceTypeDataSource();
+  BusServiceTypeDataSource busServiceTypeDataSource =
+      BusServiceTypeDataSource();
   BusServiceTypeResponse busServiceTypeResponse = BusServiceTypeResponse();
+
   Future<BusServiceTypeResponse> busServiceTypeRequest(String strpId) async {
-    var response = await busServiceTypeDataSource.busServiceTypeApi(strpId, AppConstants.MY_TOKEN);
+    var response = await busServiceTypeDataSource.busServiceTypeApi(
+        strpId, AppConstants.MY_TOKEN);
     print(response);
     busServiceTypeResponse = BusServiceTypeResponse.fromJson(response);
-    if(busServiceTypeResponse.code=="100"){
+    if (busServiceTypeResponse.code == "100") {
       //print(busServiceTypeResponse.serviceTypeMaxSeat![0].currentseats!.toString()+"SEAT_");
-      AppConstants.MAX_SEAT_SELECT = busServiceTypeResponse.serviceTypeMaxSeat![0].currentseats!;
+      AppConstants.MAX_SEAT_SELECT =
+          busServiceTypeResponse.serviceTypeMaxSeat![0].currentseats!;
     }
     return busServiceTypeResponse;
   }
 
+  void filterBuServiceType() {
+    String serviceType = "";
+    print(busServices.length.toString()+"bus servi");
+    for (int i = 0; i < newBusTypeModelList.length; i++) {
+      if (newBusTypeModelList[i].isSelected == true) {
+        serviceType = newBusTypeModelList[i].serviceTypeName.toString();
+        print(serviceType.length.toString() + "service type");
+        for (int k = 0; k < busServices.length; k++) {
+          filterBusServices[k].showHideItem = false;
+          print(k.toString() + " => " + serviceType.toString().trim() + " ======>" + busServices[k].servicetypename.toString().trim());
+          if (serviceType.toString().trim().compareTo(busServices[k].servicetypename.toString().trim()) == 0) {
+            filterBusServices[k].showHideItem = true;
+          }
+        }
+      }
+    }
+  }
 
+  void filterBySortBy() {
+    for (int i = 0; i < filterBusServices.length; i++) {
+      if (filterBusServices[i].showHideItem == true) {
+        if (lateDepartureValue == 1 && busServices[i].deptBus == "Night" ||
+            earlyDepartureValue == 1 && busServices[i].deptBus == "Morning" ||
+            nightBuses_depature == true && busServices[i].deptBus == "Night" ||
+            afterNoonBuses_depature == true && busServices[i].deptBus == "Afternoon" ||
+            morningBuses_depature == true && busServices[i].deptBus == "Morning" ||
+            eveBuses_depature == true && busServices[i].deptBus == "Evening" ||
+            nightBuses_arrival == true && busServices[i].arrivalBus == "Night" ||
+            afterNoonBuses_arrival == true && busServices[i].arrivalBus == "Afternoon" ||
+            morningBuses_arrival == true && busServices[i].arrivalBus == "Morning" ||
+            eveBuses_arrival == true && busServices[i].arrivalBus == "Evening") {
+          filterBusServices[i].showHideItem = true;
+        } else if (lateDepartureValue == 0 &&
+            earlyDepartureValue == 0 &&
+            nightBuses_depature == false &&
+            afterNoonBuses_depature == false &&
+            morningBuses_depature == false &&
+            eveBuses_depature == false &&
+            nightBuses_arrival == false &&
+            afterNoonBuses_arrival == false &&
+            morningBuses_arrival == false &&
+            eveBuses_arrival == false) {
+          filterBusServices[i].showHideItem = true;
+        } else {
+          filterBusServices[i].showHideItem = false;
+        }
+      }
+      else {
+        //print("zzzzzz");
+        for (int i = 0; i < busServices.length; i++) {
+          if (lateDepartureValue == 1 && busServices[i].deptBus == "Night" ||
+              earlyDepartureValue == 1 && busServices[i].deptBus == "Morning" ||
+              nightBuses_depature == true &&
+                  busServices[i].deptBus == "Night" ||
+              afterNoonBuses_depature == true &&
+                  busServices[i].deptBus == "Afternoon" ||
+              morningBuses_depature == true &&
+                  busServices[i].deptBus == "Morning" ||
+              eveBuses_depature == true &&
+                  busServices[i].deptBus == "Evening" ||
+              nightBuses_arrival == true &&
+                  busServices[i].arrivalBus == "Night" ||
+              afterNoonBuses_arrival == true &&
+                  busServices[i].arrivalBus == "Afternoon" ||
+              morningBuses_arrival == true &&
+                  busServices[i].arrivalBus == "Morning" ||
+              eveBuses_arrival == true &&
+                  busServices[i].arrivalBus == "Evening") {
+            filterBusServices[i].showHideItem = true;
+          } else if (lateDepartureValue == 0 &&
+              earlyDepartureValue == 0 &&
+              nightBuses_depature == false &&
+              afterNoonBuses_depature == false &&
+              morningBuses_depature == false &&
+              eveBuses_depature == false &&
+              nightBuses_arrival == false &&
+              afterNoonBuses_arrival == false &&
+              morningBuses_arrival == false &&
+              eveBuses_arrival == false) {
+            filterBusServices[i].showHideItem = true;
+          } else {
+            filterBusServices[i].showHideItem = false;
+          }
+        }
+      }
+    }
 
+    // for (int k = 0; k < filterBusServices.length; k++) {
+    //
+    // }
 
-
+  }
 }

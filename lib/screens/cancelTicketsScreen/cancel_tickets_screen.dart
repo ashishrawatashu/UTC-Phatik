@@ -26,8 +26,7 @@ class _CancelTicketsScreenState extends State<CancelTicketsScreen> {
   @override
   void initState() {
     super.initState();
-    _cancelTicketsProvider =
-        Provider.of<CancelTicketsProvider>(context, listen: false);
+    _cancelTicketsProvider = Provider.of<CancelTicketsProvider>(context, listen: false);
 
     Future.delayed(Duration.zero, () async {
       final args = ModalRoute.of(context)!.settings.arguments

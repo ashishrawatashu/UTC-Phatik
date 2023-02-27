@@ -1,10 +1,9 @@
-package `in`.nic.uk.utc.starbuspathik
+package com.utconline.utcbooking
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 import android.view.WindowManager.LayoutParams
 import io.flutter.embedding.engine.FlutterEngine
 import android.view.WindowManager;
-import android.os.Bundle;
 
 class MainActivity : FlutterFragmentActivity() {
 

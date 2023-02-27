@@ -38,6 +38,7 @@ class MyRoutes {
   static String activeBookingScreen ="/activeBookingScreen";
   static String fillConcessionScreen ="/fillConcessionScreen";
   static String mealOnWheel ="/mealOnWheel";
+  static String appNotWorking ="/appNotWorking";
 
   // Demo Screens
   static String paymentConditionsScreens = "/paymentConditionsScreens";

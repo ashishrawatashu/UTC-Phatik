@@ -39,7 +39,6 @@ class _SplashScreenState extends State<SplashScreen> {
       width: MediaQuery.of(context).size.width,
       color: Colors.grey,
       child: Image.asset('assets/images/splashscreen.jpg', fit: BoxFit.fill,),
-
     );
   }
 

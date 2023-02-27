@@ -729,6 +729,8 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
+                            width: MediaQuery.of(context).size.width,
+                            color: HexColor(MyColors.white),
                             alignment: Alignment.centerLeft,
                             child: Row(
                               children: [
@@ -1040,7 +1042,7 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
   }
 
   busTypeImageSlider(BusSeatLayoutProvider busSeatLayoutProvider) {
-
+    print(AppConstants.bus_type_url);
     return Container(
       height: 150,
       width: MediaQuery.of(context).size.width,
@@ -1182,49 +1184,53 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
               topLeft: Radius.circular(20), topRight: Radius.circular(20))),
       builder: (BuildContext context) {
         return Container(
-            height: MediaQuery.of(context).size.height * 0.2,
             padding: EdgeInsets.only(top: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Wrap(
               children: [
-                Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Text(
-                    "Max Seats Selected !",
-                    style: GoogleFonts.nunito(
-                        fontSize: 18, color: HexColor(MyColors.black)),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text(
-                    "You can select maximun "+AppConstants.MAX_SEAT_SELECT.toString()+" seats ",
-                    style: GoogleFonts.nunito(
-                        fontSize: 15, color: HexColor(MyColors.black)),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    height: 45,
-                    width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: HexColor(MyColors.orange),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Text(
+                        "Max Seats Selected !",
+                        style: GoogleFonts.nunito(
+                            fontSize: 18, color: HexColor(MyColors.black)),
+                      ),
                     ),
-                    child: Center(
-                        child: Text(
-                      "OK",
-                      style: GoogleFonts.nunito(
-                          fontSize: 15, color: HexColor(MyColors.white)),
-                    )),
-                  ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Text(
+                        "You can select maximun "+AppConstants.MAX_SEAT_SELECT.toString()+" seats ",
+                        style: GoogleFonts.nunito(
+                            fontSize: 15, color: HexColor(MyColors.black)),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        height: 45,
+                        width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: HexColor(MyColors.orange),
+                        ),
+                        child: Center(
+                            child: Text(
+                              "OK",
+                              style: GoogleFonts.nunito(
+                                  fontSize: 15, color: HexColor(MyColors.white)),
+                            )),
+                      ),
+                    )
+                  ],
                 )
               ],
-            ));
+            )
+        );
       },
     );
   }

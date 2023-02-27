@@ -79,7 +79,7 @@ class StationsScreenState extends State<StationsScreen> {
                       ),
                       onChanged: (val) {
                         //print(val);
-                        if (val.length == 3) {
+                        if (val.length == 2) {
                           _allDestinationProvider.searchKeyword = val;
                           getdestination();
                         }

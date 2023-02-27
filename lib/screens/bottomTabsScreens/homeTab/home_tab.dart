@@ -874,8 +874,7 @@ class _HomeTabState extends State<HomeTab> {
                 Expanded(
                   child: InkWell(
                     onTap: () {
-                      Navigator.pushNamed(
-                          context, MyRoutes.activeBookingScreen);
+                      Navigator.pushNamed(context, MyRoutes.activeBookingScreen);
                     },
                     child: Container(
                       padding: EdgeInsets.all(5),

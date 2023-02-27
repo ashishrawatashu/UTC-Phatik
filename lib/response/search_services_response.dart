@@ -55,7 +55,7 @@ class Services {
       // this.tostation,
       this.arrivalBus,
       this.deptBus,
-      this.showHideItem
+      this.showHideItem,
   });
 
   Services.fromJson(dynamic json) {
@@ -83,7 +83,6 @@ class Services {
     // tostation = json['tostation'];
     arrivalBus = json['arrivalBus'];
     deptBus = json['deptBus'];
-    showHideItem = json['showHideItem'];
   }
   String? dsvcid;
   String? servicename;
@@ -137,7 +136,6 @@ class Services {
     // map['tostation'] = tostation;
     map['arrivalBus'] = arrivalBus;
     map['deptBus'] = deptBus;
-    map['showHideItem'] = showHideItem;
     return map;
   }
 

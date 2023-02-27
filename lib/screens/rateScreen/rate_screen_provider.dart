@@ -469,7 +469,7 @@ class RateScreenProvider extends ChangeNotifier{
   SaveRatingDataSource saveRatingDataSource = SaveRatingDataSource();
   Future<SaveResponse> saveRating() async {
     var response = await saveRatingDataSource.saveRatingApi(ticketNo, AppConstants.USER_MOBILE_NO, sectionNoThreeRating.toString(), sectionNoOneRating.toString(), sectionNoTwoRating.toString(), portalFeedback, staffFeedback, busFeedback, AppConstants.DEVICE_ID!,AppConstants.MY_TOKEN);
-    //print(response);
+    print(response);
     saveResponse = SaveResponse.fromJson(response);
     return saveResponse;
   }
@@ -478,6 +478,21 @@ class RateScreenProvider extends ChangeNotifier{
   void dispose() {
     super.dispose();
     bookingPortalTextEditingController.dispose();
+  }
+
+
+  clear(){
+
+    ourServiceTextEditingController.clear();
+    busDriverTextEditingController.clear();
+    bookingPortalTextEditingController.clear();
+    sectionNoOneRating = 0;
+    sectionNoTwoRating = 0;
+    sectionNoThreeRating = 0;
+
+    ourServiceEditText = false;
+    busDriverEditText = false;
+    bookingPortalEditText = false;
   }
 
 

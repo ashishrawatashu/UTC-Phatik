@@ -478,10 +478,11 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
 
   Future<GetConcessionTypesResponse> getConcessionTypes(String dsvcid, String fromstationId ,String tostationId, BuildContext context) async{
     var response = await getConcessionTypesDataSource.getConcessionTypes(dsvcid, fromstationId, tostationId, AppConstants.MY_TOKEN);
-    //print(response);
+    print(response);
     getConcessionTypesResponse = GetConcessionTypesResponse.fromJson(response);
     if(getConcessionTypesResponse.code=="100"){
       concessionList = getConcessionTypesResponse.concession!;
+      setConcessionInPassengersList(concessionList);
       //print(concessionList);
     }else if(getConcessionTypesResponse.code=="999"){
       CommonMethods.showTokenExpireDialog(context);
@@ -501,7 +502,7 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
 
   Future<CheckConcessionResponse> checkConcession(String concession, String gender ,String age) async{
     var response = await checkConcessionDataSource.checkConcessionApi(concession, gender, age, AppConstants.MY_TOKEN);
-    //print(response);
+    print(response);
     checkConcessionResponse = CheckConcessionResponse.fromJson(response);
     if(checkConcessionResponse.code=="100"){
       //print(checkConcessionResponse.concession.toString());
@@ -542,19 +543,8 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
     }
   }
 
-  //
-  // checkPostionValidation(int index){
-  //
-  //   if(passengerList[index].formKey.currentState!.validate()){
-  //     //print("Validate");
-  //   }else {
-  //     //print("NOT VALIDATE");
-  //   }
-  //
-  // }
 
   selectConsessionFromDropDown(String concessionName, int index){
-    //print(concessionName.toString()+"CONCESSION");
     passengerList[index].concessionName=concessionName;
     if(concessionName==concessionList[0].categoryname){
       isContainAnyConcession = false;
@@ -569,8 +559,6 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
     }else {
       isContainAnyConcession = true;
     }
-    //print(passengerList[index].concessionName.toString()+" SELECT DROP DOWN");
-
     notifyListeners();
   }
 
@@ -583,27 +571,25 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
          concessionID = concessionList[i].categorycode.toString();
       }
     }
-    //print(concessionID.toString()+" INDEX "+concessionName);
-    if(concessionID=="0"){
-      // if(passengerList[index].formKey.currentState!.validate()){
-      //   //print("Validation 1");
-      // }else {
-      //   //print("Validation 2");
-      // }
-    }else {
+     if(concessionID=="0"){
+
+    }
+     else {
       if(passengerList[index].name?.trim().length==0){
         CommonMethods.showSnackBar(context, "Please enter name");
       }else if(passengerList[index].gender.toString()=="G"){
           CommonMethods.showSnackBar(context, "Please select gender");
-          //print("Validation 3");
         }else {
         if(passengerList[index].passengerAgeTextEditingController.text.toString().isEmpty){
+          CommonMethods.showLoadingDialog(context);
           await checkConcession(concessionID, passengerList[index].gender.toString(), "0");
+          Navigator.pop(context);
         }else {
+          CommonMethods.showLoadingDialog(context);
           await checkConcession(concessionID, passengerList[index].gender.toString(), passengerList[index].passengerAgeTextEditingController.text.toString());
+          Navigator.pop(context);
         }
           if(await checkConcessionResponse.code=="100"){
-            //print("Validation 4");
             if(checkConcessionResponse.concession![0].pgenderresult!="Success"){
               CommonMethods.showSnackBar(context, checkConcessionResponse.concession![0].pgenderresult.toString());
               validation = false;
@@ -627,7 +613,6 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
               validation = false;
               selectConsessionFromDropDown(concessionList[0].categoryname.toString(), index);
             }
-            //print("Validation 5");
           }else  if(await checkConcessionResponse.code=="999"){
             CommonMethods.showTokenExpireDialog(context);
           }else{
@@ -635,6 +620,24 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
           }
         }
     }
+  }
+
+  setConcessionInPassengersList(List<ConcessionList> concessionList) {
+     print(concessionList[0].categoryname);
+     for(int index = 0;index< passengerList.length;index++) {
+       isContainAnyConcession = false;
+       passengerList[index].pgenderresult="N";
+       passengerList[index].pageresult="N";
+       passengerList[index].sponlineverificationyn="N";
+       passengerList[index].spidverificationyn="N";
+       passengerList[index].spidverification="N";
+       passengerList[index].spdocumentverificationyn="N";
+       passengerList[index].spdocumentverification="N";
+       passengerList[index].concessionName=concessionList[0].categoryname;
+       passengerList[index].spconcessionname=concessionList[0].categoryname;
+
+     }
+     notifyListeners();
   }
 
 }

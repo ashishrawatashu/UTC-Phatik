@@ -29,6 +29,7 @@ class _RateScreenState extends State<RateScreen> {
   void initState() {
     super.initState();
     _rateScreenProvider = Provider.of<RateScreenProvider>(context, listen: false);
+    _rateScreenProvider.clear();
 
   }
 
@@ -293,9 +294,10 @@ class _RateScreenState extends State<RateScreen> {
           CommonMethods.showLoadingDialog(context);
           await rateScreenProvider.saveRating();
           if(rateScreenProvider.saveResponse.code=="100"){
-            // Navigator.pop(context);
+            print("Feedback done successfully");
             Navigator.pop(context);
-            CommonMethods.dialogDone(context, "Feedback done successfully");
+            // Navigator.pop(context);
+            CommonMethods.feedBackDiaog(context, "Feedback taken successfully");
           }else if(rateScreenProvider.saveResponse.code == "999"){
             Navigator.pop(context);
             CommonMethods.showTokenExpireDialog(context);
@@ -307,11 +309,12 @@ class _RateScreenState extends State<RateScreen> {
             CommonMethods.showErrorMoveToDashBaordDialog(context, "Something went wrong, please try again");
           }
           // Navigator.popUntil(context, (route) => route.settings.name==MyRoutes.rateScreenList);
-          if(size==1){
-            Navigator.pushNamed(context, MyRoutes.homeRoute);
-          }else{
-            Navigator.pop(context);
-          }
+          // if(size==1) {
+          //   Navigator.pushNamed(context, MyRoutes.homeRoute);
+          // }
+          // }else{
+          //   Navigator.pop(context);
+          // }
 
         }
       }else {

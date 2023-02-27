@@ -144,8 +144,8 @@ class NavigationDrawerState extends State<NavigationDrawer> {
               height: 10,
             ),
             Divider(),
+            menuItems("assets/images/privacy.png", "Privacy policy"),
             menuItems("assets/images/exiticon.png", "Logout/Exit"),
-
           ],
         ),
       ),
@@ -295,6 +295,9 @@ class NavigationDrawerState extends State<NavigationDrawer> {
       CommonMethods.showSnackBar(context, "Coming Soon ....");
     }else if (itemsName == "Need any help") {
       CommonMethods.showSnackBar(context, "Coming Soon ....");
+    }else if (itemsName == "Privacy policy") {
+      Navigator.pushNamed(context, MyRoutes.webPagesScreen,arguments: WebPageUrlArguments(AppConstants.PRIVACY_POLICY, "Privacy policy"));
+      // notificationApi.showNotifications(0, "title", "Ashish");
     }
 
   }

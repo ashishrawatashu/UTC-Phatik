@@ -22,7 +22,8 @@ class FillPassengersDetailsScreen extends StatefulWidget {
   const FillPassengersDetailsScreen({Key? key}) : super(key: key);
 
   @override
-  _FillPassengersDetailsScreenState createState() => _FillPassengersDetailsScreenState();
+  _FillPassengersDetailsScreenState createState() =>
+      _FillPassengersDetailsScreenState();
 }
 
 class _FillPassengersDetailsScreenState
@@ -47,7 +48,8 @@ class _FillPassengersDetailsScreenState
   void initState() {
     //print("initSate");
     super.initState();
-    _fillPassengersDetailsProvider = Provider.of<FillPassengersDetailsProvider>(context, listen: false);
+    _fillPassengersDetailsProvider =
+        Provider.of<FillPassengersDetailsProvider>(context, listen: false);
     getUserData();
     // _fillPassengersDetailsProvider.passengerList.clear();
     // _fillPassengersDetailsProvider.passengerList = AppConstants.passengerList11;
@@ -56,8 +58,10 @@ class _FillPassengersDetailsScreenState
 
     Future.delayed(Duration.zero, () {
       // _fillPassengersDetailsProvider.passengerList.clear();
-      final args = ModalRoute.of(context)!.settings.arguments as FillPassengersDetailsArguments;
-      _fillPassengersDetailsProvider.passengerList = args.passengerInformationList;
+      final args = ModalRoute.of(context)!.settings.arguments
+          as FillPassengersDetailsArguments;
+      _fillPassengersDetailsProvider.passengerList =
+          args.passengerInformationList;
       _fillPassengersDetailsProvider.depotServiceCode = args.depotServiceCode;
       _fillPassengersDetailsProvider.tripType = args.triptype;
       _fillPassengersDetailsProvider.tripId = args.tripid;
@@ -65,9 +69,12 @@ class _FillPassengersDetailsScreenState
       _fillPassengersDetailsProvider.toStationId = args.toStationId;
       _fillPassengersDetailsProvider.bordeingStationId = args.bordeingStationId;
       setState(() {});
-      _fillPassengersDetailsProvider.getConcessionTypes(_fillPassengersDetailsProvider.depotServiceCode, _fillPassengersDetailsProvider.fromStationId , _fillPassengersDetailsProvider.toStationId,context);
+      _fillPassengersDetailsProvider.getConcessionTypes(
+          _fillPassengersDetailsProvider.depotServiceCode,
+          _fillPassengersDetailsProvider.fromStationId,
+          _fillPassengersDetailsProvider.toStationId,
+          context);
     });
-
   }
 
   @override
@@ -79,20 +86,19 @@ class _FillPassengersDetailsScreenState
   Widget build(BuildContext context) {
     // _fillPassengersDetailsProvider.passengerList.clear();
 
-
     return Consumer<FillPassengersDetailsProvider>(
       builder: (_, fillPassengersDetailsProvider, __) {
         return Scaffold(
             body: Container(
-              width: MediaQuery.of(context).size.width,
-              alignment: Alignment.topLeft,
-              color: HexColor(MyColors.grey2),
-              child: Column(
-                children: [
-                  topAppBarSection(fillPassengersDetailsProvider),
-                  bookingProcessLayout(),
-                  middleContentSection(fillPassengersDetailsProvider),
-                  bottomSection(fillPassengersDetailsProvider)
+          width: MediaQuery.of(context).size.width,
+          alignment: Alignment.topLeft,
+          color: HexColor(MyColors.grey2),
+          child: Column(
+            children: [
+              topAppBarSection(fillPassengersDetailsProvider),
+              bookingProcessLayout(),
+              middleContentSection(fillPassengersDetailsProvider),
+              bottomSection(fillPassengersDetailsProvider)
             ],
           ),
         ));
@@ -134,31 +140,30 @@ class _FillPassengersDetailsScreenState
                     ),
                     Container(
                         child: Image.asset(
-                          "assets/images/longarrow.png",
-                          width: 25,
-                          fit: BoxFit.fill,
-                        ))
+                      "assets/images/longarrow.png",
+                      width: 25,
+                      fit: BoxFit.fill,
+                    ))
                   ],
                 ),
               ],
             ),
           ),
           Expanded(
-              child: Column(
-                children: [
-                  Center(
-                      child: Text(
-                        "Passengers details",
-                        style: GoogleFonts.nunito(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 12),
-                      )),
-                  Container(
-                    height: 3,
-                    color: HexColor(MyColors.primaryColor),
-                  )
-                ],
-              ),
+            child: Column(
+              children: [
+                Center(
+                    child: Text(
+                  "Passengers details",
+                  style: GoogleFonts.nunito(
+                      fontWeight: FontWeight.w700, fontSize: 12),
+                )),
+                Container(
+                  height: 3,
+                  color: HexColor(MyColors.primaryColor),
+                )
+              ],
+            ),
           ),
           Expanded(
             child: Row(
@@ -166,10 +171,10 @@ class _FillPassengersDetailsScreenState
               children: [
                 Container(
                     child: Image.asset(
-                      "assets/images/longarrow.png",
-                      width: 25,
-                      fit: BoxFit.fill,
-                    )),
+                  "assets/images/longarrow.png",
+                  width: 25,
+                  fit: BoxFit.fill,
+                )),
                 Expanded(
                   child: Center(
                     child: Text(
@@ -194,12 +199,6 @@ class _FillPassengersDetailsScreenState
       // height: 220,
       color: HexColor(MyColors.primaryColor),
       padding: EdgeInsets.only(top: 45, bottom: 10),
-      // decoration: BoxDecoration(
-      //   image: DecorationImage(
-      //     image: AssetImage('assets/images/topbussearchbg.jpg'),
-      //     fit: BoxFit.cover,
-      //   ),
-      // ),
       child: Column(
         children: [
           Row(
@@ -376,11 +375,13 @@ class _FillPassengersDetailsScreenState
                 children: [
                   Text(
                     "Your ticket details will be sent to this e-mail id & Mobile number",
-                    style: GoogleFonts.nunito(color: Colors.black, fontSize: 14),
+                    style:
+                        GoogleFonts.nunito(color: Colors.black, fontSize: 14),
                   ),
                   TextFormField(
                     enableInteractiveSelection: false,
-                    controller: fillPassengerDetailsProvider.userEmailTextEditingController,
+                    controller: fillPassengerDetailsProvider
+                        .userEmailTextEditingController,
                     cursorColor: HexColor(MyColors.primaryColor),
                     style: GoogleFonts.nunito(
                       fontSize: 16,
@@ -421,7 +422,8 @@ class _FillPassengersDetailsScreenState
                       prefixText: "+91 - ",
                       labelStyle: TextStyle(color: Colors.grey, fontSize: 15),
                       focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: HexColor(MyColors.primaryColor))),
+                          borderSide: BorderSide(
+                              color: HexColor(MyColors.primaryColor))),
                     ),
                     validator: (value) {
                       fillPassengerDetailsProvider.userPhoneValidation(value);
@@ -647,46 +649,63 @@ class _FillPassengersDetailsScreenState
     );
   }
 
-  checkMobileNumber(FillPassengersDetailsProvider fillPassengersDetailsProvider) async {
+  checkMobileNumber(
+      FillPassengersDetailsProvider fillPassengersDetailsProvider) async {
     if (await CommonMethods.getInternetUsingInternetConnectivity()) {
       if (_formKeyForContactInformationCard.currentState!.validate()) {
         await fillPassengersDetailsProvider.validatePassengerList();
         if (fillPassengersDetailsProvider.passengerForm) {
-          await fillPassengersDetailsProvider.checkMobileNumber(fillPassengersDetailsProvider.userPhoneTextEditingController.text);
-          if (fillPassengersDetailsProvider.isUserLoggedIn == "false" || fillPassengersDetailsProvider.isUserSkipped == "true") {
+          await fillPassengersDetailsProvider.checkMobileNumber(
+              fillPassengersDetailsProvider
+                  .userPhoneTextEditingController.text);
+          if (fillPassengersDetailsProvider.isUserLoggedIn == "false" ||
+              fillPassengersDetailsProvider.isUserSkipped == "true") {
             showLoginBottomSheet();
           } else {
             //print("IS CONTAIN ANY CONCESSION  "+fillPassengersDetailsProvider.isContainAnyConcession.toString());
-            if(fillPassengersDetailsProvider.isContainAnyConcession==true){
-              Navigator.pushNamed(context, MyRoutes.fillConcessionScreen,arguments: FillConcessionScreenArguments(
-                  fillPassengersDetailsProvider.userEmailTextEditingController.text.toString(),
-                  fillPassengersDetailsProvider.depotServiceCode,
-                  fillPassengersDetailsProvider.tripType,
-                  fillPassengersDetailsProvider.tripId,
-                  fillPassengersDetailsProvider.fromStationId,
-                  fillPassengersDetailsProvider.toStationId,
-                  fillPassengersDetailsProvider.bordeingStationId,
-                  fillPassengersDetailsProvider.passengerList));
-            }else {
+            if (fillPassengersDetailsProvider.isContainAnyConcession == true) {
+              Navigator.pushNamed(context, MyRoutes.fillConcessionScreen,
+                  arguments: FillConcessionScreenArguments(
+                      fillPassengersDetailsProvider
+                          .userEmailTextEditingController.text
+                          .toString(),
+                      fillPassengersDetailsProvider.depotServiceCode,
+                      fillPassengersDetailsProvider.tripType,
+                      fillPassengersDetailsProvider.tripId,
+                      fillPassengersDetailsProvider.fromStationId,
+                      fillPassengersDetailsProvider.toStationId,
+                      fillPassengersDetailsProvider.bordeingStationId,
+                      fillPassengersDetailsProvider.passengerList));
+            } else {
               fillPassengersDetailsProvider.concatPassengersListToString();
               await fillPassengersDetailsProvider.savePassengers();
-              if(fillPassengersDetailsProvider.savePassengersResponse.code=="100"){
+              if (fillPassengersDetailsProvider.savePassengersResponse.code ==
+                  "100") {
                 moveToPaymentScreen(context);
-              }else if(fillPassengersDetailsProvider.savePassengersResponse.code=="999"){
+              } else if (fillPassengersDetailsProvider
+                      .savePassengersResponse.code ==
+                  "999") {
                 CommonMethods.showTokenExpireDialog(context);
-              }else if(fillPassengersDetailsProvider.savePassengersResponse.code=="900"){
-                CommonMethods.showErrorDialog(context,"Something went wrong, please try again");
-              }else if(fillPassengersDetailsProvider.savePassengersResponse.code=="200"){
-                CommonMethods.showErrorMoveToDashBaordDialog(context,"Something went wrong, please try again");
-              }else{
-                CommonMethods.showErrorMoveToDashBaordDialog(context,"Something went wrong, please try again");
+              } else if (fillPassengersDetailsProvider
+                      .savePassengersResponse.code ==
+                  "900") {
+                CommonMethods.showErrorDialog(
+                    context, "Something went wrong, please try again");
+              } else if (fillPassengersDetailsProvider
+                      .savePassengersResponse.code ==
+                  "200") {
+                CommonMethods.showErrorMoveToDashBaordDialog(
+                    context, "Something went wrong, please try again");
+              } else {
+                CommonMethods.showErrorMoveToDashBaordDialog(
+                    context, "Something went wrong, please try again");
               }
-
             }
             //print(fillPassengersDetailsProvider.passengerList.toList());
           }
         } else {
-          CommonMethods.showSnackBar(context, "Please fill all passenger information !");
+          CommonMethods.showSnackBar(
+              context, "Please fill all passenger information !");
         }
       } else {
         //print("false");
@@ -745,11 +764,8 @@ class _FillPassengersDetailsScreenState
     //print("getuserdata");
   }
 
-
-  Widget passengerInformationListLayout(int index, FillPassengersDetailsProvider fillPassengersDetailsProvider) {
-    //print(fillPassengersDetailsProvider.passengerList[index].genderName.toString() +"GENDERRRRR");
-  // fillPassengersDetailsProvider.selectConsessionFromDropDown(fillPassengersDetailsProvider.concessionList[0].categoryname.toString(), index);
-  return Container(
+  Widget passengerInformationListLayout1(int index, FillPassengersDetailsProvider fillPassengersDetailsProvider) {
+    return Container(
       child: Column(
         children: [
           Row(
@@ -763,11 +779,13 @@ class _FillPassengersDetailsScreenState
                     enableInteractiveSelection: false,
                     autofocus: true,
                     maxLength: 50,
-                    controller: fillPassengersDetailsProvider.passengerList[index].passengerNameTextEditingController,
+                    controller: fillPassengersDetailsProvider
+                        .passengerList[index]
+                        .passengerNameTextEditingController,
                     cursorColor: HexColor(MyColors.primaryColor),
                     onChanged: (value) {
-                      fillPassengersDetailsProvider.setPassengerName(index, value.toString());
-                      fillPassengersDetailsProvider.selectConsessionFromDropDown(fillPassengersDetailsProvider.concessionList[0].categoryname.toString(), index);
+                      fillPassengersDetailsProvider.setPassengerName(
+                          index, value.toString());
                     },
                     style: TextStyle(
                       fontSize: 16,
@@ -780,14 +798,18 @@ class _FillPassengersDetailsScreenState
                     decoration: InputDecoration(
                       hintText: 'Name',
                       counter: SizedBox.shrink(),
-                      labelStyle: TextStyle(color: Colors.grey, fontSize: 14,fontWeight: FontWeight.bold,),
+                      labelStyle: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
                       focusedBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: HexColor(MyColors.primaryColor))),
+                          borderSide: BorderSide(
+                              color: HexColor(MyColors.primaryColor))),
                     ),
                     validator: (passengerName) {
                       fillPassengersDetailsProvider.uservalidation(
-                           passengerName.toString(),index);
+                          passengerName.toString(), index);
                       return fillPassengersDetailsProvider.passengerName1;
                     },
                   ),
@@ -814,20 +836,25 @@ class _FillPassengersDetailsScreenState
                     inputFormatters: <TextInputFormatter>[
                       FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                     ],
-
                     decoration: InputDecoration(
                       counter: SizedBox.shrink(),
                       hintText: 'Age',
                       labelStyle: TextStyle(color: Colors.grey, fontSize: 14),
                       focusedBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: HexColor(MyColors.primaryColor))),
+                          borderSide: BorderSide(
+                              color: HexColor(MyColors.primaryColor))),
                     ),
-                    onChanged: (value){
-                      fillPassengersDetailsProvider.selectConsessionFromDropDown(fillPassengersDetailsProvider.concessionList[0].categoryname.toString(), index);
+                    onChanged: (value) {
+                      fillPassengersDetailsProvider
+                          .selectConsessionFromDropDown(
+                              fillPassengersDetailsProvider
+                                  .concessionList[0].categoryname
+                                  .toString(),
+                              index);
                     },
                     validator: (passengerAge) {
-                      fillPassengersDetailsProvider.agevalidation(passengerAge.toString(),index);
+                      fillPassengersDetailsProvider.agevalidation(
+                          passengerAge.toString(), index);
                       return fillPassengersDetailsProvider.age1;
                     },
                   ),
@@ -843,86 +870,346 @@ class _FillPassengersDetailsScreenState
                   children: [
                     Visibility(
                       visible: fillPassengersDetailsProvider
-                          .passengerList[index].onlyMale=="N"?true:false,
-                      child: DropdownButtonHideUnderline(child: DropdownButton2(
-                        isExpanded: true,
-                        hint: Row(
-                          children: [
-                            Expanded(
-                              child: Center(
-                                child: Container(
-                                  child: Text(
-                                    'Gender',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.grey,
+                                  .passengerList[index].onlyMale ==
+                              "N"
+                          ? true
+                          : false,
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton2(
+                          isExpanded: true,
+                          hint: Row(
+                            children: [
+                              Expanded(
+                                child: Center(
+                                  child: Container(
+                                    child: Text(
+                                      'Gender',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.grey,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
+                          items: genderList
+                              .map((item) => DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        item,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ))
+                              .toList(),
+                          value: fillPassengersDetailsProvider
+                              .passengerList[index].genderName,
+                          onChanged: (value) {
+                            // fillPassengersDetailsProvider.checkPostionValidation(index);
+                            fillPassengersDetailsProvider
+                                .selectGenderFromDropDown(
+                                    value.toString(), index);
+                            fillPassengersDetailsProvider
+                                .selectConsessionFromDropDown(
+                                    fillPassengersDetailsProvider
+                                        .concessionList[0].categoryname
+                                        .toString(),
+                                    index);
+                          },
+                          iconSize: 25,
+                          iconEnabledColor: Colors.grey,
+                          iconDisabledColor: Colors.grey,
+                          buttonHeight: 40,
+                          buttonWidth: 160,
+                          // buttonElevation: 2,
+                          itemHeight: 40,
+                          itemPadding:
+                              const EdgeInsets.only(left: 14, right: 14),
+                          dropdownMaxHeight: 200,
+                          dropdownWidth: 150,
+                          dropdownPadding: null,
+                          dropdownDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(14),
+                            color: Colors.white,
+                          ),
+                          dropdownElevation: 8,
+                          scrollbarRadius: const Radius.circular(40),
+                          scrollbarThickness: 6,
+                          scrollbarAlwaysShow: true,
+                          offset: const Offset(-20, 0),
                         ),
-                        items: genderList.map((item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              item,
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                              overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    Visibility(
+                        visible: fillPassengersDetailsProvider
+                                    .passengerList[index].onlyMale ==
+                                "N"
+                            ? false
+                            : true,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Text(
+                            fillPassengersDetailsProvider
+                                .passengerList[index].genderName
+                                .toString(),
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ))
-                            .toList(),
-                        value: fillPassengersDetailsProvider
-                            .passengerList[index].genderName,
-                        onChanged: (value) {
-                          // fillPassengersDetailsProvider.checkPostionValidation(index);
-                          fillPassengersDetailsProvider.selectGenderFromDropDown(value.toString(), index);
-                          fillPassengersDetailsProvider.selectConsessionFromDropDown(fillPassengersDetailsProvider.concessionList[0].categoryname.toString(), index);
-                        },
-                        iconSize: 25,
-                        iconEnabledColor: Colors.grey,
-                        iconDisabledColor: Colors.grey,
-                        buttonHeight: 40,
-                        buttonWidth: 160,
-                        // buttonElevation: 2,
-                        itemHeight: 40,
-                        itemPadding: const EdgeInsets.only(left: 14, right: 14),
-                        dropdownMaxHeight: 200,
-                        dropdownWidth: 150,
-                        dropdownPadding: null,
-                        dropdownDecoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14),
-                          color: Colors.white,
-                        ),
-                        dropdownElevation: 8,
-                        scrollbarRadius: const Radius.circular(40),
-                        scrollbarThickness: 6,
-                        scrollbarAlwaysShow: true,
-                        offset: const Offset(-20, 0),
+                  ],
+                ),
+              ),
+              Expanded(
+                  flex: 2,
+                  child: InkWell(
+                    onTap: () {
+                      showConcessionListBottomSheet(
+                          fillPassengersDetailsProvider, index);
+                    },
+                    child: Container(
+                      height: 45,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            fillPassengersDetailsProvider
+                                .passengerList[index].concessionName
+                                .toString(),
+                            style: GoogleFonts.nunito(
+                                fontSize: 16,
+                                color: HexColor(MyColors.black),
+                                fontWeight: FontWeight.w700),
+                          ),
+                          Icon(Icons.arrow_drop_down),
+                        ],
                       ),
-                    ),),
+                    ),
+                  )),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget passengerInformationListLayout(int index, FillPassengersDetailsProvider fillPassengersDetailsProvider) {
+    return Container(
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: 5,
+                child: Container(
+                  margin: EdgeInsets.only(left: 10, right: 10),
+                  child: TextFormField(
+                    enableInteractiveSelection: false,
+                    autofocus: true,
+                    maxLength: 50,
+                    controller: fillPassengersDetailsProvider
+                        .passengerList[index]
+                        .passengerNameTextEditingController,
+                    cursorColor: HexColor(MyColors.primaryColor),
+                    onChanged: (value) {
+                      fillPassengersDetailsProvider.setPassengerName(
+                          index, value.toString());
+                      fillPassengersDetailsProvider
+                          .selectConsessionFromDropDown(
+                              fillPassengersDetailsProvider
+                                  .concessionList[0].categoryname
+                                  .toString(),
+                              index);
+                    },
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    keyboardType: TextInputType.name,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
+                    ],
+                    decoration: InputDecoration(
+                      hintText: 'Name',
+                      counter: SizedBox.shrink(),
+                      labelStyle: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: HexColor(MyColors.primaryColor))),
+                    ),
+                    validator: (passengerName) {
+                      fillPassengersDetailsProvider.uservalidation(
+                          passengerName.toString(), index);
+                      return fillPassengersDetailsProvider.passengerName1;
+                    },
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Container(
+                  margin: EdgeInsets.only(left: 10, right: 10),
+                  child: TextFormField(
+                    enableInteractiveSelection: false,
+                    maxLength: 2,
+                    controller: fillPassengersDetailsProvider
+                        .passengerList[index].passengerAgeTextEditingController,
+                    cursorColor: HexColor(MyColors.primaryColor),
+                    onTap: () {
+                      //print(fillPassengersDetailsProvider.passengerList[index].passengerAgeTextEditingController.text);
+                    },
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    ],
+                    decoration: InputDecoration(
+                      counter: SizedBox.shrink(),
+                      hintText: 'Age',
+                      labelStyle: TextStyle(color: Colors.grey, fontSize: 14),
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: HexColor(MyColors.primaryColor))),
+                    ),
+                    onChanged: (value) {
+                      fillPassengersDetailsProvider
+                          .selectConsessionFromDropDown(
+                              fillPassengersDetailsProvider
+                                  .concessionList[0].categoryname
+                                  .toString(),
+                              index);
+                    },
+                    validator: (passengerAge) {
+                      fillPassengersDetailsProvider.agevalidation(
+                          passengerAge.toString(), index);
+                      return fillPassengersDetailsProvider.age1;
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Stack(
+                  children: [
                     Visibility(
                       visible: fillPassengersDetailsProvider
-                          .passengerList[index].onlyMale=="N"?false:true,
-                      child:Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
-                            fillPassengersDetailsProvider
-                                .passengerList[index].genderName.toString(),
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                                  .passengerList[index].onlyMale == "N"
+                          ? true
+                          : false,
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton2(
+                          isExpanded: true,
+                          hint: Row(
+                            children: [
+                              Expanded(
+                                child: Center(
+                                  child: Container(
+                                    child: Text(
+                                      'Gender',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.grey,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
+                          items: genderList
+                              .map((item) => DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        item,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ))
+                              .toList(),
+                          value: fillPassengersDetailsProvider
+                              .passengerList[index].genderName,
+                          onChanged: (value) {
+                            // fillPassengersDetailsProvider.checkPostionValidation(index);
+                            fillPassengersDetailsProvider
+                                .selectGenderFromDropDown(
+                                    value.toString(), index);
+                            fillPassengersDetailsProvider.selectConsessionFromDropDown(
+                                    fillPassengersDetailsProvider.concessionList[0].categoryname.toString(),
+                                    index);
+                          },
+                          iconSize: 25,
+                          iconEnabledColor: Colors.grey,
+                          iconDisabledColor: Colors.grey,
+                          buttonHeight: 40,
+                          buttonWidth: 160,
+                          // buttonElevation: 2,
+                          itemHeight: 40,
+                          itemPadding:
+                              const EdgeInsets.only(left: 14, right: 14),
+                          dropdownMaxHeight: 200,
+                          dropdownWidth: 150,
+                          dropdownPadding: null,
+                          dropdownDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(14),
+                            color: Colors.white,
+                          ),
+                          dropdownElevation: 8,
+                          scrollbarRadius: const Radius.circular(40),
+                          scrollbarThickness: 6,
+                          scrollbarAlwaysShow: true,
+                          offset: const Offset(-20, 0),
                         ),
-                      ))
+                      ),
+                    ),
+                    Visibility(
+                        visible: fillPassengersDetailsProvider
+                                    .passengerList[index].onlyMale ==
+                                "N"
+                            ? false
+                            : true,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Text(
+                            fillPassengersDetailsProvider
+                                .passengerList[index].genderName
+                                .toString(),
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ))
                   ],
                 ),
               ),
@@ -950,32 +1237,38 @@ class _FillPassengersDetailsScreenState
                       ],
                     ),
                     items: fillPassengersDetailsProvider.concessionList
-                        .map((item) => DropdownMenuItem<String>(value: item.categoryname.toString(),
-                      child: Text(
-                        item.categoryname.toString(),
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ))
+                        .map((item) => DropdownMenuItem<String>(
+                              value: item.categoryname.toString(),
+                              child: Text(
+                                item.categoryname.toString(),
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ))
                         .toList(),
-                    value: fillPassengersDetailsProvider.passengerList[index].concessionName,
+                    value: fillPassengersDetailsProvider
+                        .passengerList[index].concessionName,
                     onChanged: (value) async {
-                      await fillPassengersDetailsProvider.checkPassengerValidation(value.toString(),fillPassengersDetailsProvider.passengerList[index].age!,fillPassengersDetailsProvider.passengerList[index].gender!,index,context);
-                      if(fillPassengersDetailsProvider.validation==true){
-                        fillPassengersDetailsProvider.selectConsessionFromDropDown(value.toString(), index);
-                      }else {
+                      await fillPassengersDetailsProvider
+                          .checkPassengerValidation(
+                              value.toString(),
+                              fillPassengersDetailsProvider
+                                  .passengerList[index].age!,
+                              fillPassengersDetailsProvider
+                                  .passengerList[index].gender!,
+                              index,
+                              context);
+                      if (fillPassengersDetailsProvider.validation == true) {
+                        fillPassengersDetailsProvider
+                            .selectConsessionFromDropDown(
+                                value.toString(), index);
+                      } else {
                         //print("BBBBBBB");
                       }
-
-
-
-                      // setState(() {
-                      //   // fillPassengersDetailsProvider.selectedGenderValue = value as String;
-                      // });
                     },
                     iconSize: 25,
                     iconEnabledColor: Colors.grey,
@@ -1004,6 +1297,127 @@ class _FillPassengersDetailsScreenState
           )
         ],
       ),
+    );
+  }
+
+  showConcessionListBottomSheet(
+      FillPassengersDetailsProvider fillPassengersDetailsProvider,
+      int passengerListIndex) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+      builder: (BuildContext buildContext) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.6,
+          padding: EdgeInsets.only(top: 10),
+          child: Column(
+            children: [
+              Container(
+                  height: 45,
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: 50,
+                      ),
+                      Text(
+                        "Select Concession",
+                        style: GoogleFonts.nunito(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: HexColor(MyColors.black)),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                            margin: EdgeInsets.only(right: 20),
+                            child: Icon(Icons.close_rounded)),
+                      ),
+                    ],
+                  )),
+              Container(
+                height: 3,
+                margin: EdgeInsets.only(top: 3, bottom: 2),
+                color: HexColor(MyColors.primaryColor),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  // physics: ScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  itemCount:
+                      fillPassengersDetailsProvider.concessionList.length,
+                  itemBuilder: (BuildContext buildcontex, int index) {
+                    return GestureDetector(
+                      onTap: () async {
+                        Navigator.pop(context);
+                        await fillPassengersDetailsProvider
+                            .checkPassengerValidation(
+                                fillPassengersDetailsProvider
+                                    .concessionList[index].categoryname
+                                    .toString(),
+                                fillPassengersDetailsProvider
+                                    .passengerList[passengerListIndex].age!,
+                                fillPassengersDetailsProvider
+                                    .passengerList[passengerListIndex].gender!,
+                                passengerListIndex,
+                                context);
+                        if (fillPassengersDetailsProvider.validation == true) {
+                          fillPassengersDetailsProvider
+                              .selectConsessionFromDropDown(
+                                  fillPassengersDetailsProvider
+                                      .concessionList[passengerListIndex].categoryname
+                                      .toString(),
+                              passengerListIndex);
+                        } else {
+                          //print("BBBBBBB");
+                        }
+
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Icon(
+                                    Icons.local_offer,
+                                    size: 15,
+                                  ),
+                                ),
+                                Text(
+                                  fillPassengersDetailsProvider
+                                      .concessionList[index].categoryname
+                                      .toString(),
+                                  // busSeatLayoutProvider
+                                  //     .boardingList[index].pStname!,
+                                  style: GoogleFonts.nunito(
+                                      fontSize: 16,
+                                      color: HexColor(MyColors.black)),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 2, bottom: 2),
+                            height: 2,
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }

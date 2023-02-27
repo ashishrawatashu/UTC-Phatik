@@ -21,7 +21,6 @@ class SearchBuses extends StatefulWidget {
 
   @override
   SearchBusesState createState() => SearchBusesState();
-
 }
 
 class SearchBusesState extends State<SearchBuses> {
@@ -37,17 +36,21 @@ class SearchBusesState extends State<SearchBuses> {
     super.initState();
     isloading = true;
     Future.delayed(Duration.zero, () async {
-      _searchBusProvider = Provider.of<SearchBusProvider>(context, listen: false);
-      final args = ModalRoute.of(context)!.settings.arguments as SearchBusesArguments;
+      _searchBusProvider =
+          Provider.of<SearchBusProvider>(context, listen: false);
+      final args =
+          ModalRoute.of(context)!.settings.arguments as SearchBusesArguments;
       date = args.date;
       //print(args.fromStation+"====>"+args.toStation);
-      getSearchBuses(args.fromStation, args.toStation, args.serviceTypeId, args.date);
+      getSearchBuses(
+          args.fromStation, args.toStation, args.serviceTypeId, args.date);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as SearchBusesArguments;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as SearchBusesArguments;
     date = args.date;
     return Scaffold(
         endDrawerEnableOpenDragGesture: false,
@@ -85,7 +88,7 @@ class SearchBusesState extends State<SearchBuses> {
       // itemCount: 10,
       itemBuilder: (BuildContext context, int index) {
         // return busesListLayout(index);
-        return busesListNewLayout(index,myProvider);
+        return busesListNewLayout(index, myProvider);
       },
     );
   }
@@ -102,8 +105,10 @@ class SearchBusesState extends State<SearchBuses> {
     }
   }
 
-  void getSearchBuses(String fromservicesName, String toservicesName, String serviceTypeId, String date) async {
-    getsearchBuses = await _searchBusProvider.getSearchBuses(fromservicesName, toservicesName, serviceTypeId, date);
+  void getSearchBuses(String fromservicesName, String toservicesName,
+      String serviceTypeId, String date) async {
+    getsearchBuses = await _searchBusProvider.getSearchBuses(
+        fromservicesName, toservicesName, serviceTypeId, date);
     // myProvider.setloading(false);
     getsearchBuses;
     isloading = false;
@@ -132,10 +137,14 @@ class SearchBusesState extends State<SearchBuses> {
           ),
           Flexible(
               child: Align(
-            alignment: Alignment.centerLeft, child: Text(
+            alignment: Alignment.centerLeft,
+            child: Text(
               AppConstants.SELECTED_SOURCE +
                   " - " +
-                  AppConstants.SELECTED_DESTINATION +" ("+AppConstants.JOURNEY_DATE+" )",
+                  AppConstants.SELECTED_DESTINATION +
+                  " (" +
+                  AppConstants.JOURNEY_DATE +
+                  " )",
               style: GoogleFonts.nunito(
                   fontSize: 16, color: HexColor(MyColors.white)),
             ),
@@ -153,10 +162,10 @@ class SearchBusesState extends State<SearchBuses> {
     // String selectedDate = DateFormat('dd/MM/yyy').format(tempDate);
     // //print(selectedDate);
     // //print(currentDate);
-    if(DateTime.now().difference(selectedDate).inDays == 0) {
+    if (DateTime.now().difference(selectedDate).inDays == 0) {
       //print(DateTime.now().difference(selectedDate).inDays);
       dateTimeForCal = DateTime.now();
-    }else{
+    } else {
       dateTimeForCal = DateTime.now();
     }
 
@@ -167,7 +176,7 @@ class SearchBusesState extends State<SearchBuses> {
           DateTime.now(),
           width: 50,
           height: 90,
-          daysCount: AppConstants.ADVANCE_DAYS_BOOKING+1,
+          daysCount: AppConstants.ADVANCE_DAYS_BOOKING + 1,
           deactivatedColor: HexColor(MyColors.orange),
           initialSelectedDate: selectedDate,
           selectionColor: HexColor(MyColors.orange),
@@ -202,8 +211,7 @@ class SearchBusesState extends State<SearchBuses> {
       child: Column(
         children: [
           searchBusesAppBar(),
-          Container(
-              margin: EdgeInsets.only(top: 5), child: selectDateLayout()),
+          Container(margin: EdgeInsets.only(top: 5), child: selectDateLayout()),
         ],
       ),
     );
@@ -213,7 +221,7 @@ class SearchBusesState extends State<SearchBuses> {
     return Stack(
       children: [
         Visibility(
-          visible: myProvider.isloading?false:true,
+            visible: myProvider.isloading ? false : true,
             child: busesListBuilder(myProvider)),
         Visibility(
             visible: myProvider.isloading,
@@ -224,12 +232,14 @@ class SearchBusesState extends State<SearchBuses> {
       ],
     );
   }
+
   checkData(SearchBusProvider myProvider) {
-    if(myProvider.isloading&&myProvider.filterBusServices.isEmpty){
+    if (myProvider.isloading && myProvider.filterBusServices.isEmpty) {
       return false;
-    }else if (myProvider.isloading==false&&myProvider.filterBusServices.isEmpty){
+    } else if (myProvider.isloading == false &&
+        myProvider.filterBusServices.isEmpty) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }
@@ -237,33 +247,36 @@ class SearchBusesState extends State<SearchBuses> {
   clickOnViewSeats(int index) async {
     if (await CommonMethods.getInternetUsingInternetConnectivity()) {
       await _searchBusProvider.authenticationMethod();
-      await _searchBusProvider.busServiceTypeRequest(getsearchBuses.services![index].srtpid.toString());
-      if(_searchBusProvider.authenticationMethodResponse.code=="100"){
+      await _searchBusProvider.busServiceTypeRequest(
+          getsearchBuses.services![index].srtpid.toString());
+      if (_searchBusProvider.authenticationMethodResponse.code == "100") {
         //print( AppConstants.MY_TOKEN+"==>TOKEN");
-        AppConstants.MY_TOKEN = _searchBusProvider.authenticationMethodResponse.result![0].token.toString();
+        AppConstants.MY_TOKEN = _searchBusProvider
+            .authenticationMethodResponse.result![0].token
+            .toString();
         //print(getsearchBuses.services![index].tostonid.toString()+"TO_STATION");
-        _searchBusProvider.splitBusAmenities(getsearchBuses.services![index].amenities_url.toString());
-        AppConstants.SERICE_TYPE_NAME = getsearchBuses.services![index].servicetypename.toString();
-        AppConstants.JOURNEY_TIME = getsearchBuses.services![index].depttime.toString();
-        Navigator.pushNamed(context, MyRoutes.busSeatLayout, arguments: SeatLayoutBoardingArguments(
-            getsearchBuses.services![index].dsvcid.toString(),
-            getsearchBuses.services![index].strpid.toString(),
-            getsearchBuses.services![index].tripdirection.toString(),
-            getsearchBuses.services![index].tostonid.toString(),
-            getsearchBuses.services![index].frstonid.toString(),
-            _searchBusProvider.amenitiesUrlList,
-            getsearchBuses.services![index].frstonid.toString()));
-      }else {
-        CommonMethods.showSnackBar(context, "Something went wrong, Please try again later");
+        _searchBusProvider.splitBusAmenities(
+            getsearchBuses.services![index].amenities_url.toString());
+        AppConstants.SERICE_TYPE_NAME =
+            getsearchBuses.services![index].servicetypename.toString();
+        AppConstants.JOURNEY_TIME =
+            getsearchBuses.services![index].depttime.toString();
+        Navigator.pushNamed(context, MyRoutes.busSeatLayout,
+            arguments: SeatLayoutBoardingArguments(
+                getsearchBuses.services![index].dsvcid.toString(),
+                getsearchBuses.services![index].strpid.toString(),
+                getsearchBuses.services![index].tripdirection.toString(),
+                getsearchBuses.services![index].tostonid.toString(),
+                getsearchBuses.services![index].frstonid.toString(),
+                _searchBusProvider.amenitiesUrlList,
+                getsearchBuses.services![index].frstonid.toString()));
+      } else {
+        CommonMethods.showSnackBar(
+            context, "Something went wrong, Please try again later");
       }
     } else {
       CommonMethods.showNoInternetDialog(context);
     }
-
-
-
-
-
   }
 
   openFilterDialogDialog() {
@@ -271,8 +284,7 @@ class SearchBusesState extends State<SearchBuses> {
         context: context,
         builder: (builder) {
           return Container(
-              height : MediaQuery.of(context).size.height,
-              margin: EdgeInsets.only(left: 90),
+              height: MediaQuery.of(context).size.height,
               child: Scaffold(
                   appBar: AppBar(
                     title: Text(AllStringsClass.shortAndFilter),
@@ -295,8 +307,7 @@ class SearchBusesState extends State<SearchBuses> {
   }
 
   filterBody() {
-    return Consumer<SearchBusProvider>(
-        builder: (_, myProvider, __) {
+    return Consumer<SearchBusProvider>(builder: (_, myProvider, __) {
       return Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -320,89 +331,75 @@ class SearchBusesState extends State<SearchBuses> {
                       margin: EdgeInsets.only(top: 2, left: 10, right: 10),
                       child: busServiceTypeList(myProvider),
                     ),
-                    Container(
-                        margin: EdgeInsets.only(top: 10, left: 10),
-                        child: Text(
-                          "SORT BY",
-                          style: GoogleFonts.nunito(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black),
-                        )),
-                    Container(
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 35,
-                            child: Row(
-                              children: [
-                                Radio(
-                                  value: myProvider.cheapestFirstValue,
-                                  groupValue: 1,
-                                  onChanged: (value) {
-                                    //print(value);
-                                    myProvider.setValueInRadioButton(value.toString(), "Cheap");
-                                    // myProvider.cheapestFirstValue = v;
-                                  },
-                                ),
-                                Text('Cheapest first'),
-                              ],
-                            ),
-                          ),
-                          // Container(
-                          //   height: 35,
-                          //   child: Row(
-                          //     children: [
-                          //       Radio(
-                          //         value: 0,
-                          //         groupValue: 1,
-                          //         onChanged: (value) {
-                          //           setState(() {
-                          //             // _site = value;
-                          //           });
-                          //         },
-                          //       ),
-                          //       Text('Top rated buses'),
-                          //     ],
-                          //   ),
-                          // ),
-                          Container(
-                            height: 35,
-                            child: Row(
-                              children: [
-                                Radio(
-                                  value: myProvider.earlyDepartureValue,
-                                  groupValue: 1,
-                                  onChanged: (value) {
-                                    //print(value);
-                                    myProvider.setValueInRadioButton(value.toString(), "Early");
-                                    // myProvider.cheapestFirstValue = v;
-                                  },
-                                ),
-                                Text('Early departure'),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: 35,
-                            child: Row(
-                              children: [
-                                Radio(
-                                  value: myProvider.lateDepartureValue,
-                                  groupValue: 1,
-                                  onChanged: (value) {
-                                    //print(value);
-                                    myProvider.setValueInRadioButton(value.toString(), "Late");
-                                    // myProvider.cheapestFirstValue = v;
-                                  },
-                                ),
-                                Text('Late departure'),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Container(
+                    //     margin: EdgeInsets.only(top: 10, left: 10),
+                    //     child: Text(
+                    //       "SORT BY",
+                    //       style: GoogleFonts.nunito(
+                    //           fontSize: 14,
+                    //           fontWeight: FontWeight.w600,
+                    //           color: Colors.black),
+                    //     )),
+                    // Container(
+                    //   child: Column(
+                    //     children: [
+                    //       // Container(
+                    //       //   height: 35,
+                    //       //   child: Row(
+                    //       //     children: [
+                    //       //       Radio(
+                    //       //         value: myProvider.cheapestFirstValue,
+                    //       //         groupValue: 1,
+                    //       //         onChanged: (value) {
+                    //       //           //print(value);
+                    //       //           myProvider.setValueInRadioButton(
+                    //       //               value.toString(), "Cheap");
+                    //       //           // myProvider.cheapestFirstValue = v;
+                    //       //         },
+                    //       //       ),
+                    //       //       Text('Cheapest first'),
+                    //       //     ],
+                    //       //   ),
+                    //       // ),
+                    //       Container(
+                    //         height: 35,
+                    //         child: Row(
+                    //           children: [
+                    //             Radio(
+                    //               value: myProvider.earlyDepartureValue,
+                    //               groupValue: 1,
+                    //               onChanged: (value) {
+                    //                 //print(value);
+                    //                 myProvider.setValueInRadioButton(
+                    //                     value.toString(), "Early");
+                    //                 // myProvider.cheapestFirstValue = v;
+                    //               },
+                    //             ),
+                    //             Text('Early departure'),
+                    //           ],
+                    //         ),
+                    //       ),
+                    //       Container(
+                    //         height: 35,
+                    //         child: Row(
+                    //           children: [
+                    //             Radio(
+                    //               value: myProvider.lateDepartureValue,
+                    //               groupValue: 1,
+                    //               onChanged: (value) {
+                    //                 //print(value);
+                    //                 myProvider.setValueInRadioButton(
+                    //                     value.toString(), "Late");
+                    //                 // myProvider.cheapestFirstValue = v;
+                    //               },
+                    //             ),
+                    //             Text('Late departure'),
+                    //           ],
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     Container(
                       height: 1,
                       color: HexColor(MyColors.grey1),
@@ -438,29 +435,34 @@ class SearchBusesState extends State<SearchBuses> {
                                   'assets/images/morningsun.png',
                                   height: 30,
                                   width: 35,
-                                  color: myProvider.checkColorMorningBusDeparture(),
+                                  color: myProvider
+                                      .checkColorMorningBusDeparture(),
                                 ),
                                 Text("06:00 Am -11.59 Am",
                                     style: TextStyle(
                                         fontSize: 12,
-                                        color: myProvider.checkColorMorningBusDeparture()))
+                                        color: myProvider
+                                            .checkColorMorningBusDeparture()))
                               ],
                             ),
                           ),
                           GestureDetector(
-                            onTap: () => myProvider.selectAfterNoonBusDeparture(),
+                            onTap: () =>
+                                myProvider.selectAfterNoonBusDeparture(),
                             child: Column(
                               children: [
                                 Image.asset(
                                   'assets/images/fullsun.png',
                                   height: 30,
                                   width: 35,
-                                  color: myProvider.checkColorAfterNoonBusDeparture(),
+                                  color: myProvider
+                                      .checkColorAfterNoonBusDeparture(),
                                 ),
                                 Text("12:00 Pm -4.59 Pm",
                                     style: TextStyle(
                                         fontSize: 12,
-                                        color: myProvider.checkColorAfterNoonBusDeparture()))
+                                        color: myProvider
+                                            .checkColorAfterNoonBusDeparture()))
                               ],
                             ),
                           ),
@@ -480,12 +482,14 @@ class SearchBusesState extends State<SearchBuses> {
                                   'assets/images/evesun.png',
                                   height: 30,
                                   width: 35,
-                                  color: myProvider.checkColorEveningBusDeparture(),
+                                  color: myProvider
+                                      .checkColorEveningBusDeparture(),
                                 ),
                                 Text("5:00 Pm -11.59 Pm",
                                     style: TextStyle(
                                         fontSize: 12,
-                                        color: myProvider.checkColorEveningBusDeparture()))
+                                        color: myProvider
+                                            .checkColorEveningBusDeparture()))
                               ],
                             ),
                           ),
@@ -497,12 +501,14 @@ class SearchBusesState extends State<SearchBuses> {
                                   'assets/images/night.png',
                                   height: 30,
                                   width: 30,
-                                  color: myProvider.checkColorNightBusDeparture(),
+                                  color:
+                                      myProvider.checkColorNightBusDeparture(),
                                 ),
                                 Text("12:00 Am -5:59 Am",
                                     style: TextStyle(
                                         fontSize: 12,
-                                        color: myProvider.checkColorNightBusDeparture()))
+                                        color: myProvider
+                                            .checkColorNightBusDeparture()))
                               ],
                             ),
                           ),
@@ -536,12 +542,14 @@ class SearchBusesState extends State<SearchBuses> {
                                   'assets/images/morningsun.png',
                                   height: 30,
                                   width: 35,
-                                  color: myProvider.checkColorMorningBusArrival(),
+                                  color:
+                                      myProvider.checkColorMorningBusArrival(),
                                 ),
                                 Text("06:00 Am -11.59 Am",
                                     style: TextStyle(
                                         fontSize: 12,
-                                        color: myProvider.checkColorMorningBusArrival()))
+                                        color: myProvider
+                                            .checkColorMorningBusArrival()))
                               ],
                             ),
                           ),
@@ -553,12 +561,14 @@ class SearchBusesState extends State<SearchBuses> {
                                   'assets/images/fullsun.png',
                                   height: 30,
                                   width: 35,
-                                  color: myProvider.checkColorAfterNoonBusArrival(),
+                                  color: myProvider
+                                      .checkColorAfterNoonBusArrival(),
                                 ),
                                 Text("12:00 Pm -4.59 Pm",
                                     style: TextStyle(
                                         fontSize: 12,
-                                        color: myProvider.checkColorAfterNoonBusArrival()))
+                                        color: myProvider
+                                            .checkColorAfterNoonBusArrival()))
                               ],
                             ),
                           ),
@@ -566,7 +576,8 @@ class SearchBusesState extends State<SearchBuses> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 15, left: 20, right: 20,bottom: 20),
+                      margin: EdgeInsets.only(
+                          top: 15, left: 20, right: 20, bottom: 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -578,12 +589,14 @@ class SearchBusesState extends State<SearchBuses> {
                                   'assets/images/evesun.png',
                                   height: 30,
                                   width: 35,
-                                  color: myProvider.checkColorEveningBusArrival(),
+                                  color:
+                                      myProvider.checkColorEveningBusArrival(),
                                 ),
                                 Text("5:00 Pm -11.59 Pm",
                                     style: TextStyle(
                                         fontSize: 12,
-                                        color: myProvider.checkColorEveningBusArrival()))
+                                        color: myProvider
+                                            .checkColorEveningBusArrival()))
                               ],
                             ),
                           ),
@@ -600,7 +613,8 @@ class SearchBusesState extends State<SearchBuses> {
                                 Text("12:00 Am -5:59 Am",
                                     style: TextStyle(
                                         fontSize: 12,
-                                        color: myProvider.checkColorNightBusArrival()))
+                                        color: myProvider
+                                            .checkColorNightBusArrival()))
                               ],
                             ),
                           ),
@@ -619,7 +633,7 @@ class SearchBusesState extends State<SearchBuses> {
                   children: [
                     Expanded(
                       child: InkWell(
-                        onTap: (){
+                        onTap: () {
                           myProvider.clearFilter();
                           Navigator.pop(context);
                         },
@@ -629,7 +643,8 @@ class SearchBusesState extends State<SearchBuses> {
                             child: Text(
                               "Clear",
                               style: GoogleFonts.nunito(
-                                  fontSize: 18, color: HexColor(MyColors.white)),
+                                  fontSize: 18,
+                                  color: HexColor(MyColors.white)),
                             ),
                           ),
                         ),
@@ -647,7 +662,8 @@ class SearchBusesState extends State<SearchBuses> {
                             child: Text(
                               "Apply",
                               style: GoogleFonts.nunito(
-                                  fontSize: 18, color: HexColor(MyColors.white)),
+                                  fontSize: 18,
+                                  color: HexColor(MyColors.white)),
                             ),
                           ),
                         ),
@@ -669,7 +685,7 @@ class SearchBusesState extends State<SearchBuses> {
       child: Align(
         alignment: Alignment.bottomCenter,
         child: GestureDetector(
-           onTap: () => openFilterDialogDialog(),
+          onTap: () => openFilterDialogDialog(),
           child: Card(
             elevation: 10,
             color: HexColor(MyColors.green),
@@ -687,12 +703,18 @@ class SearchBusesState extends State<SearchBuses> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Image.asset("assets/images/filtericon.png",color: HexColor(MyColors.white),),
+                    child: Image.asset(
+                      "assets/images/filtericon.png",
+                      color: HexColor(MyColors.white),
+                    ),
                   ),
-                  Text(AllStringsClass.shortFilter,style: GoogleFonts.montserrat(
-                    fontSize: 16,color: HexColor(MyColors.white),fontWeight: FontWeight.w500
-                  ),)
-
+                  Text(
+                    AllStringsClass.shortFilter,
+                    style: GoogleFonts.montserrat(
+                        fontSize: 16,
+                        color: HexColor(MyColors.white),
+                        fontWeight: FontWeight.w500),
+                  )
                 ],
               ),
             ),
@@ -702,145 +724,187 @@ class SearchBusesState extends State<SearchBuses> {
     );
   }
 
-
   Widget busesListNewLayout(int index, SearchBusProvider myProvider) {
     //print(myProvider.filterBusServices[index].showHideItem);
+
+    String serviceCode = myProvider.filterBusServices[index].dsvcid! +
+        myProvider.filterBusServices[index].tripdirection! +
+        myProvider.filterBusServices[index].strpid.toString()!;
+
     return Visibility(
-        visible: showHideList(index,myProvider),
+        visible: showHideList(index, myProvider),
         child: Card(
-      elevation: 3,
-      child: Container(
-        padding: EdgeInsets.only(left: 5),
-        height: 100,
-        width: MediaQuery.of(context).size.width,
-        child: Row(
-          // crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 4,
-              child: Container(
-                // color: Colors.green,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 8.0,top: 5),
-                          child: Text(myProvider.filterBusServices[index].servicetypename!,style: GoogleFonts.nunito(fontSize: 16,color: HexColor(MyColors.primaryColor)),),
-                        )),
-                    // Container(
-                    //     margin: EdgeInsets.only(top: 3),
-                    //     child: Text("A/C sleeper (2+2)",style: GoogleFonts.nunito(fontSize: 14,color: HexColor(MyColors.black)),)),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8.0,bottom: 10),
-                      child: Text("Available seats: "+myProvider.filterBusServices[index].seatsforbooking!,style: GoogleFonts.nunito(),),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Container(
-                margin: EdgeInsets.only(right: 20),
-                // color: Colors.grey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(myProvider.filterBusServices[index].depttime!,style: GoogleFonts.nunito(fontSize: 18,color: HexColor(MyColors.black)),),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(myProvider.filterBusServices[index].arrtime.toString(),style: GoogleFonts.nunito(fontSize: 14,color: HexColor(MyColors.grey1)),),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          elevation: 3,
+          child: Container(
+              padding: EdgeInsets.only(left: 5),
+              height: 100,
+              width: MediaQuery.of(context).size.width,
+              child: Row(
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 4,
+                    child: Container(
+                      // color: Colors.green,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                              flex: 1,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 8.0, top: 5),
+                                child: Text(
+                                  serviceCode +
+                                      " " +
+                                      myProvider.filterBusServices[index]
+                                          .servicetypename!,
+                                  style: GoogleFonts.nunito(
+                                      fontSize: 14,
+                                      color: HexColor(MyColors.primaryColor)),
+                                ),
+                              )),
+                          // Container(
+                          //     margin: EdgeInsets.only(top: 3),
+                          //     child: Text("A/C sleeper (2+2)",style: GoogleFonts.nunito(fontSize: 14,color: HexColor(MyColors.black)),)),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(right: 8.0, bottom: 10),
+                            child: Text(
+                              "Available seats: " +
+                                  myProvider.filterBusServices[index]
+                                      .seatsforbooking!,
+                              style: GoogleFonts.nunito(),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      margin: EdgeInsets.only(right: 20),
+                      // color: Colors.grey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            myProvider.filterBusServices[index].depttime!,
+                            style: GoogleFonts.nunito(
+                                fontSize: 18, color: HexColor(MyColors.black)),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    height: 5,
+                                    width: 5,
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey,
+                                        border: Border.all(
+                                          color: Colors.grey,
+                                        ),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20))),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      height: 1,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 5,
+                                    width: 5,
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey,
+                                        border: Border.all(
+                                          color: Colors.grey,
+                                        ),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20))),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                "Total " +
+                                    myProvider
+                                        .filterBusServices[index].totaldistance
+                                        .toString() +
+                                    " KM",
+                                style: GoogleFonts.nunito(
+                                    fontSize: 14,
+                                    color: HexColor(MyColors.grey1)),
+                              ),
+                            ],
+                          ),
+                          Expanded(
+                              child: Text(
+                            myProvider.filterBusServices[index].arrtime!,
+                            style: GoogleFonts.nunito(
+                                fontSize: 18, color: HexColor(MyColors.black)),
+                          )),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: GestureDetector(
+                      onTap: () => clickOnViewSeats(index),
+                      child: Container(
+                        width: 100,
+                        color: HexColor(MyColors.orange),
+                        padding: EdgeInsets.only(top: 20),
+                        child: Column(
                           children: [
-                            Container(
-                              height: 5,
-                              width: 5,
-                              decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  border: Border.all(
-                                    color: Colors.grey,
-                                  ),
-                                  borderRadius: BorderRadius.all(Radius.circular(20))
-                              ),
-
-                            ),
-                            Expanded(
-                              child: Container(
-                                height: 1,
-                                color: Colors.grey,
-                              ),
+                            Text(
+                              "₹ " +
+                                  myProvider.filterBusServices[index].totalfare
+                                      .toString(),
+                              style: GoogleFonts.nunito(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w700,
+                                  color: HexColor(MyColors.white)),
                             ),
                             Container(
-                              height: 5,
-                              width: 5,
+                              width: 70,
+                              height: 25,
                               decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  border: Border.all(
-                                    color: Colors.grey,
-                                  ),
-                                  borderRadius: BorderRadius.all(Radius.circular(20))
+                                  color: HexColor(MyColors.primaryColor),
+                                  borderRadius: BorderRadius.circular(5),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey,
+                                      offset: Offset(0.0, 1.0), //(x,y)
+                                      blurRadius: 6.0,
+                                    ),
+                                  ]),
+                              child: Center(
+                                child: Text(
+                                  "View Seats",
+                                  style: GoogleFonts.nunito(
+                                      color: HexColor(MyColors.white),
+                                      fontSize: 12),
+                                ),
                               ),
-
-                            ),
+                            )
                           ],
                         ),
-                        Text("Total "+myProvider.filterBusServices[index].totaldistance.toString()+" KM",style: GoogleFonts.nunito(fontSize: 14,color: HexColor(MyColors.grey1)),),
-                      ],
+                      ),
                     ),
-                    Expanded(child: Text(myProvider.filterBusServices[index].arrtime!,style: GoogleFonts.nunito(fontSize: 18,color: HexColor(MyColors.black)),)),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 3,
-              child: GestureDetector(
-                onTap: () => clickOnViewSeats(index),
-                child: Container(
-                  width: 100,
-                  color: HexColor(MyColors.orange),
-                  padding : EdgeInsets.only(top: 20),
-                  child: Column(
-                    children: [
-                      Text( "₹ " + myProvider.filterBusServices[index].totalfare.toString(),style: GoogleFonts.nunito(fontSize: 22,fontWeight: FontWeight.w700,color: HexColor(MyColors.white)),),
-                      Container(
-                        width: 70,
-                        height: 25,
-                        decoration: BoxDecoration(
-                            color: HexColor(MyColors.primaryColor),
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey,
-                                offset: Offset(0.0, 1.0), //(x,y)
-                                blurRadius: 6.0,
-                              ),
-                            ]),
-                        child: Center(
-                          child: Text(
-                            "View Seats",
-                            style: GoogleFonts.nunito(
-                                color: HexColor(MyColors.white), fontSize: 12),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            )
-          ],
-
-
-
-        ),
-      ),
-    ));
-
+                  )
+                ],
+              )),
+        ));
   }
 
   busServiceTypeList(SearchBusProvider myProvider) {
@@ -852,7 +916,7 @@ class SearchBusesState extends State<SearchBuses> {
       // itemCount: 10,
       itemBuilder: (BuildContext context, int index) {
         // return busesListLayout(index);
-        return busServiceTypeLayout(index,myProvider);
+        return busServiceTypeLayout(index, myProvider);
       },
     );
   }
@@ -863,10 +927,9 @@ class SearchBusesState extends State<SearchBuses> {
         children: [
           Checkbox(
               value: myProvider.setValueInServiveTypeCheckBox(index),
-              onChanged: (newValue){
-                myProvider.selectServiceType(index,newValue!);
-              }
-          ),
+              onChanged: (newValue) {
+                myProvider.selectServiceType(index, newValue!);
+              }),
           Text(
             myProvider.newBusTypeModelList[index].serviceTypeName!,
             style: GoogleFonts.nunito(
@@ -877,25 +940,22 @@ class SearchBusesState extends State<SearchBuses> {
         ],
       ),
     );
-
   }
 
   showHideList(int index, SearchBusProvider myProvider) {
-    if(myProvider.filterBusServices[index].showHideItem==true){
+    if (myProvider.filterBusServices[index].showHideItem != null &&
+        myProvider.filterBusServices[index].showHideItem == true) {
       return true;
-    }else {
+    } else {
       return false;
     }
-
   }
 
   checkFilterButtonVisiblity(SearchBusProvider myProvider) {
-
-    if(myProvider.isloading||myProvider.filterBusServices.isEmpty){
+    if (myProvider.isloading || myProvider.filterBusServices.isEmpty) {
       return false;
-    }else {
+    } else {
       return true;
     }
-
   }
 }

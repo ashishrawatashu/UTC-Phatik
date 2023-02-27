@@ -17,7 +17,7 @@ import 'package:utc_flutter_app/utils/app_constants.dart';
 class PaymentScreenProvider extends ChangeNotifier{
 
   String ticketNumber = "";
-  int amountBalance = 0;
+  num amountBalance = 0;
   double totalAmount = 0;
   int totalDiscount = 0;
   bool viewOffers = true;

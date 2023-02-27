@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:utc_flutter_app/arguments/cancel_ticket_deatils_screen_arguments.dart';
 import 'package:utc_flutter_app/arguments/web_page_url_arguments.dart';
 import 'package:utc_flutter_app/screens/bottomTabsScreens/myBookingTab/my_tickets_provider.dart';
@@ -48,7 +49,6 @@ class MyHistoryTabState extends State<MyHistoryTab> {
       }
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -781,7 +781,6 @@ class MyHistoryTabState extends State<MyHistoryTab> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
             child: Container(
-              margin: EdgeInsets.only(top: 50),
               child: Column(
                 children: [
                   TicketWidget(
@@ -851,24 +850,20 @@ class MyHistoryTabState extends State<MyHistoryTab> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      child: Row(
-                        children: [
-                          Text("Booking Date/Time : ",
-                              style: GoogleFonts.nunito(
-                                  fontSize: 12,
-                                  color: HexColor(MyColors.black))),
-                          Text(
-                              myTicketsProvider.passengerConfirmDetailsResponse
-                                  .ticketDeatil![0].bookingdatetime
-                                  .toString(),
-                              style: GoogleFonts.nunito(
-                                  fontSize: 14,
-                                  color: HexColor(MyColors.black),
-                                  fontWeight: FontWeight.bold)),
-                        ],
-                      ),
+                    Text("Booking Date/Time ",
+                        style: GoogleFonts.nunito(
+                            fontSize: 12,
+                            color: HexColor(MyColors.black))),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Text(
+                          myTicketsProvider.passengerConfirmDetailsResponse
+                              .ticketDeatil![0].bookingdatetime
+                              .toString(),
+                          style: GoogleFonts.nunito(
+                              fontSize: 13,
+                              color: HexColor(MyColors.black),
+                              fontWeight: FontWeight.bold)),
                     ),
                   ],
                 ),
@@ -962,6 +957,11 @@ class MyHistoryTabState extends State<MyHistoryTab> {
               // String downloadTicketUri = "http://www.africau.edu/images/default/sample.pdf";
               //print(downloadTicketUri);
               // final file = await loadPdfFromNetwork(downloadTicketUri);
+
+              print(downloadTicketUri);
+              final Uri _url = Uri.parse(downloadTicketUri);
+              _launchInBrowser(_url);
+
               CommonMethods.showLoadingDialog(context);
               await saveFile(downloadTicketUri, myTicketsProvider.passengerConfirmDetailsResponse.ticketDeatil![0].ticketno.toString()+".pdf",context);
               Navigator.pop(context);
@@ -984,7 +984,14 @@ class MyHistoryTabState extends State<MyHistoryTab> {
     Navigator.pop(context);
     return _myTicketsProvider.storeFile(url, bytes);
   }
-
+  Future<void> _launchInBrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw Exception('Could not launch $url');
+    }
+  }
   ticketMiddleLine() {
     return Expanded(
       child: Container(
@@ -1076,49 +1083,7 @@ class MyHistoryTabState extends State<MyHistoryTab> {
                 ),
               ],
             ),
-            // Padding(
-            //   padding: EdgeInsets.only(left: 50, right: 50),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Text(
-            //         "100",
-            //         style: GoogleFonts.nunito(
-            //             color: HexColor(MyColors.grey1),
-            //             fontWeight: FontWeight.w500,
-            //             fontSize: 14),
-            //       ),
-            //       Text(
-            //         "₹ " + "100",
-            //         style: GoogleFonts.nunito(
-            //             color: HexColor(MyColors.grey1),
-            //             fontWeight: FontWeight.w500,
-            //             fontSize: 14),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // Padding(
-            //   padding: EdgeInsets.only(left: 50, right: 50),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Text("SGST",
-            //         style: GoogleFonts.nunito(
-            //             color: HexColor(MyColors.grey1),
-            //             fontWeight: FontWeight.w500,
-            //             fontSize: 16
-            //         ),),
-            //       Text("₹ "+bookingHistoryDetailsProvider.taxes[1].taxamt.toString(),
-            //         style: GoogleFonts.nunito(
-            //             color: HexColor(MyColors.grey1),
-            //             fontWeight: FontWeight.w500,
-            //             fontSize: 16
-            //         ),),
-            //     ],
-            //   ),
-            // ),
-            // greyLineContainer(),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -1141,30 +1106,9 @@ class MyHistoryTabState extends State<MyHistoryTab> {
                 ),
               ],
             ),
-            // Padding(
-            //   padding: EdgeInsets.only(left: 50, right: 50),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Text("Coupon(WELCOME100)",
-            //         style: GoogleFonts.nunito(
-            //             color: HexColor(MyColors.grey1),
-            //             fontWeight: FontWeight.w500,
-            //             fontSize: 14
-            //         ),),
-            //       Text("₹ 100.00",
-            //         style: GoogleFonts.nunito(
-            //             color: HexColor(MyColors.grey1),
-            //             fontWeight: FontWeight.w500,
-            //             fontSize: 14
-            //         ),),
-            //     ],
-            //   ),
-            // ),
             Container(
               height: 50,
               margin: EdgeInsets.only(top: 15, bottom: 5),
-              padding: EdgeInsets.only(left: 15, right: 15),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(50))),
               child: Row(
@@ -1246,7 +1190,6 @@ class MyHistoryTabState extends State<MyHistoryTab> {
             myTicketsProvider.ticketDetails[index].busservicetypename!,
             myTicketsProvider.ticketDetails[index].deptitme!,
             myTicketsProvider.ticketDetails[index].arrival!)).then((value) => checkTicketsForRating(myTicketsProvider));
-
   }
 
   checkTicketsForRating(MyTicketsProvider myTicketsProvider) {

@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_framework/responsive_wrapper.dart';
+import 'package:responsive_framework/utils/scroll_behavior.dart';
 import 'package:utc_flutter_app/screens/activeBookingsScreen/active_booking_screen.dart';
 import 'package:utc_flutter_app/screens/alertsScreens/alerts_screen.dart';
+import 'package:utc_flutter_app/screens/appNotWorkingScreen/app_not_working_screen.dart';
 import 'package:utc_flutter_app/screens/bookingHistoryDetailsScreen/booking_history_details_screen.dart';
 import 'package:utc_flutter_app/screens/busSeatLayoutScreen/bus_seat_layout_screen.dart';
 import 'package:utc_flutter_app/screens/busesListScreen/search_buses.dart';
@@ -62,6 +65,25 @@ class StarBusApp extends StatelessWidget {
     return MultiProvider(
       providers: providers,
       child: MaterialApp(
+          builder: (context, widget) {
+            return MediaQuery(
+              data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+              child: ResponsiveWrapper.builder(
+                ClampingScrollWrapper.builder(context, widget!),
+                maxWidth: 1400,
+                minWidth: 360,
+                defaultScale: true,
+                breakpoints: [
+                  const ResponsiveBreakpoint.resize(360, name: MOBILE),
+                  const ResponsiveBreakpoint.resize(600, name: MOBILE),
+                  const ResponsiveBreakpoint.autoScale(800, name: TABLET),
+                  const ResponsiveBreakpoint.autoScale(1000, name: TABLET),
+                  const ResponsiveBreakpoint.resize(1200, name: DESKTOP),
+                  const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
+                ],
+              ),
+            );
+          },
         color: HexColor(MyColors.primaryColor),
           themeMode: ThemeMode.system,
           debugShowCheckedModeBanner: false,
@@ -103,6 +125,7 @@ class StarBusApp extends StatelessWidget {
             MyRoutes.myTransactionScreen: (context) => MyTransactionScreen(),
             MyRoutes.refundStatusScreen: (context) => RefundStatusListScreen(),
             MyRoutes.activeBookingScreen: (context) => ActiveBookingScreen(),
+            MyRoutes.appNotWorking: (context) => AppNotWorkingScreen(),
             // MyRoutes.allBookingHistoryScreen: (context) => AllBookingHistoryScreen(),
             MyRoutes.alertsSCreen: (context) => AlertsScreen(),
             MyRoutes.fillConcessionScreen: (context) => FillConcessionScreen(),

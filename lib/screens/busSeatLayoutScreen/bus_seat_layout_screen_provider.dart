@@ -54,6 +54,9 @@ class BusSeatLayoutProvider extends ChangeNotifier{
         lowerSeatList = seatLayouLboardingResponse.lowerLayout!;
         upperSeatLayout = seatLayouLboardingResponse.upperLayout!;
         boardingList = seatLayouLboardingResponse.boarding!;
+        if(boardingList.isEmpty){
+          CommonMethods.showErrorMoveToDashBaordDialog(context, "No boarding sation !");
+        }
         //print(boardingList.length.toString()+"BOARDING");
         //print(boardingList.length.toString());
       }

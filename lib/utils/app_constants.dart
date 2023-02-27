@@ -20,7 +20,7 @@ class AppConstants {
   static String HELP_DESK_EMAIL = "";
 
   static String app_base_url_pg_or_img = "http://utcdemo.uk.gov.in/utcaudit";
-  static String app_base_url = "http://utcdemo.uk.gov.in/utcauditpathik";
+  static String app_base_url = "https://utcdemo.uk.gov.in/utcauditpathik";
   static String PAYMENT_GATEWAY_URL ="$app_base_url_pg_or_img/pg/pgRedirection.aspx?token=";
   static String OFFER_IMAGE_URL ="$app_base_url_pg_or_img/DBimg/offers/";
   static String PG_IMAGE_URL ="$app_base_url_pg_or_img/DBimg/PG/";
@@ -35,7 +35,6 @@ class AppConstants {
   static String TRACK_MY_BUS= "$app_base_url/webpages/trackMyBus.aspx";
   static String MEAL_ON_WHEEL_URL ="$app_base_url/webpages/mealonwheel.aspx";
   static String REFUND_STATUS_URL ="$app_base_url/webpages/refundStatus.aspx";
-
 
 
 

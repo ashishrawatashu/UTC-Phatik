@@ -224,6 +224,79 @@ class CommonMethods {
         });
   }
 
+  static feedBackDiaog(BuildContext context, String msg) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: Dialog(
+                shape: RoundedRectangleBorder(borderRadius:
+                BorderRadius.circular(20.0)), //this right here
+                child: Wrap(
+                  children: [
+                    Column(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Image.asset("assets/images/check.png",
+                                  width: 80, height: 80, fit: BoxFit.fill,),
+                              ),
+                            ),
+                            SizedBox(height: 20,),
+                            Center(child: Padding(
+                              padding: const EdgeInsets.only(left: 15.0,right: 15),
+                              child: Text(msg,
+                                textAlign: TextAlign.center, style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.w600),),
+                            )),
+                            SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigator.pushReplacementNamed(context, MyRoutes.rateScreenList);
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(
+                                bottom: 10, left: 20, right: 20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: HexColor(MyColors.primaryColor),
+                            ),
+                            height: 40,
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 4),
+                                  child: Text("OK",
+                                      style: TextStyle(color: Colors.white)),),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+            ),
+          );
+        });
+  }
+
 
   static noDataFound(BuildContext context){
     return Center(
@@ -680,6 +753,79 @@ class CommonMethods {
                     ),
                   ],
                 )
+              ),
+            ),
+          );
+        });
+
+  }
+
+  static appIsNotWorking(BuildContext context){
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: Dialog(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)), //this right here
+              child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  // color: HexColor(MyColors.dashBg),
+                  child: Wrap(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10,),
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Image.asset("assets/images/utc.png",width: 100,height: 100,fit: BoxFit.fill,),
+                            ),
+                          ),
+                          Center(child: Text("We'll be back soon",textAlign:TextAlign.center,style: GoogleFonts.nunito(fontSize: 22,fontWeight: FontWeight.w600),)),
+                          Center(
+                            child: Container(
+                              margin: EdgeInsets.only(left: 20,top: 8,right: 20),
+                              child: Text("Thank you for being our valued customer. Our services will be available soon",textAlign:TextAlign.justify,style: GoogleFonts.nunito(fontSize: 18,fontWeight: FontWeight.w600,color: HexColor(MyColors.grey6)),),
+                            ),
+                          ),
+                          SizedBox(height: 10,)
+                        ],
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: InkWell(
+                          onTap: () {
+                            // Navigator.pushNamed(context, MyRoutes.homeRoute);
+                            if (Platform.isAndroid) {
+                              SystemNavigator.pop();
+                            } else if (Platform.isIOS) {
+                              exit(0);
+                            }
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: 10,left: 20,right: 20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: HexColor(MyColors.orange),
+                            ),
+                            height: 40,
+                            width:MediaQuery.of(context).size.width,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 4),
+                                  child: Text("Exit",style: GoogleFonts.nunito(color: Colors.white)),),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  )
               ),
             ),
           );
