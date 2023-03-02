@@ -75,7 +75,7 @@ class _RefundStatusListScreenState extends State<RefundStatusListScreen> {
     return Consumer<RefundTicketsProvider>(builder: (_, refundTicketsProvider, __) {
       return /*ratingListProvider.isLoading?CommonWidgets.buildCircularProgressIndicatorWidget(): */ListView.builder(
         padding: EdgeInsets.zero,
-        itemCount: 2,
+        itemCount: refundTicketsProvider.refundTicketsList.length,
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         // itemCount: 10,

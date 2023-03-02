@@ -37,22 +37,30 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
     super.initState();
     loading = true;
     Future.delayed(Duration.zero, () async {
-      _busSeatLayoutProvider = Provider.of<BusSeatLayoutProvider>(context, listen: false);
+      _busSeatLayoutProvider =
+          Provider.of<BusSeatLayoutProvider>(context, listen: false);
       _busSeatLayoutProvider.maxSeat = 0;
-      final args = ModalRoute.of(context)!.settings.arguments as SeatLayoutBoardingArguments;
+      final args = ModalRoute.of(context)!.settings.arguments
+          as SeatLayoutBoardingArguments;
       _busSeatLayoutProvider.dsvcId = args.dsvcId;
       _busSeatLayoutProvider.strpId = args.strpId;
       _busSeatLayoutProvider.fromStationId = args.fromStationId;
       _busSeatLayoutProvider.toStationId = args.toStationId;
       _busSeatLayoutProvider.tripType = args.tripType;
       _busSeatLayoutProvider.amenitiesUrlList = args.amenitiesUrlList;
-      await _busSeatLayoutProvider.getSeatLayoutBoardingResponse(args.dsvcId, AppConstants.JOURNEY_DATE, args.strpId, _busSeatLayoutProvider.toStationId,context);
-
+      await _busSeatLayoutProvider.getSeatLayoutBoardingResponse(
+          args.dsvcId,
+          AppConstants.JOURNEY_DATE,
+          args.strpId,
+          _busSeatLayoutProvider.toStationId,
+          context);
     });
   }
 
   List<BusSeatLayoutResponse> fetchPosts(dynamic response) {
-    return (response as List).map((p) => BusSeatLayoutResponse.fromJson(p)).toList();
+    return (response as List)
+        .map((p) => BusSeatLayoutResponse.fromJson(p))
+        .toList();
   }
 
   @override
@@ -75,7 +83,7 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
           Expanded(
               child: Stack(
             children: [
-               Visibility(
+              Visibility(
                 visible: busSeatLayoutProvider.isLoading ? false : true,
                 child: Column(
                   children: [
@@ -83,7 +91,9 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
                     Container(
                         margin: EdgeInsets.only(top: 10),
                         child: Center(
-                            child: Text("You can select maximun "+AppConstants.MAX_SEAT_SELECT.toString()+" seats"))),
+                            child: Text("You can select maximun " +
+                                AppConstants.MAX_SEAT_SELECT.toString() +
+                                " seats"))),
                     Expanded(
                       child: busSeatLayoutProvider.isLoading
                           ? CommonWidgets.buildCircularProgressIndicatorWidget()
@@ -91,8 +101,9 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
                               children: [
                                 Expanded(
                                     child: Container(
-                                     child: isSleeper
-                                      ? layoutForTabSleeper(busSeatLayoutProvider)
+                                  child: isSleeper
+                                      ? layoutForTabSleeper(
+                                          busSeatLayoutProvider)
                                       : busSeatLayout(busSeatLayoutProvider),
                                 )),
                                 // Align(
@@ -141,7 +152,11 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
                 onTap: () => Navigator.of(context).pop(true),
                 child: Container(
                     padding: EdgeInsets.only(left: 10, right: 10),
-                    child: Icon(Icons.arrow_back, color: Colors.white,size: 30,)),
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                      size: 30,
+                    )),
               ),
               Flexible(
                 child: Column(
@@ -184,7 +199,10 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
 
   Widget busSeatLayout(BusSeatLayoutProvider busSeatLayoutProvider) {
     return Visibility(
-      visible: busSeatLayoutProvider.seatLayouLboardingResponse.lowerLayout!.isEmpty?false:true,
+      visible:
+          busSeatLayoutProvider.seatLayouLboardingResponse.lowerLayout!.isEmpty
+              ? false
+              : true,
       child: Container(
         padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
         margin: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
@@ -198,13 +216,13 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: busSeatLayoutProvider
-                  .seatLayouLboardingResponse.lowerLayoutRowCol![0].noofcolumns!,
+              crossAxisCount: busSeatLayoutProvider.seatLayouLboardingResponse
+                  .lowerLayoutRowCol![0].noofcolumns!,
               // crossAxisSpacing: 2,
               mainAxisSpacing: 5.0,
             ),
-            itemCount: busSeatLayoutProvider
-                    .seatLayouLboardingResponse.lowerLayoutRowCol![0].noofrows! *
+            itemCount: busSeatLayoutProvider.seatLayouLboardingResponse
+                    .lowerLayoutRowCol![0].noofrows! *
                 busSeatLayoutProvider.seatLayouLboardingResponse
                     .lowerLayoutRowCol![0].noofcolumns!,
             itemBuilder: (context, index) {
@@ -215,21 +233,20 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
                       busSeatLayoutProvider.selectDeselectSeats(index);
                       busSeatLayoutProvider.setImageOnSelectSeat(index);
                       setState(() {
-                        if (busSeatLayoutProvider.maxSeat == AppConstants.MAX_SEAT_SELECT) {
+                        if (busSeatLayoutProvider.maxSeat ==
+                            AppConstants.MAX_SEAT_SELECT) {
                           showMaximumSeatSelected(busSeatLayoutProvider);
                           return;
                         }
                       });
-
                     },
-
                     child: Container(
                         // color: setColor(index),
                         margin: EdgeInsets.all(7),
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                          image: AssetImage(
-                              busSeatLayoutProvider.setImageOnSelectSeat(index)),
+                          image: AssetImage(busSeatLayoutProvider
+                              .setImageOnSelectSeat(index)),
                           fit: BoxFit.fill,
                         )),
                         child: Center(
@@ -457,7 +474,8 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
                 child: GestureDetector(
                   onTap: () {
                     if (busSeatLayoutProvider.maxSeat == 0) {
-                      CommonMethods.showSnackBar(context, "Please select seat !");
+                      CommonMethods.showSnackBar(
+                          context, "Please select seat !");
                     } else {
                       // continueSeatSelected(0, busSeatLayoutProvider);
                       showBoardingPointListBottomSheet(busSeatLayoutProvider);
@@ -502,7 +520,8 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
   }
 
   showBoardingPointListBottomSheet(
-      BusSeatLayoutProvider busSeatLayoutProvider) { showModalBottomSheet(
+      BusSeatLayoutProvider busSeatLayoutProvider) {
+    showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -554,7 +573,8 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
                     itemCount: busSeatLayoutProvider.boardingList.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
-                        onTap: () => continueSeatSelected(index, busSeatLayoutProvider),
+                        onTap: () =>
+                            continueSeatSelected(index, busSeatLayoutProvider),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -562,7 +582,7 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
                               width: MediaQuery.of(context).size.width,
                               color: HexColor(MyColors.white),
                               alignment: Alignment.centerLeft,
-                              padding: EdgeInsets.only(top: 5,bottom: 5),
+                              padding: EdgeInsets.only(top: 5, bottom: 5),
                               child: Row(
                                 children: [
                                   Padding(
@@ -573,7 +593,9 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
                                     ),
                                   ),
                                   Text(
-                                    busSeatLayoutProvider.boardingList[index].pStname.toString(),
+                                    busSeatLayoutProvider
+                                        .boardingList[index].pStname
+                                        .toString(),
                                     // busSeatLayoutProvider
                                     //     .boardingList[index].pStname!,
                                     style: GoogleFonts.nunito(
@@ -605,11 +627,13 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
   continueSeatSelected(
       int index, BusSeatLayoutProvider busSeatLayoutProvider) async {
     if (await CommonMethods.getInternetUsingInternetConnectivity()) {
-      busSeatLayoutProvider.bordeingStationId = busSeatLayoutProvider.boardingList[index].pStcode.toString();
+      busSeatLayoutProvider.bordeingStationId =
+          busSeatLayoutProvider.boardingList[index].pStcode.toString();
       List<PassengerInformationPojo> passengerList = [];
       passengerList.addAll(_busSeatLayoutProvider.passengerList);
       Navigator.pop(context);
-      Navigator.pushNamed(context, MyRoutes.fillPassengersDetails, arguments: FillPassengersDetailsArguments(
+      Navigator.pushNamed(context, MyRoutes.fillPassengersDetails,
+          arguments: FillPassengersDetailsArguments(
               busSeatLayoutProvider.dsvcId,
               busSeatLayoutProvider.tripType,
               busSeatLayoutProvider.strpId,
@@ -821,6 +845,7 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      backgroundColor: HexColor(MyColors.white),
       isDismissible: true,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
       builder: (BuildContext context) {
@@ -833,8 +858,11 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
                   child: Container(
                     width: 80,
                     height: 4,
+                    decoration: BoxDecoration(
+                      color: HexColor(MyColors.grey1),
+                      borderRadius: BorderRadius.circular(50),
+                    ),
                     margin: EdgeInsets.only(top: 5, bottom: 10),
-                    color: HexColor(MyColors.white),
                   ),
                 ),
                 Expanded(
@@ -846,17 +874,19 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
-                            margin: EdgeInsets.only(left: 10),
-                            child: Text("Bus Details",
-                                style: GoogleFonts.nunito(
-                                    fontSize: 15, fontWeight: FontWeight.bold)),
+                            margin: EdgeInsets.only(left: 8),
+                            child: Text("Route name",
+                                style: GoogleFonts.nunito(fontSize: 15, fontWeight: FontWeight.bold)),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 8, bottom: 5,right: 5),
+                            child: Text(AppConstants.SERICE_NAME,
+                                style: GoogleFonts.nunito(fontSize: 14, color: HexColor((MyColors.black)))),
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: 10, bottom: 10),
                             child: Text(AppConstants.SERICE_TYPE_NAME,
-                                style: GoogleFonts.nunito(
-                                    fontSize: 15,
-                                    color: HexColor((MyColors.grey1)))),
+                                style: GoogleFonts.nunito(fontSize: 15,fontWeight: FontWeight.w600, color: HexColor((MyColors.black)))),
                           ),
                           busTypeImageSlider(busSeatLayoutProvider),
                           amenitiesSlider(busSeatLayoutProvider),
@@ -874,28 +904,27 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
 
   busTypeImageSlider(BusSeatLayoutProvider busSeatLayoutProvider) {
     return Container(
-      height: 150,
+      height: 160,
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.only(left: 30, right: 30),
-      margin: EdgeInsets.only(left: 15),
+      padding: EdgeInsets.only(left: 20, right: 20),
       child: Container(
-        margin: EdgeInsets.only(right: 10),
         width: MediaQuery.of(context).size.width * 0.6,
         child: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: Image.network(
-              AppConstants.bus_type_url+AppConstants.SERICE_TYPE_ID+"_M.png",
+              AppConstants.bus_type_url +
+                  AppConstants.SERICE_TYPE_ID +
+                  "_M.png",
               fit: BoxFit.fill,
             )),
       ),
     );
   }
 
-
   amenitiesSlider(BusSeatLayoutProvider busSeatLayoutProvider) {
     return Container(
-      height: 55,
-      margin: EdgeInsets.only(top: 10),
+      height: 60,
+      // margin: EdgeInsets.only(top: 10),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.zero,
@@ -908,16 +937,19 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
   }
 
   amenitiesItem(String imagePath, String imageText) {
+    print(imageText);
     return Container(
-      height: 50,
-      margin: EdgeInsets.only(left: 15, right: 5),
+      margin: EdgeInsets.only(left: 5, right: 5),
       child: Column(
         children: [
-          Container(
-            width: 50,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10)),
-            child: Image.network(imagePath),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Image.network(
+              imagePath,
+              height: 35,
+              width: 35,
+              fit: BoxFit.contain,
+            ),
           ),
           // Padding(
           //   padding: const EdgeInsets.all(3.0),
@@ -940,7 +972,7 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 10, left: 10),
+              padding: EdgeInsets.only(top: 0, left: 10),
               child: Text(
                 "Boarding Points",
                 style: GoogleFonts.nunito(
@@ -995,7 +1027,9 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
       context: context,
       isScrollControlled: true,
       isDismissible: false,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
       builder: (BuildContext context) {
         return Container(
             padding: EdgeInsets.only(top: 15),
@@ -1015,7 +1049,9 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
                     Padding(
                       padding: EdgeInsets.only(left: 10),
                       child: Text(
-                        "You can select maximun "+AppConstants.MAX_SEAT_SELECT.toString()+" seats ",
+                        "You can select maximun " +
+                            AppConstants.MAX_SEAT_SELECT.toString() +
+                            " seats ",
                         style: GoogleFonts.nunito(
                             fontSize: 15, color: HexColor(MyColors.black)),
                       ),
@@ -1034,19 +1070,17 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
                         ),
                         child: Center(
                             child: Text(
-                              "OK",
-                              style: GoogleFonts.nunito(
-                                  fontSize: 15, color: HexColor(MyColors.white)),
-                            )),
+                          "OK",
+                          style: GoogleFonts.nunito(
+                              fontSize: 15, color: HexColor(MyColors.white)),
+                        )),
                       ),
                     )
                   ],
                 )
               ],
-            )
-        );
+            ));
       },
     );
   }
-
 }

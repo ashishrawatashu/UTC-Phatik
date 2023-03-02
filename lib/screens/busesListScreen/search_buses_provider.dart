@@ -27,7 +27,6 @@ class SearchBusProvider extends ChangeNotifier {
   bool eveBuses_arrival = false;
   bool nightBuses_arrival = false;
   List<String> amenitiesUrlList = [];
-
   clearFilter() {
     cheapestFirstValue = 0;
     lateDepartureValue = 0;
@@ -53,6 +52,7 @@ class SearchBusProvider extends ChangeNotifier {
   }
 
   splitBusAmenities(String amenities) {
+    amenitiesUrlList.clear();
     List<String> result = amenities.split(',');
     for (int i = 0; i < result.length; i++) {
       amenitiesUrlList.add(AppConstants.AMINITIES_URL + result[i].toString());

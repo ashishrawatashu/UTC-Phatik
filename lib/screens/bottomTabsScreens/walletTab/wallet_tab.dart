@@ -446,7 +446,7 @@ class WalletTabState extends State<WalletTab> {
       // Background color
       barrierDismissible: false,
       barrierLabel: 'Dialog',
-      transitionDuration: Duration(milliseconds: 400),
+      transitionDuration: Duration(milliseconds: 500),
       pageBuilder: (_, __, ___) {
         return Scaffold(
           body: Column(

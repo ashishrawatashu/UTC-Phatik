@@ -17,7 +17,7 @@ class _SelectPaymentOptionScreenState extends State<SelectPaymentOptionScreen> {
       appBar: AppBar(
         backgroundColor: HexColor(MyColors.primaryColor),
         leading: IconButton(
-          icon: Icon(Icons.close_rounded, color: Colors.white),
+          icon: Icon(Icons.close_rounded, color: Colors.white,size: 30),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(

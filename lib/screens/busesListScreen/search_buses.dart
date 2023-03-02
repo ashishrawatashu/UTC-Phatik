@@ -246,8 +246,9 @@ class SearchBusesState extends State<SearchBuses> {
           AppConstants.MAX_SEAT_SELECT = _searchBusProvider.busServiceTypeResponse.serviceTypeMaxSeat![0].currentseats!;
           if (_searchBusProvider.authenticationMethodResponse.code == "100") {
             AppConstants.MY_TOKEN = _searchBusProvider.authenticationMethodResponse.result![0].token.toString();
-            _searchBusProvider.splitBusAmenities(getsearchBuses.services![index].amenities_url.toString());
+            _searchBusProvider.splitBusAmenities(getsearchBuses.services![index].amenities_url.toString(),);
             AppConstants.SERICE_TYPE_NAME = getsearchBuses.services![index].servicetypename.toString();
+            AppConstants.SERICE_NAME = getsearchBuses.services![index].routename.toString();
             AppConstants.JOURNEY_TIME = getsearchBuses.services![index].depttime.toString();
             AppConstants.SERICE_TYPE_ID = getsearchBuses.services![index].srtpid.toString();
             Navigator.pushNamed(context, MyRoutes.busSeatLayout, arguments: SeatLayoutBoardingArguments(
@@ -275,23 +276,26 @@ class SearchBusesState extends State<SearchBuses> {
   }
 
   openFilterDialogDialog() {
-    showDialog(
+    showGeneralDialog(
         context: context,
-        builder: (builder) {
-          return Container(
-              height: MediaQuery.of(context).size.height,
-              child: Scaffold(
-                  appBar: AppBar(
-                    title: Text(AllStringsClass.shortAndFilter),
-                    elevation: 1,
-                    backgroundColor: HexColor(MyColors.primaryColor),
-                    automaticallyImplyLeading: true,
-                    leading: IconButton(
-                      icon: Icon(Icons.close_rounded, color: Colors.white),
-                      onPressed: () => Navigator.of(context).pop(),
-                    ),
-                  ),
-                  body: filterBody()));
+        barrierColor: Colors.white,
+        // Background color
+        barrierDismissible: false,
+        transitionDuration: Duration(milliseconds: 300),
+        pageBuilder: (_, __, ___) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(AllStringsClass.shortAndFilter),
+              elevation: 1,
+              backgroundColor: HexColor(MyColors.primaryColor),
+              automaticallyImplyLeading: true,
+              leading: IconButton(
+                icon: Icon(Icons.close_rounded, color: Colors.white),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ),
+            body: filterBody(),
+          );
         });
   }
 
@@ -733,7 +737,7 @@ class SearchBusesState extends State<SearchBuses> {
     return Visibility(
         visible: showHideList(index, myProvider),
         child: Card(
-          elevation: 3,
+          elevation: 2,
           child: Container(
               padding: EdgeInsets.only(left: 5),
               height: 100,
@@ -755,11 +759,9 @@ class SearchBusesState extends State<SearchBuses> {
                                     const EdgeInsets.only(right: 8.0, top: 5),
                                 child: Text(
                                   serviceCode +
-                                      " " +
-                                      myProvider.filterBusServices[index]
-                                          .servicetypename!,
+                                      " " + myProvider.filterBusServices[index].servicetypename!,
                                   style: GoogleFonts.nunito(
-                                      fontSize: 14,
+                                      fontSize: 16,
                                       color: HexColor(MyColors.primaryColor)),
                                 ),
                               )),
@@ -862,21 +864,20 @@ class SearchBusesState extends State<SearchBuses> {
                       child: Container(
                         width: 100,
                         color: HexColor(MyColors.orange),
-                        padding: EdgeInsets.only(top: 20),
+                        padding: EdgeInsets.only(top: 12),
                         child: Column(
                           children: [
                             Text(
-                              "₹ " +
-                                  myProvider.filterBusServices[index].totalfare
-                                      .toString(),
+                              "₹ " + myProvider.filterBusServices[index].totalfare.toString(),
                               style: GoogleFonts.nunito(
                                   fontSize: 22,
                                   fontWeight: FontWeight.w700,
                                   color: HexColor(MyColors.white)),
                             ),
                             Container(
-                              width: 70,
-                              height: 25,
+                              width: 90,
+                              height: 30,
+                              margin: EdgeInsets.only(top: 12),
                               decoration: BoxDecoration(
                                   color: HexColor(MyColors.primaryColor),
                                   borderRadius: BorderRadius.circular(5),
@@ -892,7 +893,7 @@ class SearchBusesState extends State<SearchBuses> {
                                   "View Seats",
                                   style: GoogleFonts.nunito(
                                       color: HexColor(MyColors.white),
-                                      fontSize: 12),
+                                      fontSize: 14),
                                 ),
                               ),
                             )

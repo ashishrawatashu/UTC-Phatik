@@ -122,11 +122,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GestureDetector(
-                onTap: _onWillPop,
-                child: Container(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: Icon(Icons.close_rounded, color: Colors.white)),
+              IconButton(
+                icon: Icon(Icons.close_rounded, color: Colors.white,size: 30,),
+                onPressed:_onWillPop,
               ),
               Flexible(
                 child: Column(

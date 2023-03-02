@@ -246,7 +246,7 @@ class _HomeTabState extends State<HomeTab> {
 
   recentSearchListBuilder(HomeTabProvider homeTabProvider) {
     return Container(
-      height: 90,
+      height: 100,
       padding: EdgeInsets.only(left: 10),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -366,7 +366,6 @@ class _HomeTabState extends State<HomeTab> {
           homeTabProvider.recentSearchData1[index].destinationStation);
       validationForSearchBus(context);
     }
-
     return InkWell(
       onTap: () => _selectRecentDate(context),
       child: Card(
@@ -374,49 +373,44 @@ class _HomeTabState extends State<HomeTab> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Padding(
-              //   padding: EdgeInsets.all(12.0),
-              //   child: Image.asset("assets/images/greenbusicon.png"),
-              // ),
               Padding(
                 padding: EdgeInsets.only(right: 15, top: 10, left: 15),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Row(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          homeTabProvider
-                              .recentSearchData1[index].sourceStation,
-                          style: GoogleFonts.nunito(
-                            fontSize: 12,
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              homeTabProvider
+                                  .recentSearchData1[index].sourceStation,
+                              style: GoogleFonts.nunito(
+                                fontSize: 12,
+                              ),
+                            ),
+                            Text(
+                              " To",
+                              style: GoogleFonts.nunito(
+                                  fontSize: 14, fontWeight: FontWeight.w700),
+                            )
+                          ],
                         ),
                         Text(
-                          " To",
-                          style: GoogleFonts.nunito(
-                              fontSize: 14, fontWeight: FontWeight.w700),
-                        )
+                            homeTabProvider
+                                .recentSearchData1[index].destinationStation,
+                            style: GoogleFonts.nunito(
+                              fontSize: 12,
+                            )),
+                        Text(homeTabProvider.recentSearchData1[index].searchDate, style: GoogleFonts.nunito(fontSize: 13, color: HexColor(MyColors.grey1))),
                       ],
                     ),
-                    Text(
-                        homeTabProvider
-                            .recentSearchData1[index].destinationStation,
+                    Text("Book Now",
                         style: GoogleFonts.nunito(
-                          fontSize: 12,
-                        )),
-                    Text(homeTabProvider.recentSearchData1[index].searchDate,
-                        style: GoogleFonts.nunito(
-                            fontSize: 10, color: HexColor(MyColors.grey1))),
-                    Container(
-                      margin: EdgeInsets.only(left: 80),
-                      alignment: Alignment.topRight,
-                      child: Text("Book Now",
-                          style: GoogleFonts.nunito(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: HexColor(MyColors.primaryColor))),
-                    ),
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: HexColor(MyColors.primaryColor))),
                   ],
                 ),
               )

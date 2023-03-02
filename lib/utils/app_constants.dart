@@ -63,6 +63,7 @@ class AppConstants {
   static String JOURNEY_TIME = "";
   static String SERVICE_TYPE_ID = "0";
   static String SERICE_TYPE_NAME = "";
+  static String SERICE_NAME = "";
   static String SERICE_TYPE_ID = "";
   static String LAT = "";
   static String LONGG = "";
