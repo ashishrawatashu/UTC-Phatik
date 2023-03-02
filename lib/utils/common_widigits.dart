@@ -25,19 +25,6 @@ class CommonWidgets {
   }
 
 
-  static Widget nicBanner(BuildContext context){
-    return Expanded(
-      child: Container(
-        height: 50,
-        padding: EdgeInsets.only(left: 200,top:5,bottom: 5,right: 5),
-        width: MediaQuery.of(context).size.width,
-        color: HexColor(MyColors.green),
-        child: Image.asset("assets/images/nictagline.png",
-            height: 50,
-            fit: BoxFit.fill),
-      ),
-    );
-  }
 
 
   static Widget somethingWentWrong(BuildContext context){

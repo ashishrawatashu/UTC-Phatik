@@ -23,7 +23,6 @@ import 'package:utc_flutter_app/screens/homeScreen/dashboard_screen.dart';
 import 'package:utc_flutter_app/screens/introScreen/intro_screen.dart';
 import 'package:utc_flutter_app/screens/locateMyBusScreen/locate_my_bus_screen.dart';
 import 'package:utc_flutter_app/screens/myTransactionScreen/my_transation_screen.dart';
-import 'package:utc_flutter_app/screens/offerDetailsScreen/offer_details_screen.dart';
 import 'package:utc_flutter_app/screens/otpScreen/otp_screen.dart';
 import 'package:utc_flutter_app/screens/paymentScreen/payment_screen.dart';
 import 'package:utc_flutter_app/screens/paymentWebViewScreen/payment_web_view_screen.dart';
@@ -104,7 +103,6 @@ class StarBusApp extends StatelessWidget {
             MyRoutes.searchBuses: (context) => const SearchBuses(),
             MyRoutes.selectPlace: (context) => const StationsScreen(),
             MyRoutes.viewAllOffers: (context) => ViewAllOffersScreen(),
-            MyRoutes.offerDetailsScreen: (context) => OfferDetailsScreen(),
             MyRoutes.rateScreenList: (context) => RateListScreen(),
             MyRoutes.rateScreen: (context) => RateScreen(),
             MyRoutes.busSeatLayout: (context) => BusSeatLayoutScreen(),

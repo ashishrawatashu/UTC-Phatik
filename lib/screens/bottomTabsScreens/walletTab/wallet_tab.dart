@@ -370,8 +370,7 @@ class WalletTabState extends State<WalletTab> {
                   GestureDetector(
                     onTap: provider.isValueEnter
                         ? () async {
-                            if (await CommonMethods
-                                .getInternetUsingInternetConnectivity()) {
+                            if (await CommonMethods.getInternetUsingInternetConnectivity()) {
                               confirmTopUpDilaogBox(_walletTabProvider);
                             } else {
                               CommonMethods.showNoInternetDialog(context);
@@ -607,8 +606,7 @@ class WalletTabState extends State<WalletTab> {
                   child: Padding(
                     padding: EdgeInsets.only(left: 15, top: 10),
                     child: Text(
-                      _walletTabProvider
-                          .paymentGatewaysList[index].gatewayname!,
+                      _walletTabProvider.paymentGatewaysList[index].gatewayname!,
                       style: GoogleFonts.nunito(
                           fontSize: 18,
                           color: HexColor(MyColors.black),
@@ -627,8 +625,7 @@ class WalletTabState extends State<WalletTab> {
                     alignment: Alignment.centerLeft,
                     padding: EdgeInsets.only(left: 10),
                     child: Text(
-                      _walletTabProvider
-                          .paymentGatewaysList[index].description!,
+                      _walletTabProvider.paymentGatewaysList[index].description!,
                       style: GoogleFonts.nunito(fontSize: 12),
                     ),
                   ),
@@ -673,9 +670,7 @@ class WalletTabState extends State<WalletTab> {
       context: context,
       isScrollControlled: true,
       isDismissible: false,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
       builder: (BuildContext context) {
         return Container(
             height: 140,

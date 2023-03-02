@@ -108,27 +108,27 @@ class _GetPhoneNumberScreenState extends State<GetPhoneNumberScreen> {
                           ),
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: GestureDetector(
-                            onTap: () {
-                              _getPhoneNumberProvider.userSkipLogin();
-                              moveToDashBoard(context);
-                            },
-                            child: Container(
-                                margin: EdgeInsets.only(right: 20),
-                                child: Text(
-                                  "Skip",
-                                  style: GoogleFonts.nunito(
-                                      color: Colors.white, fontSize: 22),
-                                ))),
+                      Visibility(
+                        visible: true,
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: GestureDetector(
+                              onTap: () {
+                                _getPhoneNumberProvider.userSkipLogin();
+                                moveToDashBoard(context);
+                              },
+                              child: Container(margin: EdgeInsets.only(right: 20), child: Text("Skip",
+                                    style: GoogleFonts.nunito(
+                                        color: Colors.white, fontSize: 22),
+                                  ))),
+                        ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 15),
+                        margin: EdgeInsets.only(top: 10),
                         child: Text(
                           AllStringsClass.otpVerification,
                           style: GoogleFonts.nunito(
-                              fontSize: 30, color: HexColor(MyColors.white)),
+                              fontSize: 20, color: HexColor(MyColors.white)),
                         ),
                       ),
                       Container(
@@ -138,8 +138,8 @@ class _GetPhoneNumberScreenState extends State<GetPhoneNumberScreen> {
                                   BorderRadius.all(Radius.circular(100))),
                           margin: EdgeInsets.only(top: 20),
                           padding: EdgeInsets.all(15),
-                          height: 150,
-                          width: 150,
+                          height: 120,
+                          width: 120,
                           child: Image.asset(
                             "assets/images/phone.png",
                             fit: BoxFit.contain,
@@ -176,7 +176,7 @@ class _GetPhoneNumberScreenState extends State<GetPhoneNumberScreen> {
                   AllStringsClass.loginWithMobileNo,
                   style: GoogleFonts.nunito(
                       fontWeight: FontWeight.w600,
-                      fontSize: 22,
+                      fontSize: 18,
                       color: HexColor(MyColors.primaryColor)),
                 ),
               ),
@@ -237,7 +237,7 @@ class _GetPhoneNumberScreenState extends State<GetPhoneNumberScreen> {
                   _getPhoneNumberProvider.getOtp(context,_formKey);
                 },
                 child: Container(
-                  margin: EdgeInsets.only(top: 15,bottom: 20),
+                  margin: EdgeInsets.only(top: 15,bottom: 10),
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       color: HexColor(MyColors.newGreen),

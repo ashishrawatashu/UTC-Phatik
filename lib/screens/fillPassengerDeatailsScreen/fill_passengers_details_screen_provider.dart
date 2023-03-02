@@ -20,6 +20,9 @@ import 'package:utc_flutter_app/utils/common_methods.dart';
 import 'package:utc_flutter_app/utils/hex_color.dart';
 import 'package:utc_flutter_app/utils/sharedpref/memory_management.dart';
 
+import '../../arguments/payment_screen_arguments.dart';
+import '../../utils/my_routes.dart';
+
 class FillPassengersDetailsProvider extends ChangeNotifier {
 
   String depotServiceCode = "", tripType ="", tripId= "", fromStationId="", toStationId = "", bordeingStationId = "", passengers ="";
@@ -216,6 +219,7 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
 
 // seatno, name, gender , age , concessionId, fare=0, onlineverficationYN, passno, Id verificationYN, Id verfication , documnetverifucation VN, documentverfication
   concatPassengersListToString(){
+
     passengers = "";
     for(int i=0;i<passengerList.length;i++){
       if(passengerList.length==1){
@@ -224,7 +228,17 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
             passengerList[i].gender.toString()+","+
             passengerList[i].age.toString()+","+"1"+","+tripType+","+",0"+","+"N"+","+" "+","+"N"+","+" "+"N"+","+" ";
       }else {
-        passengers = passengerList[i].seatNo.toString()+","+ passengerList[i].name.toString()+","+ passengerList[i].gender.toString()+","+ passengerList[i].age.toString()+","+"1"+","+tripType+","+",0"+","+"N"+","+" "+","+"N"+","+" "+"N"+","+" "+"|"+passengers;
+        passengers = passengerList[i].seatNo.toString()+","+
+            passengerList[i].name.toString()+","+
+            passengerList[i].gender.toString()+","+
+            passengerList[i].age.toString()+","+
+            "1"+","+
+            tripType+"," +
+            ",0"+ ","+
+            "N"+ ","+
+            " "+","+
+            "N"+","
+            +" "+"N"+","+" "+"|"+passengers;
       }
     }
     if(passengerList.length>1){
@@ -254,25 +268,6 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
 
   }
 
-
-  checkUserGenderChangeIconForMale(int index,String type) {
-    if(passengerList[index].gender==type){
-      return "assets/images/malefill.png";
-    }else {
-      return "assets/images/maleicon.png";
-    }
-
-  }
-
-
-  checkUserGenderChangeIconForFeMale(int index,String type) {
-    if(passengerList[index].gender==type){
-      return "assets/images/femalefill.png";
-    }else {
-      return "assets/images/femaleicon.png";
-    }
-
-  }
 
 
 
@@ -382,9 +377,7 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
 
   }
   getPhoneNumber() async {
-    await encryptedSharedPreferences
-        .getString(StringsFile.phoneNumber)
-        .then((String value) {
+    await encryptedSharedPreferences.getString(StringsFile.phoneNumber).then((String value) {
       //print(value + "PHONE NUMBER GET");
       AppConstants.USER_MOBILE_NO = value;
 
@@ -415,7 +408,7 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
     if(loginSuccessResponse.code=="100"){
       //print(userPhoneTextEditingController.text.toString()+"PHONEEEEE");
       MemoryManagement.setPhoneNumber(phoneNumber: userPhoneTextEditingController.text.toString());
-      MemoryManagement.setPhoneNumber(phoneNumber: username);
+      MemoryManagement.setUserName(userName: username);
       await getPhoneNumber();
     }
 
@@ -441,7 +434,7 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
 
   Future<CheckMobileNumberResponse> checkMobileNumber(String mobileNumber) async{
     var response = await checkMobileNumberDataSource.checkMobileNumberApi(mobileNumber);
-    //print(response);
+    print(response);
     checkMobileNumberResponse = CheckMobileNumberResponse.fromJson(response);
     if(checkMobileNumberResponse.code=="100") {
       already_yn = checkMobileNumberResponse.traveller![0].alreadyYn!;
@@ -457,17 +450,34 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
   SavePassengersResponse savePassengersResponse = SavePassengersResponse();
   SavePassengersDataSource savePassengersDataSource = SavePassengersDataSource();
 
-  Future<SavePassengersResponse> savePassengers() async{
+  Future<SavePassengersResponse> savePassengers(BuildContext context) async{
+    CommonMethods.showLoadingDialog(context);
+    print(AppConstants.USER_MOBILE_NO+"===");
     var response = await savePassengersDataSource.savePassengersApi(depotServiceCode, tripType, tripId, AppConstants.JOURNEY_DATE, fromStationId, toStationId, "T", AppConstants.USER_MOBILE_NO, AppConstants.USER_MOBILE_NO, userEmailTextEditingController.text.toString(), bordeingStationId, passengers, ip_imei,AppConstants.MY_TOKEN);
-    //print(response);
+    print(response.toString()+"===>");
     savePassengersResponse = SavePassengersResponse.fromJson(response);
-    if(savePassengersResponse.code=="100"){
-      ticketNumber = savePassengersResponse.result![0].pTicketnumber.toString();
-      //print(ticketNumber);
+    Navigator.pop(context);
+    if (savePassengersResponse.code == "100") {
+      if(!savePassengersResponse.result!.isEmpty){
+        ticketNumber = savePassengersResponse.result![0].pTicketnumber.toString();
+        moveToPaymentScreen(context);
+      }else {
+        CommonMethods.showErrorMoveToDashBaordDialog(context, "Something went wrong, please try again");
+      }
     }
-
+    else if (savePassengersResponse.code == "999") {
+      CommonMethods.showTokenExpireDialog(context);
+    }
+    else if (savePassengersResponse.code == "900") {
+      CommonMethods.showErrorDialog(context, "Something went wrong, please try again");
+    }
+    else if (savePassengersResponse.code == "200") {
+      CommonMethods.showErrorMoveToDashBaordDialog(context, savePassengersResponse.msg.toString());
+    }
+    else {
+      CommonMethods.showErrorMoveToDashBaordDialog(context, "Something went wrong, please try again");
+    }
     return savePassengersResponse;
-
   }
 
 
@@ -478,7 +488,7 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
 
   Future<GetConcessionTypesResponse> getConcessionTypes(String dsvcid, String fromstationId ,String tostationId, BuildContext context) async{
     var response = await getConcessionTypesDataSource.getConcessionTypes(dsvcid, fromstationId, tostationId, AppConstants.MY_TOKEN);
-    print(response);
+    // print(response);
     getConcessionTypesResponse = GetConcessionTypesResponse.fromJson(response);
     if(getConcessionTypesResponse.code=="100"){
       concessionList = getConcessionTypesResponse.concession!;
@@ -494,20 +504,18 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
 
   }
 
-
+//FF23022402009
   // CheckConcessionResponse
   CheckConcessionResponse checkConcessionResponse = CheckConcessionResponse();
   CheckConcessionDataSource checkConcessionDataSource = CheckConcessionDataSource();
 
-
   Future<CheckConcessionResponse> checkConcession(String concession, String gender ,String age) async{
     var response = await checkConcessionDataSource.checkConcessionApi(concession, gender, age, AppConstants.MY_TOKEN);
-    print(response);
+    // print(response);
     checkConcessionResponse = CheckConcessionResponse.fromJson(response);
     if(checkConcessionResponse.code=="100"){
       //print(checkConcessionResponse.concession.toString());
     }
-
     return checkConcessionResponse;
 
   }
@@ -560,6 +568,7 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
       isContainAnyConcession = true;
     }
     notifyListeners();
+
   }
 
   bool validation = false;
@@ -569,9 +578,9 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
      for(int i=0;i<concessionList.length;i++){
        if(concessionName==concessionList[i].categoryname.toString()){
          concessionID = concessionList[i].categorycode.toString();
-      }
+       }
     }
-     if(concessionID=="0"){
+     if(concessionID == "0"){
 
     }
      else {
@@ -589,6 +598,7 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
           await checkConcession(concessionID, passengerList[index].gender.toString(), passengerList[index].passengerAgeTextEditingController.text.toString());
           Navigator.pop(context);
         }
+
           if(await checkConcessionResponse.code=="100"){
             if(checkConcessionResponse.concession![0].pgenderresult!="Success"){
               CommonMethods.showSnackBar(context, checkConcessionResponse.concession![0].pgenderresult.toString());
@@ -613,7 +623,8 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
               validation = false;
               selectConsessionFromDropDown(concessionList[0].categoryname.toString(), index);
             }
-          }else  if(await checkConcessionResponse.code=="999"){
+          }
+          else  if(await checkConcessionResponse.code=="999"){
             CommonMethods.showTokenExpireDialog(context);
           }else{
             CommonMethods.showErrorMoveToDashBaordDialog(context,"Something went wrong, please try again");
@@ -638,6 +649,30 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
 
      }
      notifyListeners();
+  }
+
+  moveToPaymentScreen(BuildContext context) {
+    if (ticketNumber == "EXCEPTION") {
+      CommonMethods.showSnackBar(context, "Something went wrong !");
+    } else {
+      //print("TICKET-NO===>" + _fillPassengersDetailsProvider.ticketNumber);
+      passengerList.clear();
+      Navigator.pushNamed(context, MyRoutes.paymentScreen, arguments: PaymentScreenArguments(ticketNumber, "PassengersDetails"));
+    }
+  }
+
+  void setNoConcession(int index) {
+    passengerList[index].pgenderresult="N";
+    passengerList[index].pageresult="N";
+    passengerList[index].sponlineverificationyn="N";
+    passengerList[index].spidverificationyn="N";
+    passengerList[index].spidverification="N";
+    passengerList[index].spdocumentverificationyn="N";
+    passengerList[index].spdocumentverification="N";
+    passengerList[index].concessionName=concessionList[0].categoryname;
+    passengerList[index].spconcessionname=concessionList[0].categoryname;
+    // isContainAnyConcession = false;
+    notifyListeners();
   }
 
 }

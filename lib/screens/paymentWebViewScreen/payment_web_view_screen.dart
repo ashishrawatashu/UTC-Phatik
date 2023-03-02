@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +13,7 @@ import 'package:utc_flutter_app/utils/common_methods.dart';
 import 'package:utc_flutter_app/utils/hex_color.dart';
 import 'package:utc_flutter_app/utils/my_routes.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:http/http.dart' as http;
 
 class PaymentWebViewScreen extends StatefulWidget {
   const PaymentWebViewScreen({Key? key}) : super(key: key);
@@ -47,19 +50,16 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
         )) ??
         false;
   }
-
+  late final WebViewController webViewController;
   @override
   void initState() {
     super.initState();
-    _paymentWebViewScreenProvider =
-        Provider.of<PaymentWebViewScreenProvider>(context, listen: false);
+    _paymentWebViewScreenProvider = Provider.of<PaymentWebViewScreenProvider>(context, listen: false);
   }
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments
-        as WebViewPaymentScreenArguments;
-    //print(args.ticketNo_OR_walletRefNo + "TICKET_OR_REF.NO");
+    final args = ModalRoute.of(context)!.settings.arguments as WebViewPaymentScreenArguments;
     _paymentWebViewScreenProvider.from = args.from;
     _paymentWebViewScreenProvider.paymentGatewayName = args.gatewayName;
     if (args.from == "PaymentScreen") {
@@ -107,8 +107,7 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
                     paymentWebViewScreenProvider.checkPaymentStatus(context);
                   },
                 ),
-                title: Text("Payment By " +
-                    _paymentWebViewScreenProvider.paymentGatewayName),
+                title: Text("Payment By " + _paymentWebViewScreenProvider.paymentGatewayName),
               ),
               body: Container(
                   height: MediaQuery.of(context).size.height,
@@ -123,6 +122,7 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
   webView() {
     return Stack(
       children: [
+
         WebView(
           initialUrl: paymentGateWayUrl,
           javascriptMode: JavascriptMode.unrestricted,
@@ -147,6 +147,7 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
       ],
     );
   }
+
 
    showDialogBox()  async {
     return (await showDialog(

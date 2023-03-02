@@ -357,7 +357,7 @@ class _RaiseAlarmScreenState extends State<RaiseAlarmScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(raiseAlarmProvider.alarmList[index].alarmtype!,style: GoogleFonts.nunito(fontSize: 16),),
+                child: Text(raiseAlarmProvider.alarmList[index].alarmtype!,style: GoogleFonts.nunito(fontSize: 14),),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),

@@ -16,7 +16,6 @@ class AllStationsProvider extends ChangeNotifier {
     var response = await getDestinationDataSource.getAllDestinationApi(searchKeyword,flag_F_T,AppConstants.IS_APP_ACTIVE_TOKEN);
     GetStationsResponse listresponse = GetStationsResponse.fromJson(response);
     if(listresponse.code=="100"){
-
     }else if(listresponse.code=="900"){
       CommonMethods.showErrorDialog(context, "Something went wrong, please try again !");
     }

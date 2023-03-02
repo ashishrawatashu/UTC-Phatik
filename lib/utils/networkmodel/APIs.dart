@@ -3,7 +3,8 @@ class APIs {
   APIs._();
 
   // Base url
-  static const String baseUrl = "https://utcdemo.uk.gov.in/utcauditpathik/wstraveller.asmx";
+  // static const String baseUrl = "https://utcdemo.uk.gov.in/utcaudit/wstraveller.asmx";
+  static const String baseUrl = "https://utconline.uk.gov.in/wstraveller.asmx";
 
   static const String AuthenticationMethod = "$baseUrl/AuthenticationMethod";
 
@@ -156,6 +157,8 @@ class APIs {
 
   //removeToken
   static const String removeToken = "$baseUrl/removeToken";
+
+  static const String send_ticket_confirmation = "$baseUrl/send_ticket_confirmation";
 
   static late BuildContext context;
 

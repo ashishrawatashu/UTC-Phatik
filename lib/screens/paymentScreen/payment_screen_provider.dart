@@ -13,6 +13,7 @@ import 'package:utc_flutter_app/response/passenger_confirm_details_response.dart
 import 'package:utc_flutter_app/response/ticket_update_response.dart';
 import 'package:utc_flutter_app/response/wallet_ticket_confirm_response.dart';
 import 'package:utc_flutter_app/utils/app_constants.dart';
+import 'package:utc_flutter_app/utils/common_methods.dart';
 
 class PaymentScreenProvider extends ChangeNotifier{
 
@@ -34,16 +35,23 @@ class PaymentScreenProvider extends ChangeNotifier{
 
   PassengerConfirmDetailsResponse passengerConfirmDetailsResponse = PassengerConfirmDetailsResponse();
   PassengerConfirmDetailsDataSource passengerConfirmDetailsDataSource = PassengerConfirmDetailsDataSource();
-  Future<PassengerConfirmDetailsResponse> getPassengerConfirmationDetails(String ticketNumber) async {
+  Future<PassengerConfirmDetailsResponse> getPassengerConfirmationDetails(String ticketNumber, BuildContext context) async {
     var response = await passengerConfirmDetailsDataSource.passengerConfirmDetailsApi(ticketNumber,AppConstants.MY_TOKEN);
-    //print(response);
-    setLoading(false);
+    print(response);
+
     passengerConfirmDetailsResponse = PassengerConfirmDetailsResponse.fromJson(response);
     if(passengerConfirmDetailsResponse.code=="100"){
+      setLoading(false);
       ticketDeatils = passengerConfirmDetailsResponse.ticketDeatil!;
       ticketFare = passengerConfirmDetailsResponse.ticketFare!;
       taxes = passengerConfirmDetailsResponse.ticketTax!;
       totalAmount = passengerConfirmDetailsResponse.ticketFare![0].netfare!.toDouble();
+    }else if(passengerConfirmDetailsResponse.code=="888"){
+      CommonMethods.showErrorMoveToDashBaordDialog(context, "Something went wrong, please tray again");
+    }else if(passengerConfirmDetailsResponse.code=="900"){
+      CommonMethods.showErrorDialog(context, "Something went wrong, please try again !");
+    }else {
+      CommonMethods.showErrorMoveToDashBaordDialog(context, "Something went wrong, please tray again");
     }
 
     return passengerConfirmDetailsResponse;
@@ -55,6 +63,7 @@ class PaymentScreenProvider extends ChangeNotifier{
   Future<TicketUpdateResponse> updateTicket() async {
     var response = await ticketUpdateDataSource.getTicketUpdateApi(ticketNumber, "W");
     //print(response);
+
     setLoading(false);
     ticketUpdateResponse = TicketUpdateResponse.fromJson(response);
     if(ticketUpdateResponse.code=="100"){
@@ -97,7 +106,7 @@ class PaymentScreenProvider extends ChangeNotifier{
     }
 
 
-    setLoading(false);
+    //setLoading(false);
     return getWalletResponse;
 
   }

@@ -54,29 +54,31 @@ class _CancelTicketsScreenState extends State<CancelTicketsScreen> {
           color: Colors.white,
           child: Column(
             children: [
+              topAppBarSection(),
               Expanded(
-                child: Column(
-                  children: [
-                    topAppBarSection(),
-                    Stack(
-                      children: [
-                        cancelTicketsProvider.isLoading
-                            ? Container(
-                                height: 500,
-                                width: MediaQuery.of(context).size.width,
-                                child: CommonWidgets
-                                    .buildCircularProgressIndicatorWidget(),
-                              )
-                            : Column(
-                                children: [
-                                  // ticketStatus(),
-                                  boardingSectioncard(),
-                                  // fareSummaryCard()
-                                ],
-                              )
-                      ],
-                    ),
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Stack(
+                        children: [
+                          cancelTicketsProvider.isLoading
+                              ? Container(
+                                  height: 500,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: CommonWidgets
+                                      .buildCircularProgressIndicatorWidget(),
+                                )
+                              : Column(
+                                  children: [
+                                    // ticketStatus(),
+                                    boardingSectioncard(),
+                                    // fareSummaryCard()
+                                  ],
+                                )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Row(
@@ -123,7 +125,7 @@ class _CancelTicketsScreenState extends State<CancelTicketsScreen> {
                       }
                     : () {},
                 child: Container(
-                  margin: EdgeInsets.only(left: 15, right: 15, bottom: 20),
+                  margin: EdgeInsets.only(left: 15, right: 15, bottom: 10),
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       color: cancelTicketsProvider.isSelected
@@ -661,79 +663,83 @@ class _CancelTicketsScreenState extends State<CancelTicketsScreen> {
               topLeft: Radius.circular(20), topRight: Radius.circular(20))),
       builder: (BuildContext context) {
         return Container(
-            height: MediaQuery.of(context).size.height * 0.2,
             padding: EdgeInsets.only(top: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Wrap(
               children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 10, bottom: 5),
-                  child: Text(
-                    "Confirmation !",
-                    style: GoogleFonts.nunito(
-                        fontSize: 18, color: HexColor(MyColors.black)),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 10, bottom: 10),
-                  child: Text(
-                    "Do you want proceed  for cancellation of seat(s) " +
-                        cancelTicketsProvider.selectedSeats,
-                    style: GoogleFonts.nunito(
-                        fontSize: 15, color: HexColor(MyColors.black)),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        height: 40,
-                        width: MediaQuery.of(context).size.width / 2.2,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: HexColor(MyColors.orange)),
-                          color: HexColor(MyColors.white),
-                        ),
-                        child: Center(
-                            child: Text(
-                          "No",
-                          style: GoogleFonts.nunito(
-                              fontSize: 15, color: HexColor(MyColors.orange)),
-                        )),
+                    Padding(
+                      padding: EdgeInsets.only(left: 10, bottom: 5),
+                      child: Text(
+                        "Confirmation !",
+                        style: GoogleFonts.nunito(
+                            fontSize: 18, color: HexColor(MyColors.black)),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop(context);
-                        cancelTicket(cancelTicketsProvider);
-                      },
-                      child: Container(
-                        height: 40,
-                        width: MediaQuery.of(context).size.width / 2.2,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: HexColor(MyColors.orange),
-                        ),
-                        child: Center(
-                            child: Text(
-                          "Yes",
-                          style: GoogleFonts.nunito(
-                              fontSize: 15, color: HexColor(MyColors.white)),
-                        )),
+                    Padding(
+                      padding: EdgeInsets.only(left: 10, bottom: 10),
+                      child: Text(
+                        "Do you want proceed  for cancellation of seat(s) " +
+                            cancelTicketsProvider.selectedSeats,
+                        style: GoogleFonts.nunito(
+                            fontSize: 15, color: HexColor(MyColors.black)),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              height: 40,
+                              width: MediaQuery.of(context).size.width / 2.2,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(color: HexColor(MyColors.orange)),
+                                color: HexColor(MyColors.white),
+                              ),
+                              child: Center(
+                                  child: Text(
+                                    "No",
+                                    style: GoogleFonts.nunito(
+                                        fontSize: 15, color: HexColor(MyColors.orange)),
+                                  )),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pop(context);
+                              cancelTicket(cancelTicketsProvider);
+                            },
+                            child: Container(
+                              height: 40,
+                              width: MediaQuery.of(context).size.width / 2.2,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: HexColor(MyColors.orange),
+                              ),
+                              child: Center(
+                                  child: Text(
+                                    "Yes",
+                                    style: GoogleFonts.nunito(
+                                        fontSize: 15, color: HexColor(MyColors.white)),
+                                  )),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
-                ),
-                SizedBox(
-                  height: 3,
                 )
               ],
-            ));
+            )
+        );
       },
     );
   }

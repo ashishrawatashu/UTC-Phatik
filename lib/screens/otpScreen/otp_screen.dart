@@ -64,7 +64,7 @@ class _OtpScreenState extends State<OtpScreen> {
           child: Stack(
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.5,
+                height: MediaQuery.of(context).size.height * 0.4,
                 width: MediaQuery.of(context).size.width,
                 child: Image.asset(
                   "assets/images/phoneotpbg.png",
@@ -115,7 +115,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             Padding(
                               padding: const EdgeInsets.only(top: 0, left: 5),
                               child: Text(
-                                "JKRTC",
+                                "UTC Pathik",
                                 style: GoogleFonts.oleoScript(
                                   fontSize: 20,
                                   color: HexColor(MyColors.green),
@@ -130,7 +130,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         child: Text(
                           AllStringsClass.enterVerificationCode,
                           style: GoogleFonts.nunito(
-                              fontSize: 30, color: HexColor(MyColors.white)),
+                              fontSize: 20, color: HexColor(MyColors.white)),
                         ),
                       ),
                       Container(
@@ -138,10 +138,10 @@ class _OtpScreenState extends State<OtpScreen> {
                               color: HexColor(MyColors.white),
                               borderRadius:
                               BorderRadius.all(Radius.circular(100))),
-                          margin: EdgeInsets.only(top: 15),
+                          margin: EdgeInsets.only(top: 10),
                           padding: EdgeInsets.all(15),
-                          height: 120,
-                          width: 120,
+                          height: 80,
+                          width: 80,
                           child: Image.asset(
                             "assets/images/otp.png",
                           )),
@@ -175,15 +175,15 @@ class _OtpScreenState extends State<OtpScreen> {
                         AllStringsClass.enterSixDigitOtp,
                         style: GoogleFonts.nunito(
                             fontWeight: FontWeight.w600,
-                            fontSize: 18, color: HexColor(MyColors.primaryColor)),
+                            fontSize: 16, color: HexColor(MyColors.primaryColor)),
                       ),
                     ),
                     Text("Mobile Number - +91-"+"XXXXX"+otpScreenProvider.mobilenumber.substring(otpScreenProvider.mobilenumber.length-4,otpScreenProvider.mobilenumber.length),
-                      style: GoogleFonts.nunito(fontWeight: FontWeight.w600, fontSize: 18, color: HexColor(MyColors.primaryColor)),),
+                      style: GoogleFonts.nunito(fontWeight: FontWeight.w600, fontSize: 16, color: HexColor(MyColors.primaryColor)),),
                     Visibility(
                       visible: otpScreenProvider.already_yn == "Y" ? false : true,
                       child: Container(
-                        margin: EdgeInsets.only(top: 20),
+                        margin: EdgeInsets.only(top: 10),
                         child: TextFormField(
                           focusNode: focus,
                           enableInteractiveSelection: false,
@@ -211,10 +211,9 @@ class _OtpScreenState extends State<OtpScreen> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 20),
+                      margin: EdgeInsets.only(top: 10),
                       child: TextFormField(
                         focusNode: focusOtp,
-                        maxLength: 6,
                         enableInteractiveSelection: false,
                         autofocus:otpScreenProvider.already_yn == "Y"
                             ? true
@@ -222,6 +221,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         controller: _otpScreenProvider.otpTextEditingController,
                         keyboardType: TextInputType.number,
                         inputFormatters: <TextInputFormatter>[
+                          LengthLimitingTextInputFormatter(6),
                           FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                         ],
                         decoration: InputDecoration(
@@ -247,7 +247,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     GestureDetector(
                       onTap: () => otpScreenProvider.userLoginWithOtp(context,_formKeyForOtpandName),
                       child: Container(
-                        margin: EdgeInsets.only(top: 15),
+                        margin: EdgeInsets.only(top: 10),
                         padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
                             color: HexColor(MyColors.newGreen),

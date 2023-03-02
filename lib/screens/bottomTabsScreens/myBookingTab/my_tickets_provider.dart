@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -11,12 +12,14 @@ import 'package:utc_flutter_app/dataSource/authenticationMethodDataSource/authen
 import 'package:utc_flutter_app/dataSource/getCancelAvailableTicketsDataSource/getCancelAvailableTickets_data_source.dart';
 import 'package:utc_flutter_app/dataSource/getQRTextEnDataSource/get_qr_text_en_data_source.dart';
 import 'package:utc_flutter_app/dataSource/passengerConfirmDetails/passenger_confirm_details_data_source.dart';
+import 'package:utc_flutter_app/dataSource/sentTicketConfirmationDataSource/sent_ticket_confirmation_data_source.dart';
 import 'package:utc_flutter_app/dataSource/ticketUpdateDataSource/ticket_update_data_source.dart';
 import 'package:utc_flutter_app/dataSource/ticketsBusDataSource/tickets_data_source.dart';
 import 'package:utc_flutter_app/response/authentication_method_response.dart';
 import 'package:utc_flutter_app/response/get_cancel_available_tickets_response.dart';
 import 'package:utc_flutter_app/response/get_qr_text_en_response.dart';
 import 'package:utc_flutter_app/response/passenger_confirm_details_response.dart';
+import 'package:utc_flutter_app/response/sent_ticket_confirmation.dart';
 import 'package:utc_flutter_app/response/ticket_update_response.dart';
 import 'package:utc_flutter_app/response/tickets_response.dart';
 import 'package:utc_flutter_app/utils/app_constants.dart';
@@ -351,5 +354,38 @@ class MyTicketsProvider extends ChangeNotifier{
     }
     return false;
   }
+
+  checkActiveTicket(int index) {
+    DateTime currentDate = DateTime.now();
+    DateTime journeyDate =  DateFormat('dd/MM/yyyy').parse(ticketDetails[index].journeydate.toString().trim());
+    if(currentDate.compareTo(journeyDate) < 0){
+      if(ticketDetails[index].ticketbookingstatus=="A"){
+        return true;
+      }
+    }
+    if(currentDate.compareTo(journeyDate) > 0){
+      return false;
+    }
+    return false;
+
+  }
+
+  SentTicketConfirmation sentTicketConfirmation = SentTicketConfirmation();
+  SentTicketConfirmationDataSource sentTicketConfirmationDataSource = SentTicketConfirmationDataSource();
+
+  Future<SentTicketConfirmation> resentTicket(String ticketNo,BuildContext context) async {
+    var response = await sentTicketConfirmationDataSource.sentTicketConfirmationApi(ticketNo,AppConstants.TOKEN);
+    sentTicketConfirmation = SentTicketConfirmation.fromJson(response);
+    print(response);
+    if(sentTicketConfirmation.code=="100"){
+      CommonMethods.dialogDone(context, "Ticket sent successfully ");
+    }
+
+    return sentTicketConfirmation;
+  }
+
+
+
+
 
 }

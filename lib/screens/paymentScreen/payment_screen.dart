@@ -63,15 +63,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
     super.initState();
 
     _paymentScreenProvider = Provider.of<PaymentScreenProvider>(context, listen: false);
-
+//72F1310103202317
     Future.delayed(Duration.zero, () {
       final args = ModalRoute.of(context)!.settings.arguments as PaymentScreenArguments;
-      //print(args.ticketNumber);
+      print(args.ticketNumber);
       _paymentScreenProvider.ticketNumber = args.ticketNumber;
-      _paymentScreenProvider.getPassengerConfirmationDetails(args.ticketNumber);
+      _paymentScreenProvider.getPassengerConfirmationDetails(args.ticketNumber,context);
       _paymentScreenProvider.getWalletDetails(AppConstants.USER_MOBILE_NO);
     });
-
   }
 
   @override
@@ -473,14 +472,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     style: GoogleFonts.nunito(
                         color: HexColor(MyColors.black),
                         fontWeight: FontWeight.w600,
-                        fontSize: 18),
+                        fontSize: 16),
                   ),
                   Text(
                     "₹ " + paymentScreenProvider.totalAmount.toString(),
                     style: GoogleFonts.nunito(
                         color: HexColor(MyColors.black),
                         fontWeight: FontWeight.w700,
-                        fontSize: 22),
+                        fontSize: 18),
                   ),
                 ],
               ),
@@ -1245,29 +1244,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
               body: Container(
                   height: MediaQuery.of(context).size.height,
                   color: Colors.transparent,
-                  //could change this to Color(0xFF737373),
-                  //so you don't have to change MaterialApp canvasColor
                   child: WebView(
                     initialUrl:
                     AppConstants.TERSM_AND_CONDITIONS,
                     javascriptMode: JavascriptMode.unrestricted,
-                  )),
+                  )
+              ),
             ),
           );
         });
   }
 
-  // checkLoading(PaymentScreenProvider paymentScreenProvider) {
-  //   if(paymentScreenProvider.isLoading){
-  //     return CommonWidgets.buildCircularProgressIndicatorWidget();
-  //   }else {
-  //     return Column(
-  //       children: [
-  //         bookingProcessLayout(),
-  //         middleSection(),
-  //         bottomSection()
-  //       ],
-  //     );
-  //   }
-  // }
 }

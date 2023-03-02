@@ -13,7 +13,9 @@ import 'package:utc_flutter_app/utils/common_methods.dart';
 import 'package:utc_flutter_app/utils/my_routes.dart';
 
 import '../../dataSource/passengerConfirmDetails/passenger_confirm_details_data_source.dart';
+import '../../dataSource/sentTicketConfirmationDataSource/sent_ticket_confirmation_data_source.dart';
 import '../../response/passenger_confirm_details_response.dart';
+import '../../response/sent_ticket_confirmation.dart';
 
 class PaymentWebViewScreenProvider extends ChangeNotifier {
   String wallettTxnRefrence = "";
@@ -96,6 +98,7 @@ class PaymentWebViewScreenProvider extends ChangeNotifier {
       if (passengerConfirmDetailsResponse.code == "100") {
         if(!passengerConfirmDetailsResponse.ticketDeatil!.isEmpty){
           if (passengerConfirmDetailsResponse.ticketDeatil![0].ticketbookingstatus == "A") {
+            await sentTicket(ticketNumber);
             CommonMethods.dialogDone(context, "Ticket booked successfully");
             Navigator.pushNamed(context, MyRoutes.bookingHistoryDetailsScreen, arguments: PaymentScreenArguments(ticketNumber, "Booking"));
           }else if (passengerConfirmDetailsResponse.ticketDeatil![0].ticketbookingstatus == "R") {
@@ -108,14 +111,20 @@ class PaymentWebViewScreenProvider extends ChangeNotifier {
         }
       } else {
         CommonMethods.showSnackBar(context, "Ticket is not booked !");
-        Navigator.push(
-          context,
-          PageTransition(
-            type: PageTransitionType.leftToRight,
-            child: DashboardScreen(),
+        Navigator.push(context, PageTransition(type: PageTransitionType.leftToRight, child: DashboardScreen(),
           ),
         );
       }
     }
   }
+
+  SentTicketConfirmation sentTicketConfirmation = SentTicketConfirmation();
+  SentTicketConfirmationDataSource sentTicketConfirmationDataSource = SentTicketConfirmationDataSource();
+
+  Future<SentTicketConfirmation> sentTicket(String ticketNo) async {
+    var response = await sentTicketConfirmationDataSource.sentTicketConfirmationApi(ticketNo,AppConstants.TOKEN);
+    sentTicketConfirmation = SentTicketConfirmation.fromJson(response);
+    return sentTicketConfirmation;
+  }
+
 }

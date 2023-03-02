@@ -34,7 +34,7 @@ class CommonProviderForInAppLogin extends ChangeNotifier {
   bool fromResend = false;
   otpLimitSet(var limit){
     _otpLimit = limit;
-    print(otpLimit);
+    // print(otpLimit);
     notifyListeners();
   }
 
@@ -89,13 +89,13 @@ class CommonProviderForInAppLogin extends ChangeNotifier {
 
   matchOtp() async {
     if(EncryptOTP==MyEncryptOTP){
-      print("OTP valid");
+      // print("OTP valid");
       if(already_yn=="N"){
         print("For N");
         await loginFirstTime(userPhoneTextEditingController.text.toString(), userFullNameTextEditingController.text.toString(), login_app_web,ip_imei);
         saveDataToSharedPref("true","false");
       }else {
-        print("For Yyyyy");
+        // print("For Yyyyy");
         await loginSuccess(userPhoneTextEditingController.text.toString(), login_app_web, ip_imei);
         saveDataToSharedPref("true","false");
         // if(loginSuccessResponse.code=="100"){
@@ -108,7 +108,7 @@ class CommonProviderForInAppLogin extends ChangeNotifier {
       }
       return true;
     }else{
-      print("OTP invalid");
+      // print("OTP invalid");
       await loginFail(mobilenumber, login_app_web, ip_imei);
       if(loginSuccessResponse.code=="100"){
 
@@ -137,7 +137,7 @@ class CommonProviderForInAppLogin extends ChangeNotifier {
 
   Future<LoginResponse> loginFirstTime(String mobileNumber,String userName,String login_app_web, String ip_imei) async{
     var response = await loginFirstTimeDataSource.loginFirstTimeApi(mobileNumber,userName,login_app_web,ip_imei);
-    print(response);
+    // print(response);
     loginFirstTimeResponse = LoginResponse.fromJson(response);
     username = userFullNameTextEditingController.text.toString();
     MemoryManagement.setPhoneNumber(phoneNumber: userPhoneTextEditingController.text.toString());
@@ -156,10 +156,10 @@ class CommonProviderForInAppLogin extends ChangeNotifier {
 
   Future<LoginResponse> loginSuccess(String mobileNumber,String login_app_web, String ip_imei) async{
     var response = await loginSuccessDataSource.loginSuccessApi(mobileNumber,login_app_web,ip_imei);
-    print(response);
+    // print(response);
     loginSuccessResponse = LoginResponse.fromJson(response);
     if(loginSuccessResponse.code=="100"){
-      print(userPhoneTextEditingController.text.toString()+"PHONEEEEE");
+      // print(userPhoneTextEditingController.text.toString()+"PHONEEEEE");
       MemoryManagement.setPhoneNumber(phoneNumber: mobileNumber);
       MemoryManagement.setUserName(userName: username);
       await getPhoneNumber();
@@ -177,7 +177,7 @@ class CommonProviderForInAppLogin extends ChangeNotifier {
 
   Future<LoginResponse> loginFail(String mobileNumber,String login_app_web, String ip_imei) async{
     var response = await loginFailDataSource.loginFailApi(mobileNumber,login_app_web,ip_imei);
-    print(response);
+    // print(response);
     loginFailTimeResponse = LoginResponse.fromJson(response);
     return loginFailTimeResponse;
 
@@ -190,7 +190,7 @@ class CommonProviderForInAppLogin extends ChangeNotifier {
 
   Future<CheckMobileNumberResponse> checkMobileNumber(String mobileNumber) async{
     var response = await checkMobileNumberDataSource.checkMobileNumberApi(mobileNumber);
-    print(response);
+    // print(response);
     checkMobileNumberResponse = CheckMobileNumberResponse.fromJson(response);
     if(checkMobileNumberResponse.code=="100") {
       already_yn = checkMobileNumberResponse.traveller![0].alreadyYn!;
@@ -211,14 +211,14 @@ class CommonProviderForInAppLogin extends ChangeNotifier {
         .then((String value) {
       print(value + "PHONE NUMBER GET");
       AppConstants.USER_MOBILE_NO = value;
-      print(AppConstants.USER_MOBILE_NO);
+      // print(AppConstants.USER_MOBILE_NO);
       /// Prints Hello, World!
     });
 
     await encryptedSharedPreferences
         .getString(StringsFile.userName)
         .then((String value) {
-      print(value + "USERNAME GET ");
+      // print(value + "USERNAME GET ");
       AppConstants.USER_NAME = value;
 
       /// Prints Hello, World!

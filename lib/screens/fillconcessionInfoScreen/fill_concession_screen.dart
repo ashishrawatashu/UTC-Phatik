@@ -378,40 +378,38 @@ class _FillConcessionScreenState extends State<FillConcessionScreen> {
           Padding(
             padding: const EdgeInsets.only(bottom: 8),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  flex: 3,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        fillConcessionScreenProvider.passengerList[index].name
-                            .toString(),
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: HexColor(MyColors.black)),
-                      ),
-                      Text(
-                        ", ".toString(),
-                        style: TextStyle(color: HexColor(MyColors.black)),
-                      ),
-                      Text(
-                        fillConcessionScreenProvider
-                            .passengerList[index].genderName
-                            .toString(),
-                        style: TextStyle(color: HexColor(MyColors.black)),
-                      ),
-                      Text(
-                        ", ".toString(),
-                        style: TextStyle(color: HexColor(MyColors.black)),
-                      ),
-                      Text(
-                        fillConcessionScreenProvider.passengerList[index].age
-                            .toString(),
-                        style: TextStyle(color: HexColor(MyColors.black)),
-                      )
-                    ],
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      fillConcessionScreenProvider.passengerList[index].name
+                          .toString(),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: HexColor(MyColors.black)),
+                    ),
+                    Text(
+                      ", ".toString(),
+                      style: TextStyle(color: HexColor(MyColors.black)),
+                    ),
+                    Text(
+                      fillConcessionScreenProvider
+                          .passengerList[index].genderName
+                          .toString(),
+                      style: TextStyle(color: HexColor(MyColors.black)),
+                    ),
+                    Text(
+                      ", ".toString(),
+                      style: TextStyle(color: HexColor(MyColors.black)),
+                    ),
+                    Text(
+                      fillConcessionScreenProvider.passengerList[index].age
+                          .toString(),
+                      style: TextStyle(color: HexColor(MyColors.black)),
+                    )
+                  ],
                 ),
                 Expanded(
                   flex: 1,
@@ -522,12 +520,10 @@ class _FillConcessionScreenState extends State<FillConcessionScreen> {
                       ],
                     )),
                 Visibility(
-                    visible: fillConcessionScreenProvider
-                        .checkDocumentVerification(index),
+                    visible: fillConcessionScreenProvider.checkDocumentVerification(index),
                     child: Text(
-                      "Keep any one of these documents ready at the time of journey - " +
-                          fillConcessionScreenProvider
-                              .passengerList[index].spdocumentverification
+                      "Keep any one of these documents ready at the time of journey - " + fillConcessionScreenProvider
+                          .passengerList[index].spdocumentverification
                               .toString(),
                       style: TextStyle(color: HexColor(MyColors.green)),
                     ))
@@ -544,7 +540,10 @@ class _FillConcessionScreenState extends State<FillConcessionScreen> {
       CommonMethods.showSnackBar(context, "Please enter pass number");
       return;
     }
+
+      CommonMethods.showLoadingDialog(context);
       await fillConcessionScreenProvider.checkConcessionPass(index,fillConcessionScreenProvider.passengerList[index].concessionId.toString(), fillConcessionScreenProvider.passengerList[index].passengerPassNoTextEditingController.text.toString(), AppConstants.JOURNEY_DATE);
+      Navigator.pop(context);
       if(fillConcessionScreenProvider.checkConcessionPassResponse.code=="100"){
         if(fillConcessionScreenProvider.passengerList[index].checkBusPassStatus=="Error"){
           CommonMethods.showSnackBar(context, "Invalid pass no !");

@@ -155,7 +155,7 @@ class OtpScreenProvider extends ChangeNotifier{
 
   Future<CheckMobileNumberResponse> checkMobileNumber(String mobileNumber, BuildContext context) async{
     var response = await checkMobileNumberDataSource.checkMobileNumberApi(mobileNumber);
-    print(response);
+    // print(response);
     checkMobileNumberResponse = CheckMobileNumberResponse.fromJson(response);
     if(checkMobileNumberResponse.code=="100"){
       Navigator.pop(context);

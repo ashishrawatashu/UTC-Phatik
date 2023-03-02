@@ -81,30 +81,6 @@ class BusSeatLayoutProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  setSleeperImage(int index,List<Bus_seat_ll> listresponse) {
-    for (int i = 0; i < listresponse.length; i++) {
-      if (listresponse[index].travellertypecode == "D") {
-        return "assets/images/bedsleeper.png";
-      }
-      if (listresponse[index].travellertypecode == "C") {
-        return "assets/images/bedsleeper.png";
-      }
-      if (listresponse[index].travellertypecode == "G") {
-        return "assets/images/bedsleeper.png";
-      }
-
-      if (listresponse[index].travellertypecode == "M") {
-        return "assets/images/bedsleeper.png";
-      }
-
-      // if (listresponse[index].travellertypecode == "M") {
-      //   return "assets/images/seatred.png";
-      // }
-    }
-
-    notifyListeners();
-  }
-
   setLayoutInLowerBirth(int index) {
     if (index == 1 || index == 5 || index == 9 || index == 13 || index == 17) {
       return false;
@@ -176,157 +152,6 @@ class BusSeatLayoutProvider extends ChangeNotifier{
 
   }
 
-
-
-  // setSeatNoColor(int index) {
-  //   for (int i = 0; i < lowerSeatList.length; i++) {
-  //     if (lowerSeatList[index].travellertypecode != "D") {
-  //       return Colors.black;
-  //     } else {
-  //       return Colors.white;
-  //     }
-  //   }
-  //
-  //   notifyListeners();
-  // }
-
-
-  // setSeatBorderColorOnSelectSeat(int index){
-  //   for (int i = 0; i < lowerSeatList.length; i++) {
-  //     if (lowerSeatList[index].travellertypecode != "D") {
-  //       return Colors.grey;
-  //     }else{
-  //       return Colors.white;
-  //     }
-  //
-  //
-  //     // if (lowerSeatList[index].travellertypecode == "C") {
-  //     //   return "assets/images/seatyellow.png";
-  //     // }if (lowerSeatList[index].status == "R"||lowerSeatList[index].status == "A"&&lowerSeatList[index].seatavailforonlbooking=="Y") {
-  //     //      lowerSeatList[index].isBlocked = true;
-  //     //      return "assets/images/seatpurple.png";
-  //     // }else{
-  //     //   lowerSeatList[index].isBlocked = false;
-  //     // }
-  //     // if (lowerSeatList[index].travellertypecode == "G"&&lowerSeatList[index].seatavailforonlbooking == "Y"&&lowerSeatList[index].isBlocked==false) {
-  //     //     if(lowerSeatList[index].isSelected==true){
-  //     //       return "assets/images/seattgreen.png";
-  //     //     }else if(lowerSeatList[index].isSelected==null){
-  //     //       return "assets/images/seatgrey.png";
-  //     //     }else{
-  //     //       return "assets/images/seatgrey.png";
-  //     //     }
-  //     //
-  //     // }
-  //     // if (lowerSeatList[index].travellertypecode == "M"&&lowerSeatList[index].seatavailforonlbooking == "Y") {
-  //     //     if(lowerSeatList[index].isSelected==true){
-  //     //       return "assets/images/seattgreen.png";
-  //     //     }else if(lowerSeatList[index].isSelected==null){
-  //     //       return "assets/images/seatblack.jpeg";
-  //     //     }else{
-  //     //       return "assets/images/seatblack.jpeg";
-  //     //     }
-  //     //
-  //     // }
-  //
-  //   }
-  //
-  //   notifyListeners();
-  //
-  // }
-
-
-  // setSeatColorOnSelectSeat(int index){
-  //   for (int i = 0; i < lowerSeatList.length; i++) {
-  //     // if (lowerSeatList[index].travellertypecode == "D") {
-  //     //   return HexColor(MyColors.white);
-  //     // }
-  //
-  //     if (lowerSeatList[index].travellertypecode == "C") {
-  //       return HexColor(MyColors.grey4);
-  //     }
-  //
-  //
-  //     if (lowerSeatList[index].status == "R"||lowerSeatList[index].status == "A"&&lowerSeatList[index].seatavailforonlbooking=="Y") {
-  //       lowerSeatList[index].isBlocked = true;
-  //       return HexColor(MyColors.grey4);
-  //     }else{
-  //       lowerSeatList[index].isBlocked = false;
-  //     }
-  //
-  //
-  //     if (lowerSeatList[index].travellertypecode == "G"&&lowerSeatList[index].seatavailforonlbooking == "Y"&&lowerSeatList[index].isBlocked==false) {
-  //       if(lowerSeatList[index].isSelected==true){
-  //         return HexColor(MyColors.green);
-  //       }else if(lowerSeatList[index].isSelected==null){
-  //         return HexColor(MyColors.grey8);
-  //       }else{
-  //         return HexColor(MyColors.grey8);
-  //       }
-  //
-  //     }
-  //     if (lowerSeatList[index].travellertypecode == "M"&&lowerSeatList[index].seatavailforonlbooking == "Y") {
-  //       if(lowerSeatList[index].isSelected==true){
-  //         return HexColor(MyColors.green);
-  //       }else if(lowerSeatList[index].isSelected==null){
-  //         return HexColor(MyColors.skyBlue);
-  //       }else{
-  //         return HexColor(MyColors.skyBlue);
-  //       }
-  //
-  //     }
-  //
-  //   }
-  //
-  //
-  // }
-
-  // List<Map<String, dynamic>> passengerInformationList =[];
-  // Map<String, dynamic> passengerInformationListMap = Map();
-  //
-  // concatSeatsNumber(){
-  //   String totalSeatsCount ="";
-  //   passengerInformationList.clear();
-  //   passengerInformationListMap.clear();
-  //   for(int i=0;i<lowerSeatList.length;i++){
-  //     Map<String, String> passengerInformationMap = Map();
-  //     if(lowerSeatList[i].isSelected==true){
-  //       String? travellertypecode = lowerSeatList[i].travellertypecode;
-  //       if(travellertypecode=="M"){
-  //         passengerInformationMap = {
-  //           '"seatNo"': lowerSeatList[i].seatno.toString(),
-  //           '"gender"': '"$travellertypecode"',
-  //           '"onlyMale"': '"Y"',
-  //         };
-  //       }else {
-  //         passengerInformationMap = {
-  //           '"seatNo"': lowerSeatList[i].seatno.toString(),
-  //           '"gender"': '"$travellertypecode"',
-  //           '"onlyMale"': '"N"',
-  //         };
-  //       }
-  //
-  //       passengerInformationList.add(passengerInformationMap);
-  //
-  //       totalSeatsCount = totalSeatsCount+"," + lowerSeatList[i].seatno.toString();
-  //     }
-  //     passengerInformationListMap = {
-  //       '"passengerInformationList"': passengerInformationList,
-  //     };
-  //
-  //   }
-  //
-  //   if(totalSeatsCount.length>1){
-  //
-  //     return totalSeatsCount.substring(1);
-  //   }else{
-  //     return totalSeatsCount;
-  //   }
-  //
-  //
-  //
-  // }
-
   concatSeatsNumber(){
     String totalSeatsCount ="";
     passengerList.clear();
@@ -390,7 +215,7 @@ class BusSeatLayoutProvider extends ChangeNotifier{
     if(lowerSeatList[index].isBlocked==false){
       if(lowerSeatList[index].travellertypecode=="G"||lowerSeatList[index].travellertypecode=="F"||lowerSeatList[index].travellertypecode=="M"&&lowerSeatList[index].seatavailforonlbooking=="Y"){
         if( lowerSeatList[index].isSelected == null){
-          if(maxSeat==6){
+          if(maxSeat==AppConstants.MAX_SEAT_SELECT){
 
           }else{
             lowerSeatList[index].isSelected = true;
@@ -400,7 +225,7 @@ class BusSeatLayoutProvider extends ChangeNotifier{
           lowerSeatList[index].isSelected = false;
           maxSeat = maxSeat-1;
         }else if(lowerSeatList[index].isSelected == false){
-          if(maxSeat==6){
+          if(maxSeat==AppConstants.MAX_SEAT_SELECT){
 
           }else{
             lowerSeatList[index].isSelected = true;

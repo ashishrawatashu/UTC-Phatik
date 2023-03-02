@@ -19,25 +19,26 @@ class AppConstants {
   static String HELP_DESK_PHONE = "";
   static String HELP_DESK_EMAIL = "";
 
-  static String app_base_url_pg_or_img = "http://utcdemo.uk.gov.in/utcaudit";
-  static String app_base_url = "https://utcdemo.uk.gov.in/utcauditpathik";
+  // static String app_base_url_pg_or_img = "https://utcdemo.uk.gov.in/utcaudit";
+  static String app_base_url_pg_or_img = "https://utconline.uk.gov.in";
+  // static String app_base_url = "https://utcdemo.uk.gov.in/utcaudit";
+  static String app_base_url = "https://utconline.uk.gov.in";
   static String PAYMENT_GATEWAY_URL ="$app_base_url_pg_or_img/pg/pgRedirection.aspx?token=";
   static String OFFER_IMAGE_URL ="$app_base_url_pg_or_img/DBimg/offers/";
   static String PG_IMAGE_URL ="$app_base_url_pg_or_img/DBimg/PG/";
-  static String bus_type_url ="$app_base_url_pg_or_img/dbimg/BusServices/1_M.jpg";
+  static String bus_type_url ="$app_base_url_pg_or_img/dbimg/BusServices/";
   static String AMINITIES_URL ="$app_base_url_pg_or_img/dbimg/amenity/";
 
   static String TERSM_AND_CONDITIONS= "$app_base_url/termAndConditions.htm";
-  static String DOWNLOAD_TICKET_URL = "$app_base_url/webpages/tkt.aspx";
+  static String DOWNLOAD_TICKET_URL = "$app_base_url/pathikWebPage/tkt.aspx";
   static String CANCELLATION_POLICY= "$app_base_url/cancellationpolicy.htm";
   static String DISCLAIMER= "$app_base_url/disclaimer.htm";
   static String PRIVACY_POLICY= "$app_base_url/privacyPolicy.htm";
-  static String TRACK_MY_BUS= "$app_base_url/webpages/trackMyBus.aspx";
-  static String MEAL_ON_WHEEL_URL ="$app_base_url/webpages/mealonwheel.aspx";
-  static String REFUND_STATUS_URL ="$app_base_url/webpages/refundStatus.aspx";
-
-
-
+  static String TRACK_MY_BUS= "$app_base_url/pathikWebPage/trackMyBus.aspx";
+  static String MEAL_ON_WHEEL_URL ="$app_base_url/pathikWebPage/mealonwheel.aspx";
+  static String REFUND_STATUS_URL ="$app_base_url/pathikWebPage/refundStatus.aspx";
+//72F1310103202319
+   //FF23022402009
 
   // static String TERSM_AND_CONDITIONS= "http://utcdemo.uk.gov.in/utcauditpathik/termAndConditions.htm";
   // static String DOWNLOAD_TICKET_URL = "https://utcdemo.uk.gov.in/utcauditpathik/webpages/tkt.aspx";
@@ -45,6 +46,7 @@ class AppConstants {
   // static String CANCELLATION_POLICY= "http://utcdemo.uk.gov.in/utcauditpathik/cancellationpolicy.htm";
   // static String DISCLAIMER= "http://utcdemo.uk.gov.in/utcauditpathik/disclaimer.htm";
   // static String PRIVACY_POLICY= "http://utcdemo.uk.gov.in/utcauditpathik/privacyPolicy.htm";
+
 
   static String WALLET_BOOKING_DESE = "You can pay ticket amount using your wallet it is fast, Secure and easy way to make your booking complete. ";
   static String? DEVICE_ID = "";
@@ -61,6 +63,7 @@ class AppConstants {
   static String JOURNEY_TIME = "";
   static String SERVICE_TYPE_ID = "0";
   static String SERICE_TYPE_NAME = "";
+  static String SERICE_TYPE_ID = "";
   static String LAT = "";
   static String LONGG = "";
   static String MY_TOKEN = "";

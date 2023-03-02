@@ -9,6 +9,7 @@ import 'package:utc_flutter_app/response/bus_service_type_response.dart';
 import 'package:utc_flutter_app/response/search_services_response.dart';
 import 'package:utc_flutter_app/utils/app_constants.dart';
 import 'package:utc_flutter_app/utils/colors_code.dart';
+import 'package:utc_flutter_app/utils/common_methods.dart';
 import 'package:utc_flutter_app/utils/hex_color.dart';
 
 class SearchBusProvider extends ChangeNotifier {
@@ -60,135 +61,13 @@ class SearchBusProvider extends ChangeNotifier {
     return amenitiesUrlList;
   }
 
-  applyFilter1() {
-
-    for (int i = 0; i < newBusTypeModelList.length; i++) {
-      if (newBusTypeModelList[i].isSelected == true) {
-        String serviceType = newBusTypeModelList[i].serviceTypeName!;
-        filterBusServices[i].showHideItem = true;
-        for (int i = 0; i < busServices.length; i++) {
-          if (lateDepartureValue == 1 && busServices[i].deptBus == "Night" || earlyDepartureValue == 1 && busServices[i].deptBus == "Morning" ||
-              nightBuses_depature == true && busServices[i].deptBus == "Night" || afterNoonBuses_depature == true &&
-                  busServices[i].deptBus == "Afternoon" ||
-              morningBuses_depature == true &&
-                  busServices[i].deptBus == "Morning" ||
-              eveBuses_depature == true &&
-                  busServices[i].deptBus == "Evening" ||
-              nightBuses_arrival == true &&
-                  busServices[i].arrivalBus == "Night" ||
-              afterNoonBuses_arrival == true &&
-                  busServices[i].arrivalBus == "Afternoon" ||
-              morningBuses_arrival == true &&
-                  busServices[i].arrivalBus == "Morning" ||
-              eveBuses_arrival == true &&
-                  busServices[i].arrivalBus == "Evening") {
-            filterBusServices[i].showHideItem = true;
-            if (serviceType.toString().trim() == busServices[i].servicetypename.toString().trim()) {
-              print(serviceType + "0===>" + busServices[i].servicetypename.toString());
-              filterBusServices[i].showHideItem = true;
-            } else {
-              print(serviceType + "1===>" + busServices[i].servicetypename.toString());
-              filterBusServices[i].showHideItem = false;
-            }
-          } else if (lateDepartureValue == 0 &&
-              earlyDepartureValue == 0 &&
-              nightBuses_depature == false &&
-              afterNoonBuses_depature == false &&
-              morningBuses_depature == false &&
-              eveBuses_depature == false &&
-              nightBuses_arrival == false &&
-              afterNoonBuses_arrival == false &&
-              morningBuses_arrival == false &&
-              eveBuses_arrival == false) {
-            filterBusServices[i].showHideItem = true;
-            if (serviceType.toString().trim() ==
-                busServices[i].servicetypename.toString().trim()) {
-              //print("SERVICE_TYPE");
-              print(serviceType +
-                  "2===>" +
-                  busServices[i].servicetypename.toString());
-              filterBusServices[i].showHideItem = true;
-            } else {
-              print(serviceType +
-                  "3===>" +
-                  busServices[i].servicetypename.toString());
-              filterBusServices[i].showHideItem = false;
-            }
-          } else {
-            filterBusServices[i].showHideItem = false;
-            if (serviceType.toString().trim() ==
-                busServices[i].servicetypename.toString().trim()) {
-              //print("SERVICE_TYPE");
-              print(serviceType +
-                  "4===>" +
-                  busServices[i].servicetypename.toString());
-              filterBusServices[i].showHideItem = true;
-            } else {
-              print(serviceType +
-                  "5===>" +
-                  busServices[i].servicetypename.toString());
-              filterBusServices[i].showHideItem = false;
-            }
-          }
-        }
-      } else {
-        for (int i = 0; i < busServices.length; i++) {
-          if (lateDepartureValue == 1 && busServices[i].deptBus == "Night" ||
-              earlyDepartureValue == 1 && busServices[i].deptBus == "Morning" ||
-              nightBuses_depature == true &&
-                  busServices[i].deptBus == "Night" ||
-              afterNoonBuses_depature == true &&
-                  busServices[i].deptBus == "Afternoon" ||
-              morningBuses_depature == true &&
-                  busServices[i].deptBus == "Morning" ||
-              eveBuses_depature == true &&
-                  busServices[i].deptBus == "Evening" ||
-              nightBuses_arrival == true &&
-                  busServices[i].arrivalBus == "Night" ||
-              afterNoonBuses_arrival == true &&
-                  busServices[i].arrivalBus == "Afternoon" ||
-              morningBuses_arrival == true &&
-                  busServices[i].arrivalBus == "Morning" ||
-              eveBuses_arrival == true &&
-                  busServices[i].arrivalBus == "Evening") {
-            filterBusServices[i].showHideItem = true;
-          } else if (lateDepartureValue == 0 &&
-              earlyDepartureValue == 0 &&
-              nightBuses_depature == false &&
-              afterNoonBuses_depature == false &&
-              morningBuses_depature == false &&
-              eveBuses_depature == false &&
-              nightBuses_arrival == false &&
-              afterNoonBuses_arrival == false &&
-              morningBuses_arrival == false &&
-              eveBuses_arrival == false) {
-            filterBusServices[i].showHideItem = true;
-          } else {
-            filterBusServices[i].showHideItem = false;
-          }
-        }
-      }
-    }
-
-
-    // if (cheapestFirstValue == 1) {
-    //   filterBusServices.sort((a, b) => a.totalfare!.compareTo(b.totalfare!));
-    // }
-
-    notifyListeners();
-  }
-
   applyFilter() {
+
     filterBuServiceType();
 
-
-
-    // if (cheapestFirstValue == 1) {
-    //   filterBusServices.sort((a, b) => a.totalfare!.compareTo(b.totalfare!));
-    // }
-
     notifyListeners();
   }
+
 
   setValueInRadioButton(String value, String from) {
     if (from == "Cheap") {
@@ -369,9 +248,8 @@ class SearchBusProvider extends ChangeNotifier {
   List<BusServiceTypeModel> newBusTypeModelList = [];
   List<Services> busServices = [];
   List<Services> filterBusServices = [];
-
-  Future<SearchServicesResponse> getSearchBuses(String fromStationName,
-      String toStationName, String serviceTypeId, String date) async {
+  List<Services> filterForService = [];
+  Future<SearchServicesResponse> getSearchBuses(String fromStationName, String toStationName, String serviceTypeId, String date, BuildContext context) async {
     setloading(true);
     busServices.clear();
     filterBusServices.clear();
@@ -393,6 +271,8 @@ class SearchBusProvider extends ChangeNotifier {
     } else if (searchServicesResponse.code == "101") {
       busServices.clear();
       filterBusServices.clear();
+    }else if  (searchServicesResponse.code == "900") {
+      CommonMethods.showErrorDialog(context, "Something went wrong !");
     }
 
     setloading(false);
@@ -404,113 +284,56 @@ class SearchBusProvider extends ChangeNotifier {
     for (int i = 0; i < busServices.length; i++) {
       filterBusServices[i].showHideItem = true;
       busServices[i].showHideItem = true;
-      if (busServices[i].depttime!.substring(
-              busServices[i].depttime!.length - 2,
-              busServices[i].depttime!.length) ==
-          "AM") {
-        if (int.parse(busServices[i]
-                    .depttime!
-                    .substring(0, busServices[i].depttime!.length - 6)) <=
-                12 ||
-            int.parse(busServices[i]
-                    .depttime!
-                    .substring(0, busServices[i].depttime!.length - 6)) <=
-                5) {
+
+      //departure
+
+      if (busServices[i].depttime!.substring(busServices[i].depttime!.length - 2, busServices[i].depttime!.length) == "AM") {
+        if (int.parse(busServices[i].depttime!.substring(0, busServices[i].depttime!.length - 6)) <= 12 &&
+            int.parse(busServices[i].depttime!.substring(0, busServices[i].depttime!.length - 6)) <= 5) {
           filterBusServices[i].deptBus = "Night";
           busServices[i].deptBus = "Night";
         }
-        if (int.parse(busServices[i]
-                    .depttime!
-                    .substring(0, busServices[i].depttime!.length - 6)) <=
-                11 &&
-            int.parse(busServices[i]
-                    .depttime!
-                    .substring(0, busServices[i].depttime!.length - 6)) >=
-                6) {
+        if (int.parse(busServices[i].depttime!.substring(0, busServices[i].depttime!.length - 6)) <= 11 &&
+            int.parse(busServices[i].depttime!.substring(0, busServices[i].depttime!.length - 6)) >= 6) {
           filterBusServices[i].deptBus = "Morning";
           busServices[i].deptBus = "Morning";
         }
       }
-      if (busServices[i].depttime!.substring(
-              busServices[i].depttime!.length - 2,
-              busServices[i].depttime!.length) ==
-          "PM") {
-        //print(int.parse(busServices[i].depttime!.substring(0, busServices[i].depttime!.length - 6)));
-        if (int.parse(busServices[i]
-                    .depttime!
-                    .substring(0, busServices[i].depttime!.length - 6)) <=
-                12 ||
-            int.parse(busServices[i]
-                    .depttime!
-                    .substring(0, busServices[i].depttime!.length - 6)) <=
-                5) {
+      if (busServices[i].depttime!.substring(busServices[i].depttime!.length - 2, busServices[i].depttime!.length) == "PM") {
+        if (int.parse(busServices[i].depttime!.substring(0, busServices[i].depttime!.length - 6)) <= 12 &&
+            int.parse(busServices[i].depttime!.substring(0, busServices[i].depttime!.length - 6)) <= 4) {
           filterBusServices[i].deptBus = "Afternoon";
           busServices[i].deptBus = "Afternoon";
         }
-        if (int.parse(busServices[i]
-                    .depttime!
-                    .substring(0, busServices[i].depttime!.length - 6)) <=
-                11 &&
-            int.parse(busServices[i]
-                    .depttime!
-                    .substring(0, busServices[i].depttime!.length - 6)) >=
-                6) {
+        if (int.parse(busServices[i].depttime!.substring(0, busServices[i].depttime!.length - 6)) <= 11 &&
+            int.parse(busServices[i].depttime!.substring(0, busServices[i].depttime!.length - 6)) >=  6) {
           filterBusServices[i].deptBus = "Evening";
-          busServices[i].deptBus = "Afternoon";
+          busServices[i].deptBus = "Evening";
         }
       }
 
       //arrival time
 
-      if (busServices[i].arrtime!.substring(busServices[i].arrtime!.length - 2,
-              busServices[i].arrtime!.length) ==
-          "AM") {
-        if (int.parse(busServices[i]
-                    .arrtime!
-                    .substring(0, busServices[i].arrtime!.length - 6)) <=
-                12 ||
-            int.parse(busServices[i]
-                    .arrtime!
-                    .substring(0, busServices[i].arrtime!.length - 6)) <=
-                5) {
+      if (busServices[i].arrtime!.substring(busServices[i].arrtime!.length - 2, busServices[i].arrtime!.length) == "AM") {
+        if (int.parse(busServices[i].arrtime!.substring(0, busServices[i].arrtime!.length - 6)) <= 12 &&
+            int.parse(busServices[i].arrtime!.substring(0, busServices[i].arrtime!.length - 6)) <= 5) {
           filterBusServices[i].arrivalBus = "Night";
           busServices[i].arrivalBus = "Night";
         }
-        if (int.parse(busServices[i]
-                    .arrtime!
-                    .substring(0, busServices[i].arrtime!.length - 6)) <=
-                11 ||
-            int.parse(busServices[i]
-                    .arrtime!
-                    .substring(0, busServices[i].arrtime!.length - 6)) >=
-                6) {
+        if (int.parse(busServices[i].arrtime!.substring(0, busServices[i].arrtime!.length - 6)) <= 11 &&
+            int.parse(busServices[i].arrtime!.substring(0, busServices[i].arrtime!.length - 6)) >= 6) {
           filterBusServices[i].arrivalBus = "Morning";
           busServices[i].arrivalBus = "Morning";
         }
       }
-      if (busServices[i].arrtime!.substring(busServices[i].arrtime!.length - 2,
-              busServices[i].arrtime!.length) ==
-          "PM") {
-        //print(int.parse(busServices[i].arrtime!.substring(0, busServices[i].arrtime!.length - 6)));
-        if (int.parse(busServices[i]
-                    .arrtime!
-                    .substring(0, busServices[i].arrtime!.length - 6)) <=
-                12 ||
-            int.parse(busServices[i]
-                    .arrtime!
-                    .substring(0, busServices[i].arrtime!.length - 6)) <=
-                5) {
+      if (busServices[i].arrtime!.substring(busServices[i].arrtime!.length - 2, busServices[i].arrtime!.length) == "PM") {
+        if (int.parse(busServices[i].arrtime!.substring(0, busServices[i].arrtime!.length - 6)) <= 12 &&
+            int.parse(busServices[i].arrtime!.substring(0, busServices[i].arrtime!.length - 6)) <= 4) {
           filterBusServices[i].arrivalBus = "Afternoon";
           busServices[i].arrivalBus = "Afternoon";
         }
-        if (int.parse(busServices[i]
-                    .arrtime!
-                    .substring(0, busServices[i].arrtime!.length - 6)) <=
-                11 &&
-            int.parse(busServices[i]
-                    .arrtime!
-                    .substring(0, busServices[i].arrtime!.length - 6)) >=
-                6) {
+        if (int.parse(busServices[i].arrtime!.substring(0, busServices[i].arrtime!.length - 6)) <= 11 &&
+            int.parse(busServices[i].arrtime!.substring(0, busServices[i].arrtime!.length - 6)) >= 6) {
           filterBusServices[i].arrivalBus = "Evening";
           busServices[i].arrivalBus = "Evening";
         }
@@ -518,6 +341,7 @@ class SearchBusProvider extends ChangeNotifier {
     }
 
     applyFilter();
+    clearFilter();
     notifyListeners();
   }
 
@@ -540,25 +364,11 @@ class SearchBusProvider extends ChangeNotifier {
       busServiceTypeModel.isSelected = false;
       busTypeModelList.add(busServiceTypeModel);
     }
-
-    //print(busTypeModelList.length.toString() + "BUSTYPE");
-    // busTypeModelList.forEach((element) {
-    //   newBusTypeModelList.removeWhere((e) => element == e);
-    //   newBusTypeModelList.add(element);
-    // });
-
     busTypeModelList.forEach((element) {
       newBusTypeModelList
           .removeWhere((e) => element.serviceTypeName == e.serviceTypeName);
       newBusTypeModelList.add(element);
     });
-
-    // BusServiceTypeModel busServiceTypeModel = BusServiceTypeModel();
-    // busServiceTypeModel.serviceTypeName = "VOlVO";
-    // busServiceTypeModel.isSelected = false;
-    // newBusTypeModelList.add(busServiceTypeModel);
-
-    //print(newBusTypeModelList.length.toString() + "SERVICE TYPES LIST;");
   }
 
   selectServiceType(int index, bool value) {
@@ -590,57 +400,64 @@ class SearchBusProvider extends ChangeNotifier {
     }
   }
 
-  AuthenticationMethodDataSource authenticationMethodDataSource =
-      AuthenticationMethodDataSource();
-  AuthenticationMethodResponse authenticationMethodResponse =
-      AuthenticationMethodResponse();
+  AuthenticationMethodDataSource authenticationMethodDataSource = AuthenticationMethodDataSource();
+  AuthenticationMethodResponse authenticationMethodResponse = AuthenticationMethodResponse();
 
   Future<AuthenticationMethodResponse> authenticationMethod() async {
-    var response = await authenticationMethodDataSource.authenticationMethod(
-        AppConstants.AUTH_USER_ID, AppConstants.AUTH_IMEI);
+    var response = await authenticationMethodDataSource.authenticationMethod(AppConstants.AUTH_USER_ID, AppConstants.AUTH_IMEI);
     //print(response);
-    authenticationMethodResponse =
-        AuthenticationMethodResponse.fromJson(response);
+    authenticationMethodResponse = AuthenticationMethodResponse.fromJson(response);
     if (authenticationMethodResponse.code == "100") {
-      AppConstants.MY_TOKEN =
-          authenticationMethodResponse.result![0].token.toString();
+      AppConstants.MY_TOKEN = authenticationMethodResponse.result![0].token.toString();
     }
     return authenticationMethodResponse;
   }
 
-  BusServiceTypeDataSource busServiceTypeDataSource =
-      BusServiceTypeDataSource();
+  BusServiceTypeDataSource busServiceTypeDataSource = BusServiceTypeDataSource();
   BusServiceTypeResponse busServiceTypeResponse = BusServiceTypeResponse();
 
-  Future<BusServiceTypeResponse> busServiceTypeRequest(String strpId) async {
-    var response = await busServiceTypeDataSource.busServiceTypeApi(
-        strpId, AppConstants.MY_TOKEN);
-    print(response);
+  Future<BusServiceTypeResponse> busServiceTypeRequest(String strpId,BuildContext context) async {
+    var response = await busServiceTypeDataSource.busServiceTypeApi(strpId, AppConstants.MY_TOKEN);
     busServiceTypeResponse = BusServiceTypeResponse.fromJson(response);
-    if (busServiceTypeResponse.code == "100") {
-      //print(busServiceTypeResponse.serviceTypeMaxSeat![0].currentseats!.toString()+"SEAT_");
-      AppConstants.MAX_SEAT_SELECT =
-          busServiceTypeResponse.serviceTypeMaxSeat![0].currentseats!;
-    }
     return busServiceTypeResponse;
   }
 
+
+
+
+
+
   void filterBuServiceType() {
     String serviceType = "";
-    print(busServices.length.toString()+"bus servi");
+    List<String>  totalCount = [];
     for (int i = 0; i < newBusTypeModelList.length; i++) {
       if (newBusTypeModelList[i].isSelected == true) {
         serviceType = newBusTypeModelList[i].serviceTypeName.toString();
-        print(serviceType.length.toString() + "service type");
         for (int k = 0; k < busServices.length; k++) {
-          filterBusServices[k].showHideItem = false;
-          print(k.toString() + " => " + serviceType.toString().trim() + " ======>" + busServices[k].servicetypename.toString().trim());
           if (serviceType.toString().trim().compareTo(busServices[k].servicetypename.toString().trim()) == 0) {
+            filterBusServices[k].showHideItem = true;
+          }else {
+            filterBusServices[k].showHideItem = false;
+          }
+        }
+      }else{
+        totalCount.add("Check");
+        if(totalCount.length==newBusTypeModelList.length){
+          for (int k = 0; k < busServices.length; k++) {
             filterBusServices[k].showHideItem = true;
           }
         }
       }
     }
+
+    checkForTimeWiseFiter();
+
+    if (cheapestFirstValue == 1) {
+      filterBusServices.sort((a, b) => a.totalfare!.compareTo(b.totalfare!));
+    }
+
+
+
   }
 
   void filterBySortBy() {
@@ -712,9 +529,46 @@ class SearchBusProvider extends ChangeNotifier {
       }
     }
 
-    // for (int k = 0; k < filterBusServices.length; k++) {
-    //
-    // }
+  }
 
+  void checkForTimeWiseFiter() {
+    for (int i = 0; i < filterBusServices.length; i++) {
+      if (lateDepartureValue == 1 && filterBusServices[i].deptBus == "Night" || earlyDepartureValue == 1 && filterBusServices[i].deptBus == "Morning" ||
+          nightBuses_depature == true &&
+              filterBusServices[i].deptBus == "Night" ||
+          afterNoonBuses_depature == true &&
+              filterBusServices[i].deptBus == "Afternoon" ||
+          morningBuses_depature == true &&
+              filterBusServices[i].deptBus == "Morning" ||
+          eveBuses_depature == true &&
+              filterBusServices[i].deptBus == "Evening" ||
+          nightBuses_arrival == true &&
+              filterBusServices[i].arrivalBus == "Night" ||
+          afterNoonBuses_arrival == true &&
+              filterBusServices[i].arrivalBus == "Afternoon" ||
+          morningBuses_arrival == true &&
+              filterBusServices[i].arrivalBus == "Morning" ||
+          eveBuses_arrival == true &&
+              filterBusServices[i].arrivalBus == "Evening") {
+        if(filterBusServices[i].showHideItem==true){
+          filterBusServices[i].showHideItem = true;
+        }
+      } else if (lateDepartureValue == 0 &&
+          earlyDepartureValue == 0 &&
+          nightBuses_depature == false &&
+          afterNoonBuses_depature == false &&
+          morningBuses_depature == false &&
+          eveBuses_depature == false &&
+          nightBuses_arrival == false &&
+          afterNoonBuses_arrival == false &&
+          morningBuses_arrival == false &&
+          eveBuses_arrival == false) {
+        if(filterBusServices[i].showHideItem==true){
+          filterBusServices[i].showHideItem = true;
+        }
+      } else {
+        filterBusServices[i].showHideItem = false;
+      }
+    }
   }
 }

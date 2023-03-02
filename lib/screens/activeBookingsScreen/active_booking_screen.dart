@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:utc_flutter_app/arguments/payment_screen_arguments.dart';
 import 'package:utc_flutter_app/screens/activeBookingsScreen/active_booking_screen_provider.dart';
 import 'package:ticket_widget/ticket_widget.dart';
@@ -104,7 +105,6 @@ class _ActiveBookingScreenState extends State<ActiveBookingScreen> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
             child: Container(
-              margin: EdgeInsets.only(top: 50),
               child: Column(
                 children: [
                   TicketWidget(
@@ -128,8 +128,7 @@ class _ActiveBookingScreenState extends State<ActiveBookingScreen> {
       children: [
         Container(
           padding: EdgeInsets.only(left: 10),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10))),
+          decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10))),
           child: Column(
             children: [
               Container(
@@ -166,7 +165,6 @@ class _ActiveBookingScreenState extends State<ActiveBookingScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(right: 20),
                       child: Row(
                         children: [
                           Text("Booking Date/Time : ",
@@ -175,7 +173,7 @@ class _ActiveBookingScreenState extends State<ActiveBookingScreen> {
                                   color: HexColor(MyColors.black))),
                           Text(activeBookingScreenProvider.passengerConfirmDetailsResponse.ticketDeatil![0].bookingdatetime.toString(),
                               style: GoogleFonts.nunito(
-                                  fontSize: 14,
+                                  fontSize: 13,
                                   color: HexColor(MyColors.black),
                                   fontWeight: FontWeight.bold)),
                         ],
@@ -198,14 +196,14 @@ class _ActiveBookingScreenState extends State<ActiveBookingScreen> {
                   Text(
                     "Boarding Point",
                     style: GoogleFonts.nunito(
-                        fontSize: 16,
+                        fontSize: 12,
                         color: HexColor(MyColors.grey1),
                         fontWeight: FontWeight.w600),
                   ),
                   Text(
                     activeBookingScreenProvider.passengerConfirmDetailsResponse.ticketDeatil![0].boarding.toString(),
                     style: GoogleFonts.nunito(
-                        fontSize: 16,
+                        fontSize: 12,
                         color: HexColor(MyColors.black),
                         fontWeight: FontWeight.w600),
                   )
@@ -217,14 +215,14 @@ class _ActiveBookingScreenState extends State<ActiveBookingScreen> {
                   Text(
                     "Journey Date",
                     style: GoogleFonts.nunito(
-                        fontSize: 14,
+                        fontSize: 12,
                         color: HexColor(MyColors.grey1),
                         fontWeight: FontWeight.w600),
                   ),
                   Text(
                     activeBookingScreenProvider.passengerConfirmDetailsResponse.ticketDeatil![0].journeydate.toString(),
                     style: GoogleFonts.nunito(
-                        fontSize: 14,
+                        fontSize: 12,
                         color: HexColor(MyColors.black),
                         fontWeight: FontWeight.w600),
                   )
@@ -269,10 +267,15 @@ class _ActiveBookingScreenState extends State<ActiveBookingScreen> {
               // String downloadTicketUri = "http://www.africau.edu/images/default/sample.pdf";
               //print(downloadTicketUri);
               // final file = await loadPdfFromNetwork(downloadTicketUri);
-              CommonMethods.showLoadingDialog(context);
-              await saveFile(downloadTicketUri, activeBookingScreenProvider.passengerConfirmDetailsResponse.ticketDeatil![0].ticketno.toString()+".pdf",context);
-              Navigator.pop(context);
-              CommonMethods.doneState(context, 'Successfully saved to internal storage "UTC Ticket" folder');
+
+              print(downloadTicketUri);
+              final Uri _url = Uri.parse(downloadTicketUri);
+              _launchInBrowser(_url);
+
+            //   CommonMethods.showLoadingDialog(context);
+            //   await saveFile(downloadTicketUri, activeBookingScreenProvider.passengerConfirmDetailsResponse.ticketDeatil![0].ticketno.toString()+".pdf",context);
+            //   Navigator.pop(context);
+            //   CommonMethods.doneState(context, 'Successfully saved to internal storage "UTC Ticket" folder');
             },
             child: Text("Download e-ticket", style: TextStyle(
               color: HexColor(MyColors.primaryColor),
@@ -405,7 +408,6 @@ class _ActiveBookingScreenState extends State<ActiveBookingScreen> {
             Container(
               height: 50,
               margin: EdgeInsets.only(top: 15, bottom: 5),
-              padding: EdgeInsets.only(left: 15, right: 15),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(50))),
               child: Row(
@@ -935,5 +937,12 @@ class _ActiveBookingScreenState extends State<ActiveBookingScreen> {
 
     );
   }
-
+  Future<void> _launchInBrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw Exception('Could not launch $url');
+    }
+  }
 }

@@ -46,7 +46,6 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
       _busSeatLayoutProvider.toStationId = args.toStationId;
       _busSeatLayoutProvider.tripType = args.tripType;
       _busSeatLayoutProvider.amenitiesUrlList = args.amenitiesUrlList;
-
       await _busSeatLayoutProvider.getSeatLayoutBoardingResponse(args.dsvcId, AppConstants.JOURNEY_DATE, args.strpId, _busSeatLayoutProvider.toStationId,context);
 
     });
@@ -133,12 +132,6 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
       // height: 220,
       color: HexColor(MyColors.primaryColor),
       padding: EdgeInsets.only(top: 45, bottom: 10),
-      // decoration: BoxDecoration(
-      //   image: DecorationImage(
-      //     image: AssetImage('assets/images/topbussearchbg.jpg'),
-      //     fit: BoxFit.cover,
-      //   ),
-      // ),
       child: Column(
         children: [
           Row(
@@ -148,7 +141,7 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
                 onTap: () => Navigator.of(context).pop(true),
                 child: Container(
                     padding: EdgeInsets.only(left: 10, right: 10),
-                    child: Icon(Icons.arrow_back, color: Colors.white)),
+                    child: Icon(Icons.arrow_back, color: Colors.white,size: 30,)),
               ),
               Flexible(
                 child: Column(
@@ -218,14 +211,16 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
               return Visibility(
                   visible: busSeatLayoutProvider.getVisibilityOfSeats(index),
                   child: GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       busSeatLayoutProvider.selectDeselectSeats(index);
                       busSeatLayoutProvider.setImageOnSelectSeat(index);
                       setState(() {
                         if (busSeatLayoutProvider.maxSeat == AppConstants.MAX_SEAT_SELECT) {
                           showMaximumSeatSelected(busSeatLayoutProvider);
+                          return;
                         }
                       });
+
                     },
 
                     child: Container(
@@ -248,60 +243,6 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
             },
           ),
         ),
-      ),
-    );
-  }
-
-  Widget layoutForSleeper(BusSeatLayoutProvider busSeatLayoutProvider) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            height: 50,
-            padding: EdgeInsets.all(10),
-            // color: Colors.blue,
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        lowerUpper = true;
-                      });
-                    },
-                    child: Container(
-                        height: 8,
-                        width: 100,
-                        color: Colors.green,
-                        child: Center(child: Text("Lower"))),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        lowerUpper = false;
-                      });
-                    },
-                    child: Container(
-                        height: 8,
-                        width: 100,
-                        color: Colors.blue,
-                        child: Center(child: Text("Upper"))),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            width: 100,
-            child: lowerUpper
-                ? lowerSeatLayout(busSeatLayoutProvider)
-                : upperSeatLayout(busSeatLayoutProvider),
-          )
-        ],
       ),
     );
   }
@@ -437,118 +378,6 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
           ),
         ),
       ],
-    );
-  }
-
-  void showCustomDialog(BuildContext context) {
-    showGeneralDialog(
-      context: context,
-      barrierLabel: "Barrier",
-      barrierDismissible: true,
-      barrierColor: Colors.black.withOpacity(0.5),
-      transitionDuration: Duration(milliseconds: 300),
-      pageBuilder: (_, __, ___) {
-        return Center(
-          child: Container(
-            height: 100,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                    flex: 1,
-                    child: Column(
-                      children: [
-                        Image.asset("assets/images/seattgreen.png"),
-                        Text(
-                          "Selected",
-                          style: GoogleFonts.nunito(
-                              fontSize: 15,
-                              decoration: TextDecoration.none,
-                              color: Colors.grey),
-                        )
-                      ],
-                    )),
-                Expanded(
-                    flex: 1,
-                    child: Column(
-                      children: [
-                        Image.asset("assets/images/seatblue.png"),
-                        Text(
-                          "Seat Type",
-                          style: GoogleFonts.nunito(
-                              fontSize: 15,
-                              decoration: TextDecoration.none,
-                              color: Colors.grey),
-                        )
-                      ],
-                    )),
-                Expanded(
-                    flex: 1,
-                    child: Column(
-                      children: [
-                        Image.asset("assets/images/seatyellow.png"),
-                        Text(
-                          "Seat Type",
-                          style: GoogleFonts.nunito(
-                              fontSize: 15,
-                              decoration: TextDecoration.none,
-                              color: Colors.grey),
-                        )
-                      ],
-                    )),
-                Expanded(
-                    flex: 1,
-                    child: Column(
-                      children: [
-                        Image.asset("assets/images/seatgrey.png"),
-                        Text(
-                          "Available",
-                          style: GoogleFonts.nunito(
-                              fontSize: 15,
-                              decoration: TextDecoration.none,
-                              color: Colors.grey),
-                        )
-                      ],
-                    )),
-                Expanded(
-                    flex: 1,
-                    child: Column(
-                      children: [
-                        Image.asset("assets/images/seatpurple.png"),
-                        Text(
-                          "Seat Type",
-                          style: GoogleFonts.nunito(
-                              fontSize: 15,
-                              decoration: TextDecoration.none,
-                              color: Colors.grey),
-                        )
-                      ],
-                    )),
-              ],
-            ),
-            margin: EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(10)),
-          ),
-        );
-      },
-      transitionBuilder: (_, anim, __, child) {
-        Tween<Offset> tween;
-        if (anim.status == AnimationStatus.reverse) {
-          tween = Tween(begin: Offset(-1, 0), end: Offset.zero);
-        } else {
-          tween = Tween(begin: Offset(1, 0), end: Offset.zero);
-        }
-
-        return SlideTransition(
-          position: tween.animate(anim),
-          child: FadeTransition(
-            opacity: anim,
-            child: child,
-          ),
-        );
-      },
     );
   }
 
@@ -716,52 +545,54 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
                 color: HexColor(MyColors.primaryColor),
               ),
               Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  // physics: ScrollPhysics(),
-                  padding: EdgeInsets.zero,
-                  itemCount: busSeatLayoutProvider.boardingList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      onTap: () =>
-                          continueSeatSelected(index, busSeatLayoutProvider),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            color: HexColor(MyColors.white),
-                            alignment: Alignment.centerLeft,
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.all(10.0),
-                                  child: Icon(
-                                    Icons.location_on_rounded,
-                                    size: 15,
+                child: Container(
+                  color: HexColor(MyColors.white),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    // physics: ScrollPhysics(),
+                    padding: EdgeInsets.zero,
+                    itemCount: busSeatLayoutProvider.boardingList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () => continueSeatSelected(index, busSeatLayoutProvider),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              color: HexColor(MyColors.white),
+                              alignment: Alignment.centerLeft,
+                              padding: EdgeInsets.only(top: 5,bottom: 5),
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Icon(
+                                      Icons.location_on_rounded,
+                                      size: 15,
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  busSeatLayoutProvider
-                                      .boardingList[index].pStname
-                                      .toString(),
-                                  // busSeatLayoutProvider
-                                  //     .boardingList[index].pStname!,
-                                  style: GoogleFonts.nunito(
-                                      fontSize: 16,
-                                      color: HexColor(MyColors.black)),
-                                ),
-                              ],
+                                  Text(
+                                    busSeatLayoutProvider.boardingList[index].pStname.toString(),
+                                    // busSeatLayoutProvider
+                                    //     .boardingList[index].pStname!,
+                                    style: GoogleFonts.nunito(
+                                        fontSize: 15,
+                                        color: HexColor(MyColors.black)),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 2, bottom: 2),
-                            height: 2,
-                          ),
-                        ],
-                      ),
-                    );
-                  },
+                            Container(
+                              margin: EdgeInsets.only(top: 2, bottom: 2),
+                              color: HexColor(MyColors.grey1),
+                              height: 1,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ),
               )
             ],
@@ -991,12 +822,9 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
       context: context,
       isScrollControlled: true,
       isDismissible: true,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
       builder: (BuildContext context) {
         return Container(
-            color: HexColor(MyColors.white),
             height: MediaQuery.of(context).size.height * 0.7,
             padding: EdgeInsets.only(top: 10),
             child: Column(
@@ -1010,28 +838,31 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
                   ),
                 ),
                 Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 10),
-                          child: Text("Bus Details",
-                              style: GoogleFonts.nunito(
-                                  fontSize: 15, fontWeight: FontWeight.bold)),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 10, bottom: 10),
-                          child: Text(AppConstants.SERICE_TYPE_NAME,
-                              style: GoogleFonts.nunito(
-                                  fontSize: 15,
-                                  color: HexColor((MyColors.grey1)))),
-                        ),
-                        busTypeImageSlider(busSeatLayoutProvider),
-                        // amenitiesSlider(busSeatLayoutProvider),
-                        boardingListLayout(busSeatLayoutProvider)
-                      ],
+                  child: Container(
+                    color: Colors.white,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(left: 10),
+                            child: Text("Bus Details",
+                                style: GoogleFonts.nunito(
+                                    fontSize: 15, fontWeight: FontWeight.bold)),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 10, bottom: 10),
+                            child: Text(AppConstants.SERICE_TYPE_NAME,
+                                style: GoogleFonts.nunito(
+                                    fontSize: 15,
+                                    color: HexColor((MyColors.grey1)))),
+                          ),
+                          busTypeImageSlider(busSeatLayoutProvider),
+                          amenitiesSlider(busSeatLayoutProvider),
+                          boardingListLayout(busSeatLayoutProvider)
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -1042,7 +873,6 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
   }
 
   busTypeImageSlider(BusSeatLayoutProvider busSeatLayoutProvider) {
-    print(AppConstants.bus_type_url);
     return Container(
       height: 150,
       width: MediaQuery.of(context).size.width,
@@ -1054,26 +884,13 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
         child: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
             child: Image.network(
-              AppConstants.bus_type_url,
+              AppConstants.bus_type_url+AppConstants.SERICE_TYPE_ID+"_M.png",
               fit: BoxFit.fill,
             )),
       ),
     );
   }
 
-  busTypeImagesSliderItems(
-      BusSeatLayoutProvider busSeatLayoutProvider, int index) {
-    return Container(
-      margin: EdgeInsets.only(right: 10),
-      width: MediaQuery.of(context).size.width * 0.6,
-      child: ClipRRect(
-          borderRadius: BorderRadius.circular(10.0),
-          child: Image.asset(
-            "assets/images/bus1.jpeg",
-            fit: BoxFit.fill,
-          )),
-    );
-  }
 
   amenitiesSlider(BusSeatLayoutProvider busSeatLayoutProvider) {
     return Container(
@@ -1118,7 +935,7 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
   boardingListLayout(BusSeatLayoutProvider busSeatLayoutProvider) {
     return Container(
         width: MediaQuery.of(context).size.width,
-        color: HexColor(MyColors.homegrey),
+        color: HexColor(MyColors.white),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -1174,14 +991,11 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
   }
 
   showMaximumSeatSelected(BusSeatLayoutProvider busSeatLayoutProvider) {
-
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       isDismissible: false,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
       builder: (BuildContext context) {
         return Container(
             padding: EdgeInsets.only(top: 15),
@@ -1234,4 +1048,5 @@ class _BusSeatLayoutScreenState extends State<BusSeatLayoutScreen> {
       },
     );
   }
+
 }

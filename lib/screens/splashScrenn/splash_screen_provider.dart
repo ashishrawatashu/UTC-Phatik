@@ -47,11 +47,10 @@ class SplashScreenProvider extends ChangeNotifier {
   IsAppActive isAppActive = IsAppActive();
 
   Future<IsAppActive> isAppActiveOrNot() async {
-    var response = await isAppActiveDataSource
-        .isAppActiveApi(AppConstants.IS_APP_ACTIVE_TOKEN);
-
+    var response = await isAppActiveDataSource.isAppActiveApi(AppConstants.IS_APP_ACTIVE_TOKEN);
     print(response);
     isAppActive = IsAppActive.fromJson(response);
+
     return isAppActive;
   }
 
@@ -80,18 +79,19 @@ class SplashScreenProvider extends ChangeNotifier {
       String version = packageInfo.version;
       String buildNumber = packageInfo.buildNumber;
       //print(packageName+"===>"+version+"===>"+appName+"===>"+buildNumber);
-      final response = await http.get(Uri.parse('https://www.utconline.uk.gov.in'));
-      print(response.statusCode);
-      if (response.statusCode == 200) {
+      // final response = await http.get(Uri.parse('https://www.utconline.uk.gov.in'));
+      // print(response.statusCode);
+      // if (response.statusCode == 200) {
         await isAppActiveOrNot();
         if (isAppActive.code == "100") {
           if (isAppActive.result!.isEmpty) {
             CommonMethods.showErrorDialog(context, "Something went wrong, please try again");
-          } else {
+          }
+          else {
             if (isAppActive.result![0].active == "Y" && isAppActive.result![0].version == buildNumber) {
               AppConstants.HELP_DESK_EMAIL = isAppActive.helpdek![0].emailId.toString();
               AppConstants.HELP_DESK_PHONE = isAppActive.helpdek![0].mobileNo.toString();
-              Future.delayed(const Duration(seconds: 3), () {
+              Future.delayed(const Duration(seconds: 1), () {
                 if (isUserLoggedIn == "true" || isUserSkipped == "true") {
                   Navigator.pushReplacementNamed(context, MyRoutes.homeRoute);
                 } else {
@@ -108,15 +108,19 @@ class SplashScreenProvider extends ChangeNotifier {
           CommonMethods.showErrorDialog(context, "Something went wrong, please try again");
         } else if (isAppActive.code == "101") {
           Navigator.pushReplacementNamed(context, MyRoutes.errorMsg);
-        } else {
+        } else if (isAppActive.code == "900") {
+          CommonMethods.showErrorDialog(context, "Something went wrong, please try again");
+        }else {
           CommonMethods.showErrorDialog(context, "Something went wrong, please try again");
         }
-      }else {
+      }
+      else {
         CommonMethods.appIsNotWorking(context);
         // Navigator.pushReplacementNamed(context, MyRoutes.appNotWorking);
       }
-    } else {
+    // }
+    /*else {
       CommonMethods.showNoInternetDialog(context);
-    }
+    }*/
   }
 }

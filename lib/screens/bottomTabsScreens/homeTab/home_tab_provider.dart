@@ -183,7 +183,7 @@ class HomeTabProvider extends ChangeNotifier {
   Future<GetDashboardResponse> getDashboardData(String mobileNo, BuildContext context) async {
     setLoading(true);
     var response = await getDashboardDataSource.getDashboardApi(mobileNo, AppConstants.IS_APP_ACTIVE_TOKEN);
-    //print(response);
+    print(response);
     getDashboardResponse = GetDashboardResponse.fromJson(response);
     if (getDashboardResponse.code == "100") {
       AppConstants.HIT_FIRST_TIME = true;
@@ -203,7 +203,8 @@ class HomeTabProvider extends ChangeNotifier {
       }
     }else if (getDashboardResponse.code == "900") {
       CommonMethods.showErrorDialog(context, "Something went wrong. Please try again");
-
+    }else {
+      CommonMethods.showErrorDialog(context, "Something went wrong. Please try again");
     }
     setLoading(false);
 

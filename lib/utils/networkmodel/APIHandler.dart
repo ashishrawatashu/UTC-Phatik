@@ -83,8 +83,7 @@ class APIHandler {
     @required BuildContext ?context,
     @required MethodType? methodType,
     @required String ?url,
-    dynamic requestBody,
-    Map<String, String> additionalHeaders = const {},}) async {
+    dynamic requestBody, Map<String, String> additionalHeaders = const {},}) async {
     Completer<dynamic> completer = new Completer<dynamic>();
     try {
       Map<String, String> headers = {

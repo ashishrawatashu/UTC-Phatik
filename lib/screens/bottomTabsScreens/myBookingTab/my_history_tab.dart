@@ -39,7 +39,6 @@ class MyHistoryTabState extends State<MyHistoryTab> {
     super.initState();
     _myTicketsProvider = Provider.of<MyTicketsProvider>(context, listen: false);
     _myTicketsProvider.ticketDetails.clear();
-
     Future.delayed(Duration.zero, () async {
       if (await CommonMethods.getInternetUsingInternetConnectivity()) {
         await _myTicketsProvider.authenticationMethod();
@@ -74,8 +73,7 @@ class MyHistoryTabState extends State<MyHistoryTab> {
         child: Stack(
           children: [
             Visibility(
-                visible: myTicketsProvider.isLoading ? true : false,
-                child: CommonWidgets.buildCircularProgressIndicatorWidget()),
+                visible: myTicketsProvider.isLoading ? true : false, child: CommonWidgets.buildCircularProgressIndicatorWidget()),
             Visibility(
                 visible: myTicketsProvider.isLoading ? false : true,
                 child: Column(
@@ -387,48 +385,23 @@ class MyHistoryTabState extends State<MyHistoryTab> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Visibility(
-                            visible: myTicketsProvider.ticketDetails[index].ticketbookingstatus=="CONFIRMED"?true:false,
+                            visible: _myTicketsProvider.checkActiveTicket(index),
                             child: InkWell(
                               onTap: () {
-                                moveToCancelTicketDetailsScreen(myTicketsProvider,index);
+                                _myTicketsProvider.resentTicket(myTicketsProvider.ticketDetails[index].ticketno.toString(),context);
                               },
                               child: Container(
                                 margin: EdgeInsets.only(bottom: 5,top: 15),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8),
-                                  color: HexColor(MyColors.redColor),
+                                  color: HexColor(MyColors.green),
                                 ),
                                 height: 35,
                                 width: 120,
                                 child: Padding(
                                   padding: EdgeInsets.only(left: 4),
                                   child: Center(
-                                    child: Text("Cancel Ticket",
-                                      style: GoogleFonts.nunito(
-                                          color: HexColor((MyColors.white))),),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Visibility(
-                            visible: myTicketsProvider.ticketDetails[index].ticketbookingstatus=="P"?true:false,
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(context, MyRoutes.webPagesScreen,arguments: WebPageUrlArguments(AppConstants.TRACK_MY_BUS, "Track my bus"));
-                              },
-                              child: Container(
-                                margin: EdgeInsets.only(bottom: 5,top: 15),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: HexColor(MyColors.primaryColor),
-                                ),
-                                height: 35,
-                                width: 120,
-                                child: Padding(
-                                  padding: EdgeInsets.only(left: 4),
-                                  child: Center(
-                                    child: Text("Track my bus",
+                                    child: Text("Resend Ticket",
                                       style: GoogleFonts.nunito(
                                           color: HexColor((MyColors.white))),),
                                   ),
@@ -882,7 +855,7 @@ class MyHistoryTabState extends State<MyHistoryTab> {
                   Text(
                     "Boarding Point",
                     style: GoogleFonts.nunito(
-                        fontSize: 16,
+                        fontSize: 15,
                         color: HexColor(MyColors.grey1),
                         fontWeight: FontWeight.w600),
                   ),
@@ -891,7 +864,7 @@ class MyHistoryTabState extends State<MyHistoryTab> {
                         .ticketDeatil![0].boarding
                         .toString(),
                     style: GoogleFonts.nunito(
-                        fontSize: 16,
+                        fontSize: 12,
                         color: HexColor(MyColors.black),
                         fontWeight: FontWeight.w600),
                   )
@@ -962,10 +935,10 @@ class MyHistoryTabState extends State<MyHistoryTab> {
               final Uri _url = Uri.parse(downloadTicketUri);
               _launchInBrowser(_url);
 
-              CommonMethods.showLoadingDialog(context);
-              await saveFile(downloadTicketUri, myTicketsProvider.passengerConfirmDetailsResponse.ticketDeatil![0].ticketno.toString()+".pdf",context);
-              Navigator.pop(context);
-              CommonMethods.doneState(context, 'Successfully saved to internal storage "UTC Ticket" folder');
+              // CommonMethods.showLoadingDialog(context);
+              // await saveFile(downloadTicketUri, myTicketsProvider.passengerConfirmDetailsResponse.ticketDeatil![0].ticketno.toString()+".pdf",context);
+              // Navigator.pop(context);
+              // CommonMethods.doneState(context, 'Successfully saved to internal storage "UTC Ticket" folder');
             },
             child: Text("Download e-ticket", style: TextStyle(
               color: HexColor(MyColors.primaryColor),

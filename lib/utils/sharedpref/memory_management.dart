@@ -31,10 +31,10 @@ class MemoryManagement {
   static setPhoneNumber({ required String phoneNumber}) async{
     await encryptedSharedPreferences.setString(StringsFile.phoneNumber, phoneNumber).then((bool success){
       if (success) {
-        print("PHONE save");
+        // print("PHONE save");
         AppConstants.USER_MOBILE_NO = phoneNumber;
       } else {
-        print('PHONE fail');
+        // print('PHONE fail');
       }
     });
   }
@@ -52,10 +52,10 @@ class MemoryManagement {
   static setUserName({ required String userName}) async {
     await encryptedSharedPreferences.setString(StringsFile.userName, userName).then((bool success){
       if (success) {
-        print("USER save");
+        // print("USER save");
         AppConstants.USER_NAME = userName;
       } else {
-        print('USER fail');
+        // print('USER fail');
       }
     });
   }

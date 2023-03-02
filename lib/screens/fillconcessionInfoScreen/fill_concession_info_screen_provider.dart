@@ -55,7 +55,7 @@ class FillConcessionScreenProvider extends ChangeNotifier {
   Future<CheckConcessionPassResponse> checkConcessionPass(int index, String concession,String passno,String journeyDate) async{
     passengerList[index].idPassValid=false;
     var response = await checkConcessionPassDataSource.checkConcessionPassApi(concession, passno, journeyDate, AppConstants.MY_TOKEN);
-    //print(response);
+    print(response.toString()+"==>");
     checkConcessionPassResponse = CheckConcessionPassResponse.fromJson(response);
     if(checkConcessionPassResponse.code=="100"){
       passengerList[index].checkBusPassStatus = checkConcessionPassResponse.concession![0].presult.toString();
@@ -154,7 +154,7 @@ class FillConcessionScreenProvider extends ChangeNotifier {
   SavePassengersDataSource savePassengersDataSource = SavePassengersDataSource();
   Future<SavePassengersResponse> savePassengers() async{
     var response = await savePassengersDataSource.savePassengersApi(depotServiceCode, tripType, tripId, AppConstants.JOURNEY_DATE, fromStationId, toStationId, "T", AppConstants.USER_MOBILE_NO, AppConstants.USER_MOBILE_NO, userEmailId, bordeingStationId, passengers, AppConstants.DEVICE_ID!,AppConstants.MY_TOKEN);
-    //print(response);
+    print(response);
     savePassengersResponse = SavePassengersResponse.fromJson(response);
     if(savePassengersResponse.code=="100"){
       ticketNumber = savePassengersResponse.result![0].pTicketnumber.toString();

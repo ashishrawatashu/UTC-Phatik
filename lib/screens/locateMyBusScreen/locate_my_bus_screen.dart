@@ -190,7 +190,7 @@ class _LocateMyBusScreenState extends State<LocateMyBusScreen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Image.asset("assets/images/crewicon.png",height: 20,width: 20,),
                               ),
-                              Text(locateMyBusProvider.getAllTickets[index].conductorname!.trim()==""?"Conductore name N/A":locateMyBusProvider.getAllTickets[index].conductorname!.trim(),style: GoogleFonts.nunito(fontSize: 14),)
+                              Text(locateMyBusProvider.getAllTickets[index].conductorname!.trim()==""?"Conductore name N/A":locateMyBusProvider.getAllTickets[index].conductorname!.trim(),style: GoogleFonts.nunito(fontSize: 12),)
                             ],
                           ),
                           Row(
@@ -199,7 +199,7 @@ class _LocateMyBusScreenState extends State<LocateMyBusScreen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Image.asset("assets/images/crewicon.png",height: 20,width: 20,),
                               ),
-                              Text(locateMyBusProvider.getAllTickets[index].drivername!.trim()==""?"Drive name N/A":locateMyBusProvider.getAllTickets[index].drivername!.trim(),style: GoogleFonts.nunito(fontSize: 14),)
+                              Text(locateMyBusProvider.getAllTickets[index].drivername!.trim()==""?"Drive name N/A":locateMyBusProvider.getAllTickets[index].drivername!.trim(),style: GoogleFonts.nunito(fontSize: 12),)
                             ],
                           ),
                           Row(
@@ -211,7 +211,7 @@ class _LocateMyBusScreenState extends State<LocateMyBusScreen> {
                                     padding: EdgeInsets.only(left: 8,right: 8),
                                     child: Image.asset("assets/images/location.png",height: 18,width: 18,color: HexColor(MyColors.orange),),
                                   ),
-                                  Text("Bus location N/A",style: GoogleFonts.nunito(fontSize: 14),),
+                                  Text("Bus location N/A",style: GoogleFonts.nunito(fontSize: 12),),
                                 ],
                               ),
                             ],
@@ -361,7 +361,7 @@ class _LocateMyBusScreenState extends State<LocateMyBusScreen> {
             padding: EdgeInsets.only(left: 10,right: 10,top: 10),
             child: Image.asset("assets/images/roundDot.png",height: 12,width: 12,color: HexColor(MyColors.orange),),
           ),
-          Text(journeyStatusList[index].toString(),style: GoogleFonts.nunito(fontSize: 14),),
+          Text(journeyStatusList[index].toString(),style: GoogleFonts.nunito(fontSize: 12),),
         ],
       ),
     );

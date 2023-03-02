@@ -20,3 +20,8 @@ class CancelTicketsScreenDetailsArguments {
       this.departureTime,
       this.arrivalTime);
 }
+
+
+
+
+

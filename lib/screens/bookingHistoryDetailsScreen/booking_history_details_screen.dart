@@ -26,7 +26,6 @@ class _BookingHistoryDetailsScreenState extends State<BookingHistoryDetailsScree
   void initState() {
     super.initState();
     _bookingHistoryDetailProvider = Provider.of<BookingHistoryDetailProvider>(context, listen: false);
-
     Future.delayed(const Duration(milliseconds: 300), () async {
       final args = ModalRoute.of(context)!.settings.arguments as PaymentScreenArguments;
       //print(args.ticketNumber);
@@ -56,17 +55,21 @@ class _BookingHistoryDetailsScreenState extends State<BookingHistoryDetailsScree
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       topAppBarSection(),
-                      Stack(
-                        children: [
-                          bookingHistoryDetailsProvider.isLoading?CommonWidgets.buildCircularProgressIndicatorWidget():
-                          Column(
-                            children: [
-                              ticketStatus(),
-                              boardingSectioncard(),
-                              fareSummaryCard()
-                            ],
-                          )
-                        ],
+                      Expanded(
+                        child: Stack(
+                          children: [
+                            bookingHistoryDetailsProvider.isLoading?CommonWidgets.buildCircularProgressIndicatorWidget():
+                            SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  ticketStatus(),
+                                  boardingSectioncard(),
+                                  fareSummaryCard()
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       )
                     ],
                   ),//
@@ -94,7 +97,7 @@ class _BookingHistoryDetailsScreenState extends State<BookingHistoryDetailsScree
                   },
                   child: Container(
                       padding: EdgeInsets.only(left: 10, right: 10),
-                      child: Icon(Icons.arrow_back_sharp, color: Colors.white)),
+                      child: Icon(Icons.arrow_back_sharp, color: Colors.white,size: 30,)),
                 ),
                 Flexible(
                   child: Column(
@@ -172,14 +175,14 @@ class _BookingHistoryDetailsScreenState extends State<BookingHistoryDetailsScree
                   Text(
                     "Boarding Point",
                     style: GoogleFonts.nunito(
-                        fontSize: 16,
+                        fontSize: 14,
                         color: HexColor(MyColors.grey1),
                         fontWeight: FontWeight.w600),
                   ),
                   Text(
                     bookingHistoryDetailsProvider.ticketDeatils[0].boarding!,
                     style: GoogleFonts.nunito(
-                        fontSize: 16,
+                        fontSize: 14,
                         color: HexColor(MyColors.black),
                         fontWeight: FontWeight.w600),
                   )
@@ -231,7 +234,7 @@ class _BookingHistoryDetailsScreenState extends State<BookingHistoryDetailsScree
             Text(
               bookingHistoryDetailsProvider.ticketDeatils[0].servicetypenameen!,
               style: GoogleFonts.nunito(
-                  fontSize: 16,
+                  fontSize: 14,
                   color: HexColor(MyColors.black),
                   fontWeight: FontWeight.w600),
             ),
@@ -243,7 +246,7 @@ class _BookingHistoryDetailsScreenState extends State<BookingHistoryDetailsScree
                       .ticketDeatils[0].destination!,
               style: GoogleFonts.nunito(
                   fontSize: 14,
-                  fontWeight: FontWeight.w300,
+                  fontWeight: FontWeight.w600,
                   color: HexColor(MyColors.grey1)),
             ),
           ],
