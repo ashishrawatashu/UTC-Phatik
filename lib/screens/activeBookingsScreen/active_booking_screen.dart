@@ -264,9 +264,6 @@ class _ActiveBookingScreenState extends State<ActiveBookingScreen> {
               final base64TicketNumber = base64.encode(bytes);
               //print(base64TicketNumber);
               String downloadTicketUri = AppConstants.DOWNLOAD_TICKET_URL+"?tn="+base64TicketNumber;
-              // String downloadTicketUri = "http://www.africau.edu/images/default/sample.pdf";
-              //print(downloadTicketUri);
-              // final file = await loadPdfFromNetwork(downloadTicketUri);
 
               print(downloadTicketUri);
               final Uri _url = Uri.parse(downloadTicketUri);

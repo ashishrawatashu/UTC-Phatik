@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -95,115 +97,56 @@ class _RefundStatusListScreenState extends State<RefundStatusListScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("PNR: "+refundTicketsProvider.refundTicketsList[index].ticketno!,style: GoogleFonts.nunito(fontSize: 15),),
-              Row(
-                children: [
-                  Container(
-                    height: 60,
-                    margin: EdgeInsets.only(top: 12,right: 12,left: 12),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+              Text("PNR: "+refundTicketsProvider.refundTicketsList[index].ticketno!,style: GoogleFonts.nunito(fontSize: 16),),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          height: 10,
-                          width: 10,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              border: Border.all(color: HexColor(MyColors.orange))
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 2),
-                          width: 1,
-                          height: 2,
-                          color: HexColor(MyColors.orange),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 2),
-                          width: 1,
-                          height: 2,
-                          color: HexColor(MyColors.orange),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 2),
-                          width: 1,
-                          height: 2,
-                          color: HexColor(MyColors.orange),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 2),
-                          width: 1,
-                          height: 2,
-                          color: HexColor(MyColors.orange),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 2),
-                          width: 1,
-                          height: 2,
-                          color: HexColor(MyColors.orange),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 2,bottom: 2),
-                          width: 1,
-                          height: 2,
-                          color: HexColor(MyColors.orange),
-                        ),
-                        Container(
-                          height: 10,
-                          width: 10,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              border: Border.all(color: HexColor(MyColors.orange))
-                          ),
-                        ),
+                        Text("Cancellation Ref no.",style: GoogleFonts.nunito(fontSize: 14,color: HexColor(MyColors.grey1),fontWeight: FontWeight.w600),),
+                        Text(refundTicketsProvider.refundTicketsList[index].cancellationrefno!,style: GoogleFonts.nunito(fontSize: 16,color: HexColor(MyColors.black)),),
                       ],
                     ),
-                  ),
-                  Container(
-                    height: 70,
-                    padding: EdgeInsets.only(top: 10,bottom: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(refundTicketsProvider.refundTicketsList[index].ticketno!,style: GoogleFonts.nunito(color: HexColor(MyColors.black),fontSize: 16,fontWeight: FontWeight.bold),),
-                        Text(refundTicketsProvider.refundTicketsList[index].ticketno!,style: GoogleFonts.nunito(color: HexColor(MyColors.black),fontSize: 16,fontWeight: FontWeight.bold),),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Cancellation Date/Time",style: GoogleFonts.nunito(fontSize: 14,color: HexColor(MyColors.grey1),fontWeight: FontWeight.w600),),
+                            Text(refundTicketsProvider.refundTicketsList[index].cancellationdate!,style: GoogleFonts.nunito(fontSize: 16,color: HexColor(MyColors.black)),),
+                          ],
+                        ),
+                        InkWell(
+                          onTap: (){
+
+                            refundTicketsProvider.checkRefundStatus(index,context);
+
+
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: 5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: HexColor(MyColors.orange),
+                            ),
+                            height: 40,
+                            width: 120,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 4),
+                              child: Center(child: Text("Check Status",style: GoogleFonts.nunito(color: HexColor((MyColors.white))),)),
+                            ),
+                          ),
+                        )
                       ],
-                    ),
-                  )
-                ],
+                    )
+
+                  ],
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Date:  "+refundTicketsProvider.refundTicketsList[index].cancellationdate!,style: GoogleFonts.nunito(fontSize: 14,color: HexColor(MyColors.grey1)),),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: InkWell(
-                      onTap: (){
-                        Navigator.pushNamed(context, MyRoutes.webPagesScreen,arguments: WebPageUrlArguments(AppConstants.REFUND_STATUS_URL, "Refund Status"));
-
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(bottom: 5),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: HexColor(MyColors.orange),
-                        ),
-                        height: 40,
-                        width: 120,
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 4),
-                          child: Center(child: Text("Check Status",style: GoogleFonts.nunito(color: HexColor((MyColors.white))),)),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              )
-
-
-
             ],
           )
       ),

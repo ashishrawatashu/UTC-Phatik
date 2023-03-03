@@ -192,11 +192,7 @@ class OtpScreenProvider extends ChangeNotifier{
   userLoginWithOtp(BuildContext context, GlobalKey<FormState> formKeyForOtpandName) async {
     if (await CommonMethods.getInternetUsingInternetConnectivity()) {
       if (formKeyForOtpandName.currentState!.validate()) {
-        // username = usernameTextEditingController.text.toString();
-        //print(username);
-
         //encrypt user OTP
-
         //sha 512 convert...
         var bytes = utf8.encode(otpTextEditingController.text.toString());
         var digest = sha512.convert(bytes);
@@ -212,13 +208,7 @@ class OtpScreenProvider extends ChangeNotifier{
           await MemoryManagement.setLoginDateTime(dateTime: loginDateTime.toString());
           moveToHomeScreen(context);
           otpTextEditingController.text = "";
-          // _otpScreenProvider.usernameTextEditingController.text = "";
           CommonMethods.dialogDone(context, "Login successfully");
-          // if (getRatingTicketsList.isEmpty) {
-          //
-          // } else {
-          //   moveToRatingListScreen(context);
-          // }
         } else {
           Navigator.pop(context);
           CommonMethods.showSnackBar(context, "Invalid OTP !");

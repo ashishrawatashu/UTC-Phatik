@@ -128,7 +128,7 @@ class FillConcessionScreenProvider extends ChangeNotifier {
                 passengerList[i].gender.toString()+","+
                 passengerList[i].age.toString()+","+
                 passengerList[i].concessionId.toString()+","+tripType+","
-                "0"+","+
+                    "0"+","+
                     passengerList[i].sponlineverificationyn.toString()+","+
                     passengerList[i].passengerPassNoTextEditingController.text.toString()+","+
                     passengerList[i].spidverificationyn.toString()+","+

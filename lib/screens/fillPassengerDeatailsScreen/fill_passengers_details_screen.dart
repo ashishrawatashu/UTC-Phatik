@@ -69,10 +69,7 @@ class _FillPassengersDetailsScreenState
       _fillPassengersDetailsProvider.toStationId = args.toStationId;
       _fillPassengersDetailsProvider.bordeingStationId = args.bordeingStationId;
       setState(() {});
-      _fillPassengersDetailsProvider.getConcessionTypes(
-          _fillPassengersDetailsProvider.depotServiceCode,
-          _fillPassengersDetailsProvider.fromStationId,
-          _fillPassengersDetailsProvider.toStationId,
+      _fillPassengersDetailsProvider.getConcessionTypes(_fillPassengersDetailsProvider.depotServiceCode, _fillPassengersDetailsProvider.fromStationId, _fillPassengersDetailsProvider.toStationId,
           context);
     });
   }
@@ -657,9 +654,7 @@ class _FillPassengersDetailsScreenState
             showLoginBottomSheet();
           } else {
             if (fillPassengersDetailsProvider.isContainAnyConcession == true) {
-              Navigator.pushNamed(context,
-                  MyRoutes.fillConcessionScreen,
-                  arguments: FillConcessionScreenArguments(
+              Navigator.pushNamed(context, MyRoutes.fillConcessionScreen, arguments: FillConcessionScreenArguments(
                       fillPassengersDetailsProvider.userEmailTextEditingController.text.toString(),
                       fillPassengersDetailsProvider.depotServiceCode,
                       fillPassengersDetailsProvider.tripType,
@@ -1217,8 +1212,6 @@ class _FillPassengersDetailsScreenState
                           //print("BBBBBBB");
                         }
                       }
-
-
                     },
                     iconSize: 25,
                     iconEnabledColor: Colors.grey,

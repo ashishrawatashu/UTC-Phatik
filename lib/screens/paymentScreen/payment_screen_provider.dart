@@ -193,8 +193,6 @@ class PaymentScreenProvider extends ChangeNotifier{
 
 
   checkWalletBalance(){
-    //print(amountBalance);
-    //print(totalAmount);
     if(amountBalance<=totalAmount){
       return false;
     }else{
@@ -202,7 +200,5 @@ class PaymentScreenProvider extends ChangeNotifier{
     }
 
   }
-
-
 
 }
