@@ -847,46 +847,49 @@ class CommonMethods {
               BorderRadius.circular(20.0)), //this right here
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: 200,
                 // color: HexColor(MyColors.dashBg),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child:Wrap(
                   children: [
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Image.asset("assets/images/oops.png",width: 80,height: 80,fit: BoxFit.fill,),
-                      ),
-                    ),
-                    Center(child: Padding(
-                      padding: const EdgeInsets.only(left: 5.0,right: 5),
-                      child: Text(msg,textAlign:TextAlign.center,style: GoogleFonts.nunito(fontSize: 14,fontWeight: FontWeight.bold),),
-                    )),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, MyRoutes.homeRoute);
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(bottom: 5,left: 20,right: 20),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: HexColor(MyColors.orange),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Image.asset("assets/images/oops.png",width: 80,height: 80,fit: BoxFit.fill,),
+                          ),
                         ),
-                        height: 40,
-                        width:MediaQuery.of(context).size.width,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 4),
-                              child: Text("OK",style: GoogleFonts.nunito(color: Colors.white)),),
-                          ],
+                        Center(child: Padding(
+                          padding: const EdgeInsets.only(left: 5.0,right: 5),
+                          child: Text(msg,textAlign:TextAlign.center,style: GoogleFonts.nunito(fontSize: 14,fontWeight: FontWeight.bold),),
+                        )),
+                        SizedBox(
+                          height: 10,
                         ),
-                      ),
-                    ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, MyRoutes.homeRoute);
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: 5,left: 20,right: 20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: HexColor(MyColors.orange),
+                            ),
+                            height: 40,
+                            width:MediaQuery.of(context).size.width,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 4),
+                                  child: Text("OK",style: GoogleFonts.nunito(color: Colors.white)),),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),

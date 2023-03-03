@@ -48,8 +48,7 @@ class _FillPassengersDetailsScreenState
   void initState() {
     //print("initSate");
     super.initState();
-    _fillPassengersDetailsProvider =
-        Provider.of<FillPassengersDetailsProvider>(context, listen: false);
+    _fillPassengersDetailsProvider = Provider.of<FillPassengersDetailsProvider>(context, listen: false);
     getUserData();
     // _fillPassengersDetailsProvider.passengerList.clear();
     // _fillPassengersDetailsProvider.passengerList = AppConstants.passengerList11;
@@ -262,7 +261,7 @@ class _FillPassengersDetailsScreenState
   Widget bottomSection(
       FillPassengersDetailsProvider fillPassengersDetailsProvider) {
     String totalSeats =
-        fillPassengersDetailsProvider.passengerList.length.toString();
+    fillPassengersDetailsProvider.passengerList.length.toString();
 
     return Container(
       height: Platform.isIOS ? 70 : 60,
@@ -729,246 +728,6 @@ class _FillPassengersDetailsScreenState
     //print("getuserdata");
   }
 
-  // Widget passengerInformationListLayout1(int index, FillPassengersDetailsProvider fillPassengersDetailsProvider) {
-  //   return Container(
-  //     child: Column(
-  //       children: [
-  //         Row(
-  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //           children: [
-  //             Expanded(
-  //               flex: 5,
-  //               child: Container(
-  //                 margin: EdgeInsets.only(left: 10, right: 10),
-  //                 child: TextFormField(
-  //                   enableInteractiveSelection: false,
-  //                   autofocus: true,
-  //                   maxLength: 50,
-  //                   controller: fillPassengersDetailsProvider
-  //                       .passengerList[index]
-  //                       .passengerNameTextEditingController,
-  //                   cursorColor: HexColor(MyColors.primaryColor),
-  //                   onChanged: (value) {
-  //                     fillPassengersDetailsProvider.setPassengerName(
-  //                         index, value.toString());
-  //                   },
-  //                   style: TextStyle(
-  //                     fontSize: 16,
-  //                     fontWeight: FontWeight.bold,
-  //                   ),
-  //                   keyboardType: TextInputType.name,
-  //                   inputFormatters: [
-  //                     FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]')),
-  //                   ],
-  //                   decoration: InputDecoration(
-  //                     hintText: 'Name',
-  //                     counter: SizedBox.shrink(),
-  //                     labelStyle: TextStyle(
-  //                       color: Colors.grey,
-  //                       fontSize: 14,
-  //                       fontWeight: FontWeight.bold,
-  //                     ),
-  //                     focusedBorder: UnderlineInputBorder(
-  //                         borderSide: BorderSide(
-  //                             color: HexColor(MyColors.primaryColor))),
-  //                   ),
-  //                   validator: (passengerName) {
-  //                     fillPassengersDetailsProvider.uservalidation(
-  //                         passengerName.toString(), index);
-  //                     return fillPassengersDetailsProvider.passengerName1;
-  //                   },
-  //                 ),
-  //               ),
-  //             ),
-  //             Expanded(
-  //               flex: 2,
-  //               child: Container(
-  //                 margin: EdgeInsets.only(left: 10, right: 10),
-  //                 child: TextFormField(
-  //                   enableInteractiveSelection: false,
-  //                   maxLength: 2,
-  //                   controller: fillPassengersDetailsProvider
-  //                       .passengerList[index].passengerAgeTextEditingController,
-  //                   cursorColor: HexColor(MyColors.primaryColor),
-  //                   onTap: () {
-  //                     //print(fillPassengersDetailsProvider.passengerList[index].passengerAgeTextEditingController.text);
-  //                   },
-  //                   style: TextStyle(
-  //                     fontSize: 16,
-  //                     fontWeight: FontWeight.bold,
-  //                   ),
-  //                   keyboardType: TextInputType.number,
-  //                   inputFormatters: <TextInputFormatter>[
-  //                     FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-  //                   ],
-  //                   decoration: InputDecoration(
-  //                     counter: SizedBox.shrink(),
-  //                     hintText: 'Age',
-  //                     labelStyle: TextStyle(color: Colors.grey, fontSize: 14),
-  //                     focusedBorder: UnderlineInputBorder(
-  //                         borderSide: BorderSide(
-  //                             color: HexColor(MyColors.primaryColor))),
-  //                   ),
-  //                   onChanged: (value) {
-  //                     fillPassengersDetailsProvider
-  //                         .selectConsessionFromDropDown(
-  //                             fillPassengersDetailsProvider
-  //                                 .concessionList[0].categoryname
-  //                                 .toString(),
-  //                             index);
-  //                   },
-  //                   validator: (passengerAge) {
-  //                     fillPassengersDetailsProvider.agevalidation(
-  //                         passengerAge.toString(), index);
-  //                     return fillPassengersDetailsProvider.age1;
-  //                   },
-  //                 ),
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //         Row(
-  //           children: [
-  //             Expanded(
-  //               flex: 1,
-  //               child: Stack(
-  //                 children: [
-  //                   Visibility(
-  //                     visible: fillPassengersDetailsProvider
-  //                                 .passengerList[index].onlyMale ==
-  //                             "N"
-  //                         ? true
-  //                         : false,
-  //                     child: DropdownButtonHideUnderline(
-  //                       child: DropdownButton2(
-  //                         isExpanded: true,
-  //                         hint: Row(
-  //                           children: [
-  //                             Expanded(
-  //                               child: Center(
-  //                                 child: Container(
-  //                                   child: Text(
-  //                                     'Gender',
-  //                                     style: TextStyle(
-  //                                       fontSize: 15,
-  //                                       color: Colors.grey,
-  //                                     ),
-  //                                     overflow: TextOverflow.ellipsis,
-  //                                   ),
-  //                                 ),
-  //                               ),
-  //                             ),
-  //                           ],
-  //                         ),
-  //                         items: genderList
-  //                             .map((item) => DropdownMenuItem<String>(
-  //                                   value: item,
-  //                                   child: Padding(
-  //                                     padding: const EdgeInsets.all(8.0),
-  //                                     child: Text(
-  //                                       item,
-  //                                       style: TextStyle(
-  //                                         fontSize: 14,
-  //                                         fontWeight: FontWeight.bold,
-  //                                         color: Colors.black,
-  //                                       ),
-  //                                       overflow: TextOverflow.ellipsis,
-  //                                     ),
-  //                                   ),
-  //                                 ))
-  //                             .toList(),
-  //                         value: fillPassengersDetailsProvider
-  //                             .passengerList[index].genderName,
-  //                         onChanged: (value) {
-  //                           // fillPassengersDetailsProvider.checkPostionValidation(index);
-  //                           fillPassengersDetailsProvider
-  //                               .selectGenderFromDropDown(
-  //                                   value.toString(), index);
-  //                           fillPassengersDetailsProvider
-  //                               .selectConsessionFromDropDown(
-  //                                   fillPassengersDetailsProvider
-  //                                       .concessionList[0].categoryname
-  //                                       .toString(),
-  //                                   index);
-  //                         },
-  //                         iconSize: 25,
-  //                         iconEnabledColor: Colors.grey,
-  //                         iconDisabledColor: Colors.grey,
-  //                         buttonHeight: 40,
-  //                         buttonWidth: 160,
-  //                         // buttonElevation: 2,
-  //                         itemHeight: 40,
-  //                         itemPadding:
-  //                             const EdgeInsets.only(left: 14, right: 14),
-  //                         dropdownMaxHeight: 200,
-  //                         dropdownWidth: 150,
-  //                         dropdownPadding: null,
-  //                         dropdownDecoration: BoxDecoration(
-  //                           borderRadius: BorderRadius.circular(14),
-  //                           color: Colors.white,
-  //                         ),
-  //                         dropdownElevation: 8,
-  //                         scrollbarRadius: const Radius.circular(40),
-  //                         scrollbarThickness: 6,
-  //                         scrollbarAlwaysShow: true,
-  //                         offset: const Offset(-20, 0),
-  //                       ),
-  //                     ),
-  //                   ),
-  //                   Visibility(
-  //                       visible: fillPassengersDetailsProvider
-  //                                   .passengerList[index].onlyMale ==
-  //                               "N"
-  //                           ? false
-  //                           : true,
-  //                       child: Padding(
-  //                         padding: EdgeInsets.only(left: 10),
-  //                         child: Text(
-  //                           fillPassengersDetailsProvider
-  //                               .passengerList[index].genderName
-  //                               .toString(),
-  //                           style: TextStyle(
-  //                             fontSize: 16,
-  //                             fontWeight: FontWeight.bold,
-  //                           ),
-  //                         ),
-  //                       ))
-  //                 ],
-  //               ),
-  //             ),
-  //             Expanded(
-  //                 flex: 2,
-  //                 child: InkWell(
-  //                   onTap: () {
-  //                     showConcessionListBottomSheet(
-  //                         fillPassengersDetailsProvider, index);
-  //                   },
-  //                   child: Container(
-  //                     height: 45,
-  //                     child: Row(
-  //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                       children: [
-  //                         Text(
-  //                           fillPassengersDetailsProvider
-  //                               .passengerList[index].concessionName
-  //                               .toString(),
-  //                           style: GoogleFonts.nunito(
-  //                               fontSize: 16,
-  //                               color: HexColor(MyColors.black),
-  //                               fontWeight: FontWeight.w700),
-  //                         ),
-  //                         Icon(Icons.arrow_drop_down),
-  //                       ],
-  //                     ),
-  //                   ),
-  //                 )),
-  //           ],
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
-
   Widget passengerInformationListLayout(int index, FillPassengersDetailsProvider fillPassengersDetailsProvider) {
     return Container(
       child: Column(
@@ -1112,9 +871,7 @@ class _FillPassengersDetailsScreenState
                               .passengerList[index].genderName,
                           onChanged: (value) {
                             // fillPassengersDetailsProvider.checkPostionValidation(index);
-                            fillPassengersDetailsProvider
-                                .selectGenderFromDropDown(
-                                    value.toString(), index);
+                            fillPassengersDetailsProvider.selectGenderFromDropDown(value.toString(), index);
                             fillPassengersDetailsProvider.selectConsessionFromDropDown(fillPassengersDetailsProvider.concessionList[0].categoryname.toString(),
                                     index);
                           },

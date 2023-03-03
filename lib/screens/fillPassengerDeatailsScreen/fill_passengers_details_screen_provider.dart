@@ -487,24 +487,22 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
   List<ConcessionList> concessionList = [];
 
   Future<GetConcessionTypesResponse> getConcessionTypes(String dsvcid, String fromstationId ,String tostationId, BuildContext context) async{
+    CommonMethods.showLoadingDialog(context);
     var response = await getConcessionTypesDataSource.getConcessionTypes(dsvcid, fromstationId, tostationId, AppConstants.MY_TOKEN);
-    // print(response);
     getConcessionTypesResponse = GetConcessionTypesResponse.fromJson(response);
+    Navigator.pop(context);
     if(getConcessionTypesResponse.code=="100"){
       concessionList = getConcessionTypesResponse.concession!;
       setConcessionInPassengersList(concessionList);
-      //print(concessionList);
     }else if(getConcessionTypesResponse.code=="999"){
       CommonMethods.showTokenExpireDialog(context);
     }else if(getConcessionTypesResponse.code=="900"){
       CommonMethods.showErrorDialog(context, "Something went wrong, please try again");
     }
-
     return getConcessionTypesResponse;
-
   }
 
-//FF23022402009
+  //FF23022402009
   // CheckConcessionResponse
   CheckConcessionResponse checkConcessionResponse = CheckConcessionResponse();
   CheckConcessionDataSource checkConcessionDataSource = CheckConcessionDataSource();
@@ -517,11 +515,7 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
       //print(checkConcessionResponse.concession.toString());
     }
     return checkConcessionResponse;
-
   }
-
-
-
 
   var _passengerName1;
 
@@ -564,6 +558,9 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
       passengerList[index].spdocumentverificationyn="N";
       passengerList[index].spdocumentverification="N";
       passengerList[index].spconcessionname=concessionName;
+      if(index==0){
+        passengerList[index].concessionId="0";
+      }
     }else {
       isContainAnyConcession = true;
     }
@@ -618,6 +615,9 @@ class FillPassengersDetailsProvider extends ChangeNotifier {
               passengerList[index].spdocumentverificationyn=checkConcessionResponse.concession![0].spdocumentverificationyn;
               passengerList[index].spdocumentverification=checkConcessionResponse.concession![0].spdocumentverification;
               passengerList[index].spconcessionname=checkConcessionResponse.concession![0].spconcessionname;
+              if(passengerList[index].spconcessionname=="No concession"){
+                passengerList[index].concessionId="0";
+              }
               passengerList[index].concessionId=concessionID;
             }else {
               validation = false;

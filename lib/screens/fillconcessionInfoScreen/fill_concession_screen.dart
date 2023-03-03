@@ -318,7 +318,7 @@ class _FillConcessionScreenState extends State<FillConcessionScreen> {
           ),
           GestureDetector(
             onTap: (){
-              checkConcessionVaidation(fillConcessionScreenProvider);
+              fillConcessionScreenProvider.checkConcessionVaidation(context);
             },
             child: Container(
               margin: EdgeInsets.only(top: 8, right: 5, bottom: 8),
@@ -376,63 +376,40 @@ class _FillConcessionScreenState extends State<FillConcessionScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.only(bottom: 5),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      fillConcessionScreenProvider.passengerList[index].name
-                          .toString(),
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: HexColor(MyColors.black)),
-                    ),
-                    Text(
-                      ", ".toString(),
-                      style: TextStyle(color: HexColor(MyColors.black)),
-                    ),
-                    Text(
-                      fillConcessionScreenProvider
-                          .passengerList[index].genderName
-                          .toString(),
-                      style: TextStyle(color: HexColor(MyColors.black)),
-                    ),
-                    Text(
-                      ", ".toString(),
-                      style: TextStyle(color: HexColor(MyColors.black)),
-                    ),
-                    Text(
-                      fillConcessionScreenProvider.passengerList[index].age
-                          .toString(),
-                      style: TextStyle(color: HexColor(MyColors.black)),
-                    )
-                  ],
+                Text(
+                  fillConcessionScreenProvider.passengerList[index].name.toString(),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: HexColor(MyColors.black)),
                 ),
-                Expanded(
-                  flex: 1,
-                  child: Row(
-                    children: [
-                      Text(
-                        "Seat No : ",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: HexColor(MyColors.black)),
-                      ),
-                      Text(
-                        fillConcessionScreenProvider.passengerList[index].seatNo.toString(),
-                        style: TextStyle(color: HexColor(MyColors.black)),
-                      )
-                    ],
-                  ),
+                Text(
+                  ", ".toString(),
+                  style: TextStyle(color: HexColor(MyColors.black)),
                 ),
+                Text(
+                  fillConcessionScreenProvider
+                      .passengerList[index].genderName
+                      .toString(),
+                  style: TextStyle(color: HexColor(MyColors.black)),
+                ),
+                Text(
+                  ", ".toString(),
+                  style: TextStyle(color: HexColor(MyColors.black)),
+                ),
+                Text(
+                  fillConcessionScreenProvider.passengerList[index].age
+                      .toString(),
+                  style: TextStyle(color: HexColor(MyColors.black)),
+                )
               ],
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.only(bottom: 5),
             child: Row(
               children: [
                 Text(
@@ -441,10 +418,29 @@ class _FillConcessionScreenState extends State<FillConcessionScreen> {
                       fontWeight: FontWeight.bold,
                       color: HexColor(MyColors.black)),
                 ),
+                Expanded(
+                  child: Text(
+                    fillConcessionScreenProvider
+                        .passengerList[index].concessionName
+                        .toString(),
+                    style: TextStyle(color: HexColor(MyColors.black),fontSize: 12),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 5),
+            child: Row(
+              children: [
                 Text(
-                  fillConcessionScreenProvider
-                      .passengerList[index].concessionName
-                      .toString(),
+                  "Seat No : ",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: HexColor(MyColors.black)),
+                ),
+                Text(
+                  fillConcessionScreenProvider.passengerList[index].seatNo.toString(),
                   style: TextStyle(color: HexColor(MyColors.black)),
                 )
               ],
@@ -459,63 +455,86 @@ class _FillConcessionScreenState extends State<FillConcessionScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Enter pass number provided by department",
-                          style: TextStyle(color: HexColor(MyColors.primaryColor)),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 8,
-                              child: TextFormField(
-                                enableInteractiveSelection: false,
-                                controller: fillConcessionScreenProvider.passengerList[index].passengerPassNoTextEditingController,
-                                autofocus: true,
-                                maxLength: 50,
-                                cursorColor: HexColor(MyColors.primaryColor),
-                                onChanged: (value) {},
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                                keyboardType: TextInputType.name,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.allow(
-                                      RegExp('[a-zA-Z0-9]')),
+                        Visibility(
+                          visible: fillConcessionScreenProvider.chekPassIsValidOrNot(index),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Enter pass number provided by department",
+                                style: TextStyle(color: HexColor(MyColors.primaryColor)),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    flex: 8,
+                                    child: TextFormField(
+                                      enableInteractiveSelection: false,
+                                      controller: fillConcessionScreenProvider.passengerList[index].passengerPassNoTextEditingController,
+                                      autofocus: true,
+                                      maxLength: 50,
+                                      cursorColor: HexColor(MyColors.primaryColor),
+                                      onChanged: (value) {},
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                      keyboardType: TextInputType.name,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp('[a-zA-Z0-9]')),
+                                      ],
+                                      decoration: InputDecoration(
+                                        hintText: 'Pass number',
+                                        counter: SizedBox.shrink(),
+                                        labelStyle: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 14,
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: HexColor(MyColors.primaryColor))),
+                                      ),
+                                      validator: (passNo) {
+                                        fillConcessionScreenProvider.busPassNovalidation(passNo.toString(),index);
+                                        return fillConcessionScreenProvider.busPassNo;
+                                      },
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(right: 5),
+                                      child: GestureDetector(
+                                        onTap: (){
+                                          fillConcessionScreenProvider.checkBusPass(index,context);
+                                        },
+                                        child: Text(
+                                          "Verify",
+                                          textAlign: TextAlign.end,
+                                          style: TextStyle(color: HexColor(MyColors.primaryColor),fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
                                 ],
-                                decoration: InputDecoration(
-                                  hintText: 'Pass number',
-                                  counter: SizedBox.shrink(),
-                                  labelStyle: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 14,
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: HexColor(MyColors.primaryColor))),
-                                ),
-                                validator: (passNo) {
-                                  fillConcessionScreenProvider.busPassNovalidation(passNo.toString(),index);
-                                  return fillConcessionScreenProvider.busPassNo;
-                                },
                               ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Padding(
-                                padding: EdgeInsets.only(right: 5),
-                                child: GestureDetector(
-                                  onTap: (){
-                                    checkBusPass(index,fillConcessionScreenProvider);
-                                  },
-                                  child: Text(
-                                    "Verify",
-                                    textAlign: TextAlign.end,
-                                    style: TextStyle(color: HexColor(MyColors.primaryColor),fontWeight: FontWeight.bold),
-                                  ),
-                                ),
+                            ],
+                          ),
+                        ),
+                        Visibility(
+                          visible:  fillConcessionScreenProvider.checkPassIsVerifedOrNot(index),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                fillConcessionScreenProvider.passengerList[index].passengerPassNoTextEditingController.text.toString(),
+                                textAlign: TextAlign.end,
+                                style: TextStyle(color: HexColor(MyColors.primaryColor),fontWeight: FontWeight.bold),
                               ),
-                            ),
-                          ],
+                              Icon(Icons.check,color: HexColor(MyColors.orange),),
+                            ],
+                          ),
                         ),
                       ],
                     )),
@@ -534,61 +553,4 @@ class _FillConcessionScreenState extends State<FillConcessionScreen> {
       ),
     );
   }
-
-  void checkBusPass(int index, FillConcessionScreenProvider fillConcessionScreenProvider) async {
-    if(_fillConcessionScreenProvider.passengerList[index].passengerPassNoTextEditingController.text.isEmpty){
-      CommonMethods.showSnackBar(context, "Please enter pass number");
-      return;
-    }
-
-      CommonMethods.showLoadingDialog(context);
-      await fillConcessionScreenProvider.checkConcessionPass(index,fillConcessionScreenProvider.passengerList[index].concessionId.toString(), fillConcessionScreenProvider.passengerList[index].passengerPassNoTextEditingController.text.toString(), AppConstants.JOURNEY_DATE);
-      Navigator.pop(context);
-      if(fillConcessionScreenProvider.checkConcessionPassResponse.code=="100"){
-        if(fillConcessionScreenProvider.passengerList[index].checkBusPassStatus=="Error"){
-          CommonMethods.showSnackBar(context, "Invalid pass no !");
-        }else {
-          CommonMethods.dialogDone(context, "Pass is verified ");
-        }
-      }else if(fillConcessionScreenProvider.checkConcessionPassResponse.code=="999"){
-        CommonMethods.showTokenExpireDialog(context);
-      }else {
-        CommonMethods.showErrorDialog(context,"Something went wrong, please try again");
-      }
-  }
-
-  void checkConcessionVaidation(FillConcessionScreenProvider fillConcessionScreenProvider) async {
-    if (await CommonMethods.getInternetUsingInternetConnectivity()) {
-      await fillConcessionScreenProvider.validatePassNoAndIdProof();
-      if (fillConcessionScreenProvider.passengerForm==true) {
-        await fillConcessionScreenProvider.concatSeatsNumber();
-        await fillConcessionScreenProvider.concatPassengersListToString();
-        await _fillConcessionScreenProvider.savePassengers();
-        if(fillConcessionScreenProvider.savePassengersResponse.code=="100"){
-          moveToPaymentScreen(context,fillConcessionScreenProvider);
-        }else if(fillConcessionScreenProvider.savePassengersResponse.code=="999"){
-          CommonMethods.showTokenExpireDialog(context);
-        }else{
-          CommonMethods.showSnackBar(context, "Something went wrong, please try again later");
-        }
-        moveToPaymentScreen(context,fillConcessionScreenProvider);
-      } else {
-        CommonMethods.showSnackBar(context, "Please check and verify the Id/Bus pass");
-      }
-    } else {
-      CommonMethods.showNoInternetDialog(context);
-    }
-  }
-
-  moveToPaymentScreen(BuildContext context, FillConcessionScreenProvider fillConcessionScreenProvider) {
-    if (fillConcessionScreenProvider.ticketNumber == "EXCEPTION") {
-      CommonMethods.showSnackBar(context, "Something went wrong !");
-    } else {
-      //print("TICKET-NO===>" + fillConcessionScreenProvider.ticketNumber);
-      fillConcessionScreenProvider.passengerList.clear();
-
-      Navigator.pushNamed(context, MyRoutes.paymentScreen, arguments: PaymentScreenArguments(fillConcessionScreenProvider.ticketNumber, "PassengersDetails"));
-    }
-  }
-  
 }
