@@ -7,7 +7,6 @@ import 'package:utc_flutter_app/utils/colors_code.dart';
 import 'package:utc_flutter_app/utils/common_methods.dart';
 import 'package:utc_flutter_app/utils/hex_color.dart';
 import 'package:utc_flutter_app/utils/my_routes.dart';
-import 'package:utc_flutter_app/utils/notifications_class.dart';
 import 'package:utc_flutter_app/utils/sharedpref/memory_management.dart';
 
 class NavigationDrawer extends StatefulWidget {
@@ -16,12 +15,9 @@ class NavigationDrawer extends StatefulWidget {
 }
 
 class NavigationDrawerState extends State<NavigationDrawer> {
-  late NotificationApis notificationApi;
 
   @override
   void initState(){
-    notificationApi = NotificationApis();
-    notificationApi.intialize();
     super.initState();
 
 

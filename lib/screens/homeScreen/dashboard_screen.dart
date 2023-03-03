@@ -362,8 +362,8 @@ class DashboardScreenState extends State<DashboardScreen> {
                           enableInteractiveSelection: false,
                           controller: commonProviderForInAppLogin
                               .userOtpTextEditingController,
-                          maxLength: 6,
                           inputFormatters: <TextInputFormatter>[
+                            LengthLimitingTextInputFormatter(6),
                             FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                           ],
                           decoration: InputDecoration(
@@ -434,12 +434,19 @@ class DashboardScreenState extends State<DashboardScreen> {
                                   fontWeight: FontWeight.w300,
                                   color: HexColor(MyColors.grey6)),
                             ),
-                            Text(
-                              "Resend",
-                              style: GoogleFonts.nunito(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  color: HexColor(MyColors.primaryColor)),
+                            InkWell(
+                              onTap: () async {
+                                CommonMethods.showLoadingDialog(context);
+                               await commonProviderForInAppLogin.checkMobileNumber(commonProviderForInAppLogin.userPhoneTextEditingController.text);
+                              Navigator.pop(context);
+                               },
+                              child: Text(
+                                "Resend",
+                                style: GoogleFonts.nunito(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: HexColor(MyColors.primaryColor)),
+                              ),
                             ),
                           ],
                         ),

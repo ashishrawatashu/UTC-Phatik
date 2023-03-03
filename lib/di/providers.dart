@@ -19,7 +19,6 @@ import '../screens/fillPassengerDeatailsScreen/fill_passengers_details_screen_pr
 import '../screens/getPhoneNumberScreen/get_phone_number_provider.dart';
 import '../screens/grievanceDetailsScreen/grivance_details_screen_provilder.dart';
 import '../screens/homeScreen/dashboard_screen_provider.dart';
-import '../screens/introScreen/intro_provider.dart';
 import '../screens/locateMyBusScreen/locate_my_bus_screen_provider.dart';
 import '../screens/otpScreen/otp_screen_provider.dart';
 import '../screens/paymentScreen/payment_screen_provider.dart';
@@ -35,7 +34,6 @@ import '../screens/viewAllOffersScreen/view_all_offers_screen_provider.dart';
 
 List<SingleChildWidget> providers = [
   ChangeNotifierProvider<SplashScreenProvider>(create:(context)=> SplashScreenProvider()),
-  ChangeNotifierProvider<IntroScreenProvider>(create: (context) => IntroScreenProvider()),
   ChangeNotifierProvider<HomeTabProvider>(create: (context) => HomeTabProvider()),
   ChangeNotifierProvider<AllStationsProvider>(create:(context)=> AllStationsProvider()),
   ChangeNotifierProvider<SearchBusProvider>(create:(context)=> SearchBusProvider()),

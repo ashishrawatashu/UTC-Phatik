@@ -20,7 +20,6 @@ import 'package:utc_flutter_app/screens/fillconcessionInfoScreen/fill_concession
 import 'package:utc_flutter_app/screens/getPhoneNumberScreen/get_phone_number_screen.dart';
 import 'package:utc_flutter_app/screens/grievanceDetailsScreen/grievance_details_screen.dart';
 import 'package:utc_flutter_app/screens/homeScreen/dashboard_screen.dart';
-import 'package:utc_flutter_app/screens/introScreen/intro_screen.dart';
 import 'package:utc_flutter_app/screens/locateMyBusScreen/locate_my_bus_screen.dart';
 import 'package:utc_flutter_app/screens/myTransactionScreen/my_transation_screen.dart';
 import 'package:utc_flutter_app/screens/otpScreen/otp_screen.dart';
@@ -95,7 +94,6 @@ class StarBusApp extends StatelessWidget {
           initialRoute: MyRoutes.splashScreen,
           routes: {
             MyRoutes.splashScreen: (context) => const SplashScreen(),
-            MyRoutes.introScreen: (context) => const IntroScreen(),
             MyRoutes.getPhoneNumberScreen: (context) => GetPhoneNumberScreen(),
             MyRoutes.otpScreen: (context) => OtpScreen(),
             MyRoutes.registerScreen: (context) => const RegisterScreen(),

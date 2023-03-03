@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 2.0.0+2
 
 environment:
   sdk: ">=2.17.1 <3.0.0"
@@ -39,47 +39,34 @@ dependencies:
   google_fonts: ^2.1.0
   provider: ^6.0.1
   shared_preferences: 2.0.8
-  carousel_slider: ^4.0.0
   flutter_date_picker_timeline: ^0.3.3
   date_picker_timeline: ^1.2.3
   dio: ^4.0.4
-  otp_screen: ^0.0.3
   intl: ^0.17.0
   crypto: ^3.0.2
   encrypted_shared_preferences: ^3.0.0
-  flutter_rating_bar: ^4.0.0
   page_transition: ^2.0.5
   internet_connection_checker: ^0.0.1+1
   connectivity_plus: ^1.0.4
   webview_flutter: ^3.0.1
-  either_dart: ^0.1.4
   device_info_plus: ^3.0.1
   encrypt: ^5.0.1
-  local_auth: ^1.1.11
   image_picker: ^0.8.4+11
   path_provider: ^2.0.2
   permission_handler: ^9.2.0
   get: ^4.6.1
   responsive_framework: ^0.2.0
   dropdown_button2: ^1.4.0
-  full_screen_date_picker: ^0.0.2
-  animated_horizontal_calendar: ^0.0.3
   ticket_widget: ^0.0.1
   qr_flutter: ^4.0.0
-  flutter_local_notifications: ^9.6.1
   url_launcher: ^6.1.4
-  flutter_calendar_carousel: ^2.4.0
   open_file: ^3.2.1
-  pdf: ^3.6.0
-  syncfusion_flutter_pdf: 20.2.40
-  animated_bottom_navigation_bar: ^1.1.0
-  auto_size_text: ^3.0.0
-  circular_reveal_animation: ^2.0.1
   shimmer: ^2.0.0
   http: ^0.13.5
   file_picker: ^4.5.1
   flutter_pdfview: ^1.2.2
   path: ^1.8.0
+  open_store: ^0.5.0
 
 flutter_icons:
   image_path: "assets/images/ac_icon.png"

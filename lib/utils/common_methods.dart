@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:open_store/open_store.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:utc_flutter_app/utils/colors_code.dart';
 import 'package:utc_flutter_app/utils/hex_color.dart';
@@ -607,13 +609,13 @@ class CommonMethods {
                       height: 10,
                     ),
                     InkWell(
-                      onTap: () {
-                        // Navigator.pushNamed(context, MyRoutes.homeRoute);
-                        if (Platform.isAndroid) {
-                          // SystemNavigator.pop();
-                        } else if (Platform.isIOS) {
-                          // exit(0);
-                        }
+                      onTap: () async{
+                        const appStoreId = "com.utconline.utcbooking"; // Your app's App Store ID
+                        final packageName = (await PackageInfo.fromPlatform()).packageName;
+                        OpenStore.instance.open(
+                          androidAppBundleId: packageName,
+                          appStoreId: appStoreId,
+                        );
                       },
                       child: Container(
                         margin: EdgeInsets.only(bottom: 5,left: 20,right: 20),

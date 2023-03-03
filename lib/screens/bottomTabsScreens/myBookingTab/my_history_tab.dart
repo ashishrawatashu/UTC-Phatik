@@ -20,7 +20,6 @@ import 'package:ticket_widget/ticket_widget.dart';
 import '../../../arguments/payment_screen_arguments.dart';
 import '../../../utils/common_widigits.dart';
 import '../../../utils/my_routes.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:http/http.dart' as http;
 class MyHistoryTab extends StatefulWidget {
   const MyHistoryTab({Key? key}) : super(key: key);

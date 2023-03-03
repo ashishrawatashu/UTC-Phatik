@@ -545,8 +545,11 @@ class _FillPassengersDetailsScreenState
                         margin: EdgeInsets.only(top: 20),
                         child: TextFormField(
                           enableInteractiveSelection: false,
-                          controller: fillPassengerDetailsProvider
-                              .userOtpTextEditingController,
+                          controller: fillPassengerDetailsProvider.userOtpTextEditingController,
+                          inputFormatters: <TextInputFormatter>[
+                            LengthLimitingTextInputFormatter(6),
+                            FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                          ],
                           decoration: InputDecoration(
                               prefixIcon: Padding(
                                   padding: EdgeInsets.all(12),
@@ -560,9 +563,7 @@ class _FillPassengersDetailsScreenState
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                   color: HexColor(MyColors.grey4)),
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: HexColor(MyColors.primaryColor)))),
+                              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: HexColor(MyColors.primaryColor)))),
                           validator: (value) {
                             fillPassengerDetailsProvider
                                 .userOtpValidation(value);
@@ -617,8 +618,7 @@ class _FillPassengersDetailsScreenState
                             ),
                             GestureDetector(
                               onTap: () {
-                                checkMobileNumber(
-                                    _fillPassengersDetailsProvider);
+                                checkMobileNumber(_fillPassengersDetailsProvider);
                               },
                               child: Text(
                                 "Resend",
@@ -654,7 +654,8 @@ class _FillPassengersDetailsScreenState
             showLoginBottomSheet();
           } else {
             if (fillPassengersDetailsProvider.isContainAnyConcession == true) {
-              Navigator.pushNamed(context, MyRoutes.fillConcessionScreen, arguments: FillConcessionScreenArguments(
+              Navigator.pushNamed(context, MyRoutes.fillConcessionScreen,
+                  arguments: FillConcessionScreenArguments(
                       fillPassengersDetailsProvider.userEmailTextEditingController.text.toString(),
                       fillPassengersDetailsProvider.depotServiceCode,
                       fillPassengersDetailsProvider.tripType,
