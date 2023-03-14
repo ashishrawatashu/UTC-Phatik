@@ -79,10 +79,7 @@ class SplashScreenProvider extends ChangeNotifier {
       String version = packageInfo.version;
       // String buildNumber = "1";
       String buildNumber = packageInfo.buildNumber;
-      //print(packageName+"===>"+version+"===>"+appName+"===>"+buildNumber);
-      // final response = await http.get(Uri.parse('https://www.utconline.uk.gov.in'));
-      // print(response.statusCode);
-      // if (response.statusCode == 200) {
+      print(packageName+"===>"+version+"===>"+appName+"===>"+buildNumber);
         await isAppActiveOrNot();
         if (isAppActive.code == "100") {
           if (isAppActive.result!.isEmpty) {
@@ -115,12 +112,9 @@ class SplashScreenProvider extends ChangeNotifier {
           CommonMethods.showErrorDialog(context, "Something went wrong, please try again");
         }
       }
-      else {CommonMethods.appIsNotWorking(context);
-        // Navigator.pushReplacementNamed(context, MyRoutes.appNotWorking);
-      }
-    // }
-    /*else {
+      else {
       CommonMethods.showNoInternetDialog(context);
-    }*/
+        // CommonMethods.appIsNotWorking(context);
+      }
   }
 }
